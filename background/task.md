@@ -140,12 +140,15 @@
 | **真实-Sprinkler** | ✅ 50% | 即使在弱信号下也能识别出核心边，避免盲目自信 |
 
 ## 5. 下一步行动 (Immediate Next Steps)
-1.  **论文写作 (Paper Writing)**：
-    - 整理实验结果，撰写 Methodology 和 Experiments 章节。
-    - 强调 **"Objective Narrative + MLP Residuals + IGCI Principles"** 这一组合拳的有效性。
-2.  **扩展基准测试**：
-    - 在更多 bnlearn 网络（如 alarm, child）上运行测试。
-    - 与传统算法（PC, LiNGAM）进行同台竞技对比。
+1.  **✅ 扩展基准测试（已完成）**：
+    - ✅ 实现了与传统算法（PC, HillClimb, Random）的同台对比
+    - ✅ 引入 SHD (Structural Hamming Distance) 量化指标
+    - ✅ 扩展测试集：Asia, Sprinkler, Alarm, Child, Sachs 网络
+    - **关键发现**: 在复杂网络（Asia）上显著优于传统算法（SHD=4 vs PC=12, 67%提升）
+2.  **论文写作 (Paper Writing)**：
+    - 整理扩展基准测试结果，撰写 Methodology 和 Experiments 章节。
+    - 强调 **"Blind Causal Discovery"** 这一独特赛道（隐私保护场景）。
+    - 核心卖点：**"Objective Narrative + MLP Residuals + IGCI Principles"** 在脱敏条件下的有效性。
 
 ## 🔧 Phase 5: 验证修复效果 (Validation)
 1.  **重新运行实验**：

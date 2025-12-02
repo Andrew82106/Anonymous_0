@@ -1,0 +1,312 @@
+{
+  "campaign_a": {
+    "accuracy": 0.6086956521739131,
+    "shd": 31,
+    "details": [
+      {
+        "pair": "HISTORY-LVFAILURE",
+        "true_dir": "LVFAILURE->HISTORY",
+        "pred_raw": "A->B",
+        "is_correct": false
+      },
+      {
+        "pair": "LVEDVOLUME-LVFAILURE",
+        "true_dir": "LVFAILURE->LVEDVOLUME",
+        "pred_raw": "A->B",
+        "is_correct": false
+      },
+      {
+        "pair": "LVFAILURE-STROKEVOLUME",
+        "true_dir": "LVFAILURE->STROKEVOLUME",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "CVP-LVEDVOLUME",
+        "true_dir": "LVEDVOLUME->CVP",
+        "pred_raw": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "LVEDVOLUME-PCWP",
+        "true_dir": "LVEDVOLUME->PCWP",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "HYPOVOLEMIA-LVEDVOLUME",
+        "true_dir": "HYPOVOLEMIA->LVEDVOLUME",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "HYPOVOLEMIA-STROKEVOLUME",
+        "true_dir": "HYPOVOLEMIA->STROKEVOLUME",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "CO-STROKEVOLUME",
+        "true_dir": "STROKEVOLUME->CO",
+        "pred_raw": "B->A",
+        "is_correct": true
+      },
+      {
+        "pair": "ERRLOWOUTPUT-HRBP",
+        "true_dir": "ERRLOWOUTPUT->HRBP",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "HR-HRBP",
+        "true_dir": "HR->HRBP",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "HR-HREKG",
+        "true_dir": "HR->HREKG",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "HR-HRSAT",
+        "true_dir": "HR->HRSAT",
+        "pred_raw": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "CO-HR",
+        "true_dir": "HR->CO",
+        "pred_raw": "A->B",
+        "is_correct": false
+      },
+      {
+        "pair": "ERRCAUTER-HREKG",
+        "true_dir": "ERRCAUTER->HREKG",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ERRCAUTER-HRSAT",
+        "true_dir": "ERRCAUTER->HRSAT",
+        "pred_raw": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "ANAPHYLAXIS-TPR",
+        "true_dir": "ANAPHYLAXIS->TPR",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "CATECHOL-TPR",
+        "true_dir": "TPR->CATECHOL",
+        "pred_raw": "A->B",
+        "is_correct": false
+      },
+      {
+        "pair": "BP-TPR",
+        "true_dir": "TPR->BP",
+        "pred_raw": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "ARTCO2-EXPCO2",
+        "true_dir": "ARTCO2->EXPCO2",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ARTCO2-CATECHOL",
+        "true_dir": "ARTCO2->CATECHOL",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "EXPCO2-VENTLUNG",
+        "true_dir": "VENTLUNG->EXPCO2",
+        "pred_raw": "A->B",
+        "is_correct": false
+      },
+      {
+        "pair": "MINVOL-VENTLUNG",
+        "true_dir": "VENTLUNG->MINVOL",
+        "pred_raw": "A->B",
+        "is_correct": false
+      },
+      {
+        "pair": "VENTALV-VENTLUNG",
+        "true_dir": "VENTLUNG->VENTALV",
+        "pred_raw": "A->B",
+        "is_correct": false
+      },
+      {
+        "pair": "INTUBATION-VENTLUNG",
+        "true_dir": "INTUBATION->VENTLUNG",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "INTUBATION-MINVOL",
+        "true_dir": "INTUBATION->MINVOL",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "INTUBATION-VENTALV",
+        "true_dir": "INTUBATION->VENTALV",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "INTUBATION-SHUNT",
+        "true_dir": "INTUBATION->SHUNT",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "INTUBATION-PRESS",
+        "true_dir": "INTUBATION->PRESS",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "FIO2-PVSAT",
+        "true_dir": "FIO2->PVSAT",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "PVSAT-SAO2",
+        "true_dir": "PVSAT->SAO2",
+        "pred_raw": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "ARTCO2-VENTALV",
+        "true_dir": "VENTALV->ARTCO2",
+        "pred_raw": "B->A",
+        "is_correct": true
+      },
+      {
+        "pair": "PVSAT-VENTALV",
+        "true_dir": "VENTALV->PVSAT",
+        "pred_raw": "A->B",
+        "is_correct": false
+      },
+      {
+        "pair": "CATECHOL-SAO2",
+        "true_dir": "SAO2->CATECHOL",
+        "pred_raw": "A->B",
+        "is_correct": false
+      },
+      {
+        "pair": "SAO2-SHUNT",
+        "true_dir": "SHUNT->SAO2",
+        "pred_raw": "A->B",
+        "is_correct": false
+      },
+      {
+        "pair": "PULMEMBOLUS-SHUNT",
+        "true_dir": "PULMEMBOLUS->SHUNT",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "PAP-PULMEMBOLUS",
+        "true_dir": "PULMEMBOLUS->PAP",
+        "pred_raw": "B->A",
+        "is_correct": true
+      },
+      {
+        "pair": "KINKEDTUBE-VENTLUNG",
+        "true_dir": "KINKEDTUBE->VENTLUNG",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "KINKEDTUBE-PRESS",
+        "true_dir": "KINKEDTUBE->PRESS",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "VENTLUNG-VENTTUBE",
+        "true_dir": "VENTTUBE->VENTLUNG",
+        "pred_raw": "A->B",
+        "is_correct": false
+      },
+      {
+        "pair": "PRESS-VENTTUBE",
+        "true_dir": "VENTTUBE->PRESS",
+        "pred_raw": "A->B",
+        "is_correct": false
+      },
+      {
+        "pair": "MINVOLSET-VENTMACH",
+        "true_dir": "MINVOLSET->VENTMACH",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "VENTMACH-VENTTUBE",
+        "true_dir": "VENTMACH->VENTTUBE",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "DISCONNECT-VENTTUBE",
+        "true_dir": "DISCONNECT->VENTTUBE",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "CATECHOL-HR",
+        "true_dir": "CATECHOL->HR",
+        "pred_raw": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "CATECHOL-INSUFFANESTH",
+        "true_dir": "INSUFFANESTH->CATECHOL",
+        "pred_raw": "B->A",
+        "is_correct": true
+      },
+      {
+        "pair": "BP-CO",
+        "true_dir": "CO->BP",
+        "pred_raw": "A->B",
+        "is_correct": false
+      }
+    ]
+  },
+  "campaign_b": {
+    "pc_metrics": {
+      "shd": 24,
+      "skeleton": {
+        "precision": 0.96875,
+        "recall": 0.6739130434782609,
+        "f1": 0.7948717948717949
+      },
+      "orientation": {
+        "precision": 0.84375,
+        "recall": 0.5869565217391305,
+        "f1": 0.6923076923076924
+      }
+    },
+    "hybrid_metrics": {
+      "shd": 34,
+      "skeleton": {
+        "precision": 0.9642857142857143,
+        "recall": 0.5869565217391305,
+        "f1": 0.7297297297297297
+      },
+      "orientation": {
+        "precision": 0.7142857142857143,
+        "recall": 0.43478260869565216,
+        "f1": 0.5405405405405405
+      }
+    }
+  }
+}
