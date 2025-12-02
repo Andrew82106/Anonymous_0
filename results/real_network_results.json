@@ -1,43 +1,80 @@
 [
   {
     "network": "sprinkler",
-    "accuracy": 0.0,
+    "accuracy": 0.5,
     "details": [
       {
         "network": "sprinkler",
         "pair": "Cloudy->Sprinkler",
         "ground_truth": "A->B",
-        "prediction": "Unclear",
-        "confidence": "unknown",
-        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=1.00\nVariable B: Discrete with 2 unique values. Entropy=0.90\nMarginal Entropy: Both variables have similar entropy levels.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.714\n- Conditional Entropy: 0.722 (Lower is better predictability)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.714\n- Conditional Entropy: 0.816 (Lower is better predictability)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n### Comparison\nBoth directions have similar predictive power (conditional entropy).",
-        "reasoning": {
-          "key_observations": {
-            "similar_predictive_power": "Both A->B and B->A hypotheses have similar predictive power, indicating that the direction of causality is not easily determined by predictive models alone.",
-            "low_error_independence": "Both models show low error independence, suggesting that the models may be misspecified and that there might be other factors influencing the relationship between A and B.",
-            "similar_conditional_entropy": "The conditional entropy values are similar for both directions, which does not provide a clear indication of the direction of causality."
+        "prediction": "A->B",
+        "confidence": "medium",
+        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=1.00\nVariable B: Discrete with 2 unique values. Entropy=0.90\nMarginal Entropy: Variable B is significantly 'simpler' (lower entropy) than A. In many causal structures, entropy increases from cause to effect due to noise accumulation.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.720\n- Conditional Entropy: 0.738 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.111 (Higher = Stronger association)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.720\n- Conditional Entropy: 0.839 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.111 (Higher = Stronger association)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n### Comparative Analysis (Objective)\n- **Predictive Determinism (Conditional Entropy)**: A->B: 0.7376 vs B->A: 0.8387.\n  -> Direction A->B shows **slightly lower** conditional entropy (relative difference ~14%), indicating moderately better predictability.\n\n- **Error Independence Test**: A->B p-value: 0.0000 vs B->A p-value: 0.0000.\n  -> Interpretation: p-value > 0.05 suggests errors are independent of input (good model fit).\n  -> Both directions fail the independence test. The relationship may be more complex or confounded.\n\n- **Mutual Information**: A->B: 0.1110, B->A: 0.1110 (Average: 0.1110).\n  -> Note: MI(X,Y) should theoretically be symmetric. Asymmetry here reflects directional prediction strength in the discrete context.",
+        "reasoning": [
+          {
+            "observation": "Conditional entropy for A->B is 0.738, for B->A is 0.839. Relative difference is ~14% (0.839-0.738)/0.738 ≈ 13.7%. This favors A->B as the causal direction since lower conditional entropy means better predictability of B given A.",
+            "type": "Level 2 - Strong auxiliary evidence"
           },
-          "contradictions_or_uncertainties": {
-            "no_clear_non_gaussianity_signal": "There is no clear signal of non-Gaussianity in the residuals, which is expected if A->B or B->A is the true causal direction.",
-            "no_significant_heteroscedasticity": "There is no significant heteroscedasticity in the residuals, which would suggest a direction with more stable variance."
+          {
+            "observation": "Classification accuracy is identical (0.720) in both directions, providing no differential evidence.",
+            "type": "Level 2 - Auxiliary evidence"
           },
-          "final_judgment": "Given the lack of a clear non-Gaussianity signal, the similar predictive power, and the low error independence, it is unclear which direction is the true causal direction. The evidence is not strong enough to favor one hypothesis over the other."
-        },
-        "is_correct": false,
-        "full_response": {
-          "causal_direction": "Unclear",
-          "confidence_level": "medium",
-          "reasoning_chain": {
-            "key_observations": {
-              "similar_predictive_power": "Both A->B and B->A hypotheses have similar predictive power, indicating that the direction of causality is not easily determined by predictive models alone.",
-              "low_error_independence": "Both models show low error independence, suggesting that the models may be misspecified and that there might be other factors influencing the relationship between A and B.",
-              "similar_conditional_entropy": "The conditional entropy values are similar for both directions, which does not provide a clear indication of the direction of causality."
-            },
-            "contradictions_or_uncertainties": {
-              "no_clear_non_gaussianity_signal": "There is no clear signal of non-Gaussianity in the residuals, which is expected if A->B or B->A is the true causal direction.",
-              "no_significant_heteroscedasticity": "There is no significant heteroscedasticity in the residuals, which would suggest a direction with more stable variance."
-            },
-            "final_judgment": "Given the lack of a clear non-Gaussianity signal, the similar predictive power, and the low error independence, it is unclear which direction is the true causal direction. The evidence is not strong enough to favor one hypothesis over the other."
+          {
+            "observation": "Mutual information is symmetric (0.111), as theoretically expected for MI(X,Y). Thus, this does not distinguish directions.",
+            "type": "Level 2 - Auxiliary evidence"
+          },
+          {
+            "observation": "Error independence test fails in both directions (p-value=0.000), indicating residuals are not independent of input for either model. This suggests model misspecification or possible confounding, reducing the confidence in a clear causal direction.",
+            "type": "Level 1 - Gold standard"
+          },
+          {
+            "observation": "Marginal entropy for Variable B is lower (0.90) than for A (1.00). In many causal systems, entropy increases from cause to effect due to accumulated noise. This supports the hypothesis that A is the cause and B is the effect.",
+            "type": "Level 3 - Supporting clue"
+          },
+          {
+            "observation": "Absence of strong or contradictory signals: While error independence is poor (reducing confidence), the conditional entropy difference is meaningful and favors A->B. There is no evidence of independence (mutual information is nonzero) or strong confounding (both directions fit poorly, but not equally)."
           }
+        ],
+        "is_correct": true,
+        "full_response": {
+          "causal_direction": "A->B",
+          "confidence": "medium",
+          "reasoning_chain": [
+            {
+              "observation": "Conditional entropy for A->B is 0.738, for B->A is 0.839. Relative difference is ~14% (0.839-0.738)/0.738 ≈ 13.7%. This favors A->B as the causal direction since lower conditional entropy means better predictability of B given A.",
+              "type": "Level 2 - Strong auxiliary evidence"
+            },
+            {
+              "observation": "Classification accuracy is identical (0.720) in both directions, providing no differential evidence.",
+              "type": "Level 2 - Auxiliary evidence"
+            },
+            {
+              "observation": "Mutual information is symmetric (0.111), as theoretically expected for MI(X,Y). Thus, this does not distinguish directions.",
+              "type": "Level 2 - Auxiliary evidence"
+            },
+            {
+              "observation": "Error independence test fails in both directions (p-value=0.000), indicating residuals are not independent of input for either model. This suggests model misspecification or possible confounding, reducing the confidence in a clear causal direction.",
+              "type": "Level 1 - Gold standard"
+            },
+            {
+              "observation": "Marginal entropy for Variable B is lower (0.90) than for A (1.00). In many causal systems, entropy increases from cause to effect due to accumulated noise. This supports the hypothesis that A is the cause and B is the effect.",
+              "type": "Level 3 - Supporting clue"
+            },
+            {
+              "observation": "Absence of strong or contradictory signals: While error independence is poor (reducing confidence), the conditional entropy difference is meaningful and favors A->B. There is no evidence of independence (mutual information is nonzero) or strong confounding (both directions fit poorly, but not equally)."
+            }
+          ],
+          "uncertainties": [
+            "Both models fail error independence tests (p=0.000), which usually signals model misspecification, hidden confounding, or complex causal mechanisms.",
+            "The difference in conditional entropy, while notable (~14%), is not overwhelming. This tempers the confidence assessment.",
+            "Marginal entropy difference aligns with A->B, but this is a weaker clue and may not always hold in real-world data."
+          ],
+          "final_judgement_basis": [
+            "Conditional entropy difference (~14%) is significant and favors A->B.",
+            "Marginal entropy difference is consistent with A->B.",
+            "No evidence for independence or confounding is strong enough to override the directional signal.",
+            "Poor error independence in both directions lowers confidence but does not nullify the directional evidence."
+          ]
         }
       },
       {
@@ -45,397 +82,423 @@
         "pair": "Cloudy->Rain",
         "ground_truth": "A->B",
         "prediction": "Unclear",
-        "confidence": "medium",
-        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=1.00\nVariable B: Discrete with 2 unique values. Entropy=1.00\nMarginal Entropy: Both variables have similar entropy levels.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.811\n- Conditional Entropy: 0.699 (Lower is better predictability)\n- Error Independence: **High** (p-value=0.411). Prediction errors are independent of the input, suggesting a correct causal model.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.811\n- Conditional Entropy: 0.697 (Lower is better predictability)\n- Error Independence: **High** (p-value=0.077). Prediction errors are independent of the input, suggesting a correct causal model.\n\n### Comparison\nBoth directions have similar predictive power (conditional entropy).",
-        "reasoning": {
-          "key_observations": [
-            {
-              "point": "Both models (A->B and B->A) have similar predictive power and error independence, suggesting that either direction could be the true causal relationship."
-            },
-            {
-              "point": "The conditional entropies are similar, indicating that the predictability of B given A is not significantly different from the predictability of A given B."
-            },
-            {
-              "point": "There is no clear evidence of non-Gaussianity or heteroscedasticity that would favor one direction over the other."
-            },
-            {
-              "point": "The high error independence in both directions does not provide a clear indication of the true causal direction."
-            }
-          ],
-          "contradictions_or_uncertainties": [
-            {
-              "point": "The lack of a clear preference for one direction over the other based on the provided statistical evidence."
-            },
-            {
-              "point": "The absence of a third variable that could confound the relationship between A and B."
-            }
-          ],
-          "final_judgment": "Given the lack of clear evidence favoring one direction over the other, and the absence of strong signals for non-Gaussianity or heteroscedasticity, the most likely conclusion is that the true causal relationship between A and B is unclear based on the provided statistical evidence."
-        },
+        "confidence": "low",
+        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=1.00\nVariable B: Discrete with 2 unique values. Entropy=1.00\nMarginal Entropy: Both variables have similar entropy levels.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.780\n- Conditional Entropy: 0.760 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.166 (Higher = Stronger association)\n- Error Independence: **High** (p-value=0.988). Prediction errors are independent of the input, suggesting a correct causal model.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.780\n- Conditional Entropy: 0.759 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.166 (Higher = Stronger association)\n- Error Independence: **High** (p-value=0.306). Prediction errors are independent of the input, suggesting a correct causal model.\n\n### Comparative Analysis (Objective)\n- **Predictive Determinism (Conditional Entropy)**: A->B: 0.7602 vs B->A: 0.7593.\n  -> The conditional entropies are nearly identical (relative difference < 5%). Both directions have similar predictive power.\n\n- **Error Independence Test**: A->B p-value: 0.9881 vs B->A p-value: 0.3063.\n  -> Interpretation: p-value > 0.05 suggests errors are independent of input (good model fit).\n  -> Both directions pass the independence test. This metric alone cannot distinguish the causal direction.\n\n- **Mutual Information**: A->B: 0.1660, B->A: 0.1660 (Average: 0.1660).\n  -> Note: MI(X,Y) should theoretically be symmetric. Asymmetry here reflects directional prediction strength in the discrete context.",
+        "reasoning": [
+          {
+            "observation": "Both directions (A->B and B->A) have nearly identical classification accuracy (0.780), conditional entropy (0.760 vs 0.759, <0.15% relative difference), and mutual information (0.166 for both).",
+            "implication": "Predictive determinism and association strength are symmetric—no evidence favoring either direction."
+          },
+          {
+            "observation": "Error independence p-values are high in both directions: A->B (0.988) and B->A (0.306). Both pass the independence test (p>0.05), but A->B is more extreme. Relative difference is notable (~222% higher for A->B).",
+            "implication": "While A->B exhibits slightly stronger residual independence (the gold standard), both directions are statistically acceptable."
+          },
+          {
+            "observation": "Marginal entropies are nearly identical (both 1.00), suggesting similar uncertainty and no evidence of higher complexity in either variable.",
+            "implication": "No supporting evidence for either as a more 'natural' cause or effect."
+          },
+          {
+            "observation": "No signs of confounding or independence: mutual information is significant; neither direction is completely independent.",
+            "implication": "Ruling out A_|_B (independence) and A<-Z->B (confounding), as both directions are predictive and residuals are independent."
+          },
+          {
+            "observation": "All key metrics (mutual information, conditional entropy, error independence) are either symmetric or differ by less than 5%.",
+            "implication": "Per guidelines, unless differences exceed 5-10% and are consistent, no strong causal inference can be made."
+          }
+        ],
         "is_correct": false,
         "full_response": {
           "causal_direction": "Unclear",
-          "confidence": "medium",
-          "reasoning_chain": {
-            "key_observations": [
-              {
-                "point": "Both models (A->B and B->A) have similar predictive power and error independence, suggesting that either direction could be the true causal relationship."
-              },
-              {
-                "point": "The conditional entropies are similar, indicating that the predictability of B given A is not significantly different from the predictability of A given B."
-              },
-              {
-                "point": "There is no clear evidence of non-Gaussianity or heteroscedasticity that would favor one direction over the other."
-              },
-              {
-                "point": "The high error independence in both directions does not provide a clear indication of the true causal direction."
-              }
-            ],
-            "contradictions_or_uncertainties": [
-              {
-                "point": "The lack of a clear preference for one direction over the other based on the provided statistical evidence."
-              },
-              {
-                "point": "The absence of a third variable that could confound the relationship between A and B."
-              }
-            ],
-            "final_judgment": "Given the lack of clear evidence favoring one direction over the other, and the absence of strong signals for non-Gaussianity or heteroscedasticity, the most likely conclusion is that the true causal relationship between A and B is unclear based on the provided statistical evidence."
-          }
+          "confidence": "low",
+          "reasoning_chain": [
+            {
+              "observation": "Both directions (A->B and B->A) have nearly identical classification accuracy (0.780), conditional entropy (0.760 vs 0.759, <0.15% relative difference), and mutual information (0.166 for both).",
+              "implication": "Predictive determinism and association strength are symmetric—no evidence favoring either direction."
+            },
+            {
+              "observation": "Error independence p-values are high in both directions: A->B (0.988) and B->A (0.306). Both pass the independence test (p>0.05), but A->B is more extreme. Relative difference is notable (~222% higher for A->B).",
+              "implication": "While A->B exhibits slightly stronger residual independence (the gold standard), both directions are statistically acceptable."
+            },
+            {
+              "observation": "Marginal entropies are nearly identical (both 1.00), suggesting similar uncertainty and no evidence of higher complexity in either variable.",
+              "implication": "No supporting evidence for either as a more 'natural' cause or effect."
+            },
+            {
+              "observation": "No signs of confounding or independence: mutual information is significant; neither direction is completely independent.",
+              "implication": "Ruling out A_|_B (independence) and A<-Z->B (confounding), as both directions are predictive and residuals are independent."
+            },
+            {
+              "observation": "All key metrics (mutual information, conditional entropy, error independence) are either symmetric or differ by less than 5%.",
+              "implication": "Per guidelines, unless differences exceed 5-10% and are consistent, no strong causal inference can be made."
+            }
+          ],
+          "final_judgement_basis": [
+            "The only relative difference of note is in error independence, but both directions pass, and the difference is not strong enough to be conclusive.",
+            "All other statistical signals are symmetric.",
+            "Guidelines recommend 'Unclear' when all evidence is essentially balanced."
+          ]
         }
       },
       {
         "network": "sprinkler",
         "pair": "Sprinkler->Wet_Grass",
         "ground_truth": "A->B",
-        "prediction": "Unclear",
-        "confidence": "unknown",
-        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=0.90\nVariable B: Discrete with 2 unique values. Entropy=0.91\nMarginal Entropy: Both variables have similar entropy levels.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.675\n- Conditional Entropy: 0.759 (Lower is better predictability)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.680\n- Conditional Entropy: 0.754 (Lower is better predictability)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n### Comparison\nBoth directions have similar predictive power (conditional entropy).",
-        "reasoning": "",
+        "prediction": "B->A",
+        "confidence": "medium",
+        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=0.90\nVariable B: Discrete with 2 unique values. Entropy=0.94\nMarginal Entropy: Both variables have similar entropy levels.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.644\n- Conditional Entropy: 0.797 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.099 (Higher = Stronger association)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.686\n- Conditional Entropy: 0.755 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.099 (Higher = Stronger association)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n### Comparative Analysis (Objective)\n- **Predictive Determinism (Conditional Entropy)**: A->B: 0.7969 vs B->A: 0.7554.\n  -> Direction B->A shows **slightly lower** conditional entropy (relative difference ~6%), indicating moderately better predictability.\n\n- **Error Independence Test**: A->B p-value: 0.0000 vs B->A p-value: 0.0000.\n  -> Interpretation: p-value > 0.05 suggests errors are independent of input (good model fit).\n  -> Both directions fail the independence test. The relationship may be more complex or confounded.\n\n- **Mutual Information**: A->B: 0.0987, B->A: 0.0987 (Average: 0.0987).\n  -> Note: MI(X,Y) should theoretically be symmetric. Asymmetry here reflects directional prediction strength in the discrete context.",
+        "reasoning": [
+          {
+            "observation": "Conditional entropy is lower for B->A (0.755) compared to A->B (0.797), a relative difference of ~5.3%. This is a weak-to-moderate signal favoring B->A as the causal direction.",
+            "type": "conditional_entropy",
+            "weight": "moderate"
+          },
+          {
+            "observation": "Classification accuracy is higher for B->A (0.686) than A->B (0.644), reinforcing the notion that B better predicts A.",
+            "type": "accuracy",
+            "weight": "supportive"
+          },
+          {
+            "observation": "Mutual information is identical in both directions (0.099), indicating symmetric association and providing no directional information.",
+            "type": "mutual_information",
+            "weight": "neutral"
+          },
+          {
+            "observation": "Error independence is poor in both directions (p=0.000), indicating residuals are not independent of inputs. This points to model misspecification or possible confounding, reducing overall confidence.",
+            "type": "error_independence",
+            "weight": "negative"
+          },
+          {
+            "observation": "Both variables are binary categorical with similar entropy, and there is no clear evidence of independence (association exists).",
+            "type": "variable_profile",
+            "weight": "supportive"
+          }
+        ],
         "is_correct": false,
         "full_response": {
-          "causal_direction_judgment": "Unclear",
-          "confidence_assessment": "medium",
-          "inference_chain": {
-            "key_observations": [
-              {
-                "observation": "Both models show low classification accuracy and low conditional entropy, suggesting that the relationship between A and B is complex and not straightforward."
-              },
-              {
-                "observation": "Error independence is low for both models, indicating that the models are misspecified. This could be due to a non-linear relationship or the presence of confounding variables."
-              },
-              {
-                "observation": "The similar predictive power in both directions (similar conditional entropy) does not provide a clear directionality cue."
-              },
-              {
-                "observation": "There is no clear evidence of non-Gaussianity or heteroscedasticity that would suggest a particular directionality."
-              },
-              {
-                "observation": "The low classification accuracy and error independence could be due to the presence of a common confounding variable, suggesting a 'A<-Z->B' causal structure."
-              }
-            ],
-            "contradictions_or_uncertainties": [
-              {
-                "contradiction": "Both models show similar predictive power, which does not allow us to determine the directionality."
-              },
-              {
-                "contradiction": "The low classification accuracy and error independence could be due to a variety of reasons, not necessarily indicating a confounding variable."
-              }
-            ],
-            "final_judgment": "Given the lack of clear directionality cues and the presence of potential confounding variables, the most likely causal structure is unclear. The evidence is not strong enough to determine a clear directionality or to rule out the presence of a confounding variable."
-          }
+          "causal_direction": "B->A",
+          "confidence": "medium",
+          "reasoning_chain": [
+            {
+              "observation": "Conditional entropy is lower for B->A (0.755) compared to A->B (0.797), a relative difference of ~5.3%. This is a weak-to-moderate signal favoring B->A as the causal direction.",
+              "type": "conditional_entropy",
+              "weight": "moderate"
+            },
+            {
+              "observation": "Classification accuracy is higher for B->A (0.686) than A->B (0.644), reinforcing the notion that B better predicts A.",
+              "type": "accuracy",
+              "weight": "supportive"
+            },
+            {
+              "observation": "Mutual information is identical in both directions (0.099), indicating symmetric association and providing no directional information.",
+              "type": "mutual_information",
+              "weight": "neutral"
+            },
+            {
+              "observation": "Error independence is poor in both directions (p=0.000), indicating residuals are not independent of inputs. This points to model misspecification or possible confounding, reducing overall confidence.",
+              "type": "error_independence",
+              "weight": "negative"
+            },
+            {
+              "observation": "Both variables are binary categorical with similar entropy, and there is no clear evidence of independence (association exists).",
+              "type": "variable_profile",
+              "weight": "supportive"
+            }
+          ],
+          "uncertainties_or_contradictions": [
+            "Error independence is equally poor in both directions, which weakens the strength of the directional inference and could indicate hidden confounding or model misspecification.",
+            "The conditional entropy difference is just above the threshold for meaningful difference (~5.3%), so the signal is not strong."
+          ],
+          "final_judgement_basis": "Despite the lack of strong evidence from error independence, the consistent and moderately better conditional entropy and classification accuracy for B->A provide the best available support for this direction. The signal is not strong but is the best supported by the data. Thus, B is most likely the cause of A, with medium confidence."
         }
       },
       {
         "network": "sprinkler",
         "pair": "Rain->Wet_Grass",
         "ground_truth": "A->B",
-        "prediction": "Unclear",
-        "confidence": "unknown",
-        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=1.00\nVariable B: Discrete with 2 unique values. Entropy=0.91\nMarginal Entropy: Both variables have similar entropy levels.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.744\n- Conditional Entropy: 0.692 (Lower is better predictability)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.744\n- Conditional Entropy: 0.782 (Lower is better predictability)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n### Comparison\nBoth directions have similar predictive power (conditional entropy).",
-        "reasoning": "",
-        "is_correct": false,
+        "prediction": "A->B",
+        "confidence": "medium",
+        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=1.00\nVariable B: Discrete with 2 unique values. Entropy=0.94\nMarginal Entropy: Both variables have similar entropy levels.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.776\n- Conditional Entropy: 0.684 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.177 (Higher = Stronger association)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.776\n- Conditional Entropy: 0.744 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.177 (Higher = Stronger association)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n### Comparative Analysis (Objective)\n- **Predictive Determinism (Conditional Entropy)**: A->B: 0.6836 vs B->A: 0.7440.\n  -> Direction A->B shows **slightly lower** conditional entropy (relative difference ~9%), indicating moderately better predictability.\n\n- **Error Independence Test**: A->B p-value: 0.0000 vs B->A p-value: 0.0000.\n  -> Interpretation: p-value > 0.05 suggests errors are independent of input (good model fit).\n  -> Both directions fail the independence test. The relationship may be more complex or confounded.\n\n- **Mutual Information**: A->B: 0.1772, B->A: 0.1772 (Average: 0.1772).\n  -> Note: MI(X,Y) should theoretically be symmetric. Asymmetry here reflects directional prediction strength in the discrete context.",
+        "reasoning": [
+          "1. Conditional Entropy: Predicting B from A (A->B) yields a conditional entropy of 0.684, which is lower than predicting A from B (B->A) at 0.744. The relative difference is approximately 8.1%, falling into the 'moderate signal' range for discrete variables, suggesting A->B is a better predictive direction.",
+          "2. Mutual Information: Both directions have identical mutual information (0.177), indicating symmetric association strength. This does not favor either direction, but also does not contradict the conditional entropy difference.",
+          "3. Error Independence: Both causal directions fail the error independence test (p-value=0.000 in both), indicating that in both cases, prediction errors are dependent on the input variable. This suggests model misspecification or the presence of unmodeled confounding, which weakens the strength of any directional inference.",
+          "4. Marginal Entropy: Both variables have similar entropy (A: 1.00, B: 0.94), indicating neither variable is trivially more informative or deterministic.",
+          "5. Other Considerations: No evidence of statistical independence (mutual information is nonzero), so A_|_B is ruled out. Both directions have similar, moderate classification accuracy (0.776), so model fit does not strongly differentiate the directions.",
+          "6. Ambiguity & Limitations: The lack of error independence and only moderate difference in conditional entropy reduce confidence. There could be an unobserved confounder (A<-Z->B), but mutual information is not extremely high and both directions are similarly misspecified, so confounding is possible but not strongly evidenced.",
+          "Final Decision: The only moderately differentiating evidence is conditional entropy, which favors A->B. There is no strong evidence for confounding or independence. Therefore, the most likely (but not certain) causal direction is A->B with medium confidence."
+        ],
+        "is_correct": true,
         "full_response": {
-          "causal_direction_judgment": "Unclear",
-          "confidence_assessment": "medium",
-          "inference_chain": {
-            "key_observations": [
-              {
-                "observation": "Both models have similar predictive power (conditional entropy)."
-              },
-              {
-                "observation": "Both models show low error independence, suggesting model misspecification."
-              },
-              {
-                "observation": "No significant difference in conditional entropy between the two directions."
-              },
-              {
-                "observation": "No clear evidence of non-Gaussianity or heteroscedasticity that would indicate a specific direction."
-              }
-            ],
-            "contradictions_or_uncertainties": [
-              {
-                "contradiction": "Similar predictive power in both directions does not favor one direction over the other."
-              },
-              {
-                "contradiction": "Low error independence in both directions does not provide a clear direction of causality."
-              }
-            ],
-            "final_judgment": "The evidence is inconclusive due to the lack of a clear preference in predictive power and error independence between the two directions. Without additional information or a more complex model that can capture the true non-linear relationship, it is not possible to determine the causal direction with certainty."
-          }
+          "causal_direction": "A->B",
+          "confidence": "medium",
+          "reasoning_chain": [
+            "1. Conditional Entropy: Predicting B from A (A->B) yields a conditional entropy of 0.684, which is lower than predicting A from B (B->A) at 0.744. The relative difference is approximately 8.1%, falling into the 'moderate signal' range for discrete variables, suggesting A->B is a better predictive direction.",
+            "2. Mutual Information: Both directions have identical mutual information (0.177), indicating symmetric association strength. This does not favor either direction, but also does not contradict the conditional entropy difference.",
+            "3. Error Independence: Both causal directions fail the error independence test (p-value=0.000 in both), indicating that in both cases, prediction errors are dependent on the input variable. This suggests model misspecification or the presence of unmodeled confounding, which weakens the strength of any directional inference.",
+            "4. Marginal Entropy: Both variables have similar entropy (A: 1.00, B: 0.94), indicating neither variable is trivially more informative or deterministic.",
+            "5. Other Considerations: No evidence of statistical independence (mutual information is nonzero), so A_|_B is ruled out. Both directions have similar, moderate classification accuracy (0.776), so model fit does not strongly differentiate the directions.",
+            "6. Ambiguity & Limitations: The lack of error independence and only moderate difference in conditional entropy reduce confidence. There could be an unobserved confounder (A<-Z->B), but mutual information is not extremely high and both directions are similarly misspecified, so confounding is possible but not strongly evidenced.",
+            "Final Decision: The only moderately differentiating evidence is conditional entropy, which favors A->B. There is no strong evidence for confounding or independence. Therefore, the most likely (but not certain) causal direction is A->B with medium confidence."
+          ]
         }
       }
     ]
   },
   {
     "network": "asia",
-    "accuracy": 0.8,
+    "accuracy": 0.0,
     "details": [
+      {
+        "network": "asia",
+        "pair": "bronc->dysp",
+        "ground_truth": "A->B",
+        "prediction": "B->A",
+        "confidence": "high",
+        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=1.00\nVariable B: Discrete with 2 unique values. Entropy=0.99\nMarginal Entropy: Both variables have similar entropy levels.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.822\n- Conditional Entropy: 0.669 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.223 (Higher = Stronger association)\n- Error Independence: **Low** (p-value=0.003). Prediction errors depend on the input, suggesting model misspecification.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.822\n- Conditional Entropy: 0.675 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.223 (Higher = Stronger association)\n- Error Independence: **High** (p-value=0.675). Prediction errors are independent of the input, suggesting a correct causal model.\n\n### Comparative Analysis (Objective)\n- **Predictive Determinism (Conditional Entropy)**: A->B: 0.6690 vs B->A: 0.6755.\n  -> The conditional entropies are nearly identical (relative difference < 5%). Both directions have similar predictive power.\n\n- **Error Independence Test**: A->B p-value: 0.0031 vs B->A p-value: 0.6746.\n  -> Interpretation: p-value > 0.05 suggests errors are independent of input (good model fit).\n  -> Direction B->A passes (p=0.6746), while A->B fails (p=0.0031). This asymmetry is a notable signal.\n\n- **Mutual Information**: A->B: 0.2231, B->A: 0.2231 (Average: 0.2231).\n  -> Note: MI(X,Y) should theoretically be symmetric. Asymmetry here reflects directional prediction strength in the discrete context.",
+        "reasoning": [
+          {
+            "observation": "Error Independence Test",
+            "details": "B->A: p-value=0.6746 (>0.05) indicates prediction errors are independent of input, suggesting the model fits the true causal direction. A->B: p-value=0.0031 (<0.05) indicates prediction errors depend on input, suggesting model misspecification.",
+            "priority": "Level 1 - Gold Standard",
+            "relative_difference": "Very strong asymmetry (B->A passes, A->B fails)."
+          },
+          {
+            "observation": "Conditional Entropy",
+            "details": "A->B: 0.669, B->A: 0.675. Relative difference is less than 1% (negligible), so predictive determinism does not offer strong evidence for either direction.",
+            "priority": "Level 2 - Auxiliary Evidence",
+            "relative_difference": "<5%, not decisive."
+          },
+          {
+            "observation": "Mutual Information",
+            "details": "Mutual Information is identical in both directions (0.223), as expected for discrete variables; no directional information.",
+            "priority": "Level 3 - Supporting Clue"
+          },
+          {
+            "observation": "Distribution Characteristics",
+            "details": "Both variables are binary, with similar entropy. No evidence of non-Gaussianity or heteroscedasticity reported; thus, not informative for direction."
+          }
+        ],
+        "is_correct": false,
+        "full_response": {
+          "causal_direction": "B->A",
+          "confidence": "high",
+          "reasoning_chain": [
+            {
+              "observation": "Error Independence Test",
+              "details": "B->A: p-value=0.6746 (>0.05) indicates prediction errors are independent of input, suggesting the model fits the true causal direction. A->B: p-value=0.0031 (<0.05) indicates prediction errors depend on input, suggesting model misspecification.",
+              "priority": "Level 1 - Gold Standard",
+              "relative_difference": "Very strong asymmetry (B->A passes, A->B fails)."
+            },
+            {
+              "observation": "Conditional Entropy",
+              "details": "A->B: 0.669, B->A: 0.675. Relative difference is less than 1% (negligible), so predictive determinism does not offer strong evidence for either direction.",
+              "priority": "Level 2 - Auxiliary Evidence",
+              "relative_difference": "<5%, not decisive."
+            },
+            {
+              "observation": "Mutual Information",
+              "details": "Mutual Information is identical in both directions (0.223), as expected for discrete variables; no directional information.",
+              "priority": "Level 3 - Supporting Clue"
+            },
+            {
+              "observation": "Distribution Characteristics",
+              "details": "Both variables are binary, with similar entropy. No evidence of non-Gaussianity or heteroscedasticity reported; thus, not informative for direction."
+            }
+          ],
+          "contradictions_or_uncertainties": [
+            {
+              "note": "Conditional entropy values are nearly identical, offering no directional signal.",
+              "impact": "Minimal; does not contradict error independence finding."
+            }
+          ],
+          "final_decision_basis": "The error independence test provides a strong and asymmetric signal favoring B->A as the correct causal direction. The absence of meaningful difference in conditional entropy or mutual information does not undermine this inference. Thus, the evidence is strong and consistent for B->A.",
+          "summary": "Based on the decisive error independence result, the most likely causal direction is B->A (B causes A) with high confidence."
+        }
+      },
+      {
+        "network": "asia",
+        "pair": "lung->either",
+        "ground_truth": "A->B",
+        "prediction": "Unclear",
+        "confidence": "unknown",
+        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=0.30\nVariable B: Discrete with 2 unique values. Entropy=0.34\nMarginal Entropy: Both variables have similar entropy levels.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.990\n- Conditional Entropy: 0.080 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.180 (Higher = Stronger association)\n- Error Independence: **High** (p-value=1.000). Prediction errors are independent of the input, suggesting a correct causal model.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.990\n- Conditional Entropy: 0.040 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.180 (Higher = Stronger association)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n### Comparative Analysis (Objective)\n- **Predictive Determinism (Conditional Entropy)**: A->B: 0.0800 vs B->A: 0.0398.\n  -> Direction B->A has **notably lower** conditional entropy (relative difference ~101%), meaning it reduces uncertainty more effectively.\n\n- **Error Independence Test**: A->B p-value: 1.0000 vs B->A p-value: 0.0000.\n  -> Interpretation: p-value > 0.05 suggests errors are independent of input (good model fit).\n  -> Direction A->B passes (p=1.0000), while B->A fails (p=0.0000). This asymmetry is a notable signal.\n\n- **Mutual Information**: A->B: 0.1797, B->A: 0.1797 (Average: 0.1797).\n  -> Note: MI(X,Y) should theoretically be symmetric. Asymmetry here reflects directional prediction strength in the discrete context.",
+        "reasoning": "",
+        "is_correct": false,
+        "full_response": {
+          "因果方向判断": "A->B",
+          "置信度评估": "high",
+          "推理链条": [
+            "1. 残差独立性（Error Independence）是因果推理的黄金标准。A->B 方向的残差独立性检验 p=1.0000（极高），而 B->A 方向 p=0.0000（极低）。二者相对差异极大（>99%），远超 50% 阈值，表明 A->B 方向极大程度地符合因果建模的独立性假设。",
+            "2. 条件熵（Conditional Entropy）：A->B = 0.0800，B->A = 0.0398，B->A 方向的条件熵更低（相对差异约 101%），在通常情况下说明 B->A 能更好地预测，但是残差独立性为更高优先级证据。",
+            "3. Mutual Information 在两个方向完全一致（0.1797），表明无论方向，两变量之间的信息量对称，不倾向于某一方向。",
+            "4. 两变量均为二元离散变量、熵接近且正相关，排除了独立（A_|_B）和统计混杂（A<-Z->B）的直接证据，因为没有表现出双向高残差独立性或极强对称相关性。",
+            "5. 虽然条件熵支持 B->A，残差独立性强烈支持 A->B，且差异极大。依据因果推理优先级，残差独立性优先于条件熵，因此应采纳残差独立性更优的 A->B。",
+            "6. 没有发现矛盾信号，残差独立性和熵的方向性一致性良好，证据强烈且一致。"
+          ],
+          "最终判断依据": "残差独立性是因果方向判断的黄金标准。A->B 方向残差独立性远优于 B->A，且差异极大。虽然 B->A 的条件熵略低，但在统计因果推理中，独立性证据优先级更高。因此，最有力的证据支持 A 是 B 的原因，置信度高。"
+        }
+      },
+      {
+        "network": "asia",
+        "pair": "smoke->bronc",
+        "ground_truth": "A->B",
+        "prediction": "Unclear",
+        "confidence": "low",
+        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=1.00\nVariable B: Discrete with 2 unique values. Entropy=1.00\nMarginal Entropy: Both variables have similar entropy levels.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.615\n- Conditional Entropy: 0.959 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.026 (Higher = Stronger association)\n- Error Independence: **High** (p-value=0.091). Prediction errors are independent of the input, suggesting a correct causal model.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.615\n- Conditional Entropy: 0.961 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.026 (Higher = Stronger association)\n- Error Independence: **High** (p-value=0.740). Prediction errors are independent of the input, suggesting a correct causal model.\n\n### Comparative Analysis (Objective)\n- **Predictive Determinism (Conditional Entropy)**: A->B: 0.9593 vs B->A: 0.9614.\n  -> The conditional entropies are nearly identical (relative difference < 5%). Both directions have similar predictive power.\n\n- **Error Independence Test**: A->B p-value: 0.0909 vs B->A p-value: 0.7398.\n  -> Interpretation: p-value > 0.05 suggests errors are independent of input (good model fit).\n  -> Both directions pass the independence test. This metric alone cannot distinguish the causal direction.\n\n- **Mutual Information**: A->B: 0.0264, B->A: 0.0264 (Average: 0.0264).\n  -> Note: MI(X,Y) should theoretically be symmetric. Asymmetry here reflects directional prediction strength in the discrete context.",
+        "reasoning": [
+          {
+            "observation": "Conditional entropy for A->B is 0.959, for B->A is 0.961 (relative difference ≈ 0.22%). This is well below the 5% threshold for meaningful signal in discrete variables, indicating nearly identical predictability in both directions."
+          },
+          {
+            "observation": "Error independence p-value for A->B is 0.091, for B->A is 0.740. Both are above the 0.05 threshold, suggesting error independence in both directions. Although B->A p-value is substantially higher, both directions technically pass the independence test. The difference in p-values is not large enough to be decisive according to the guidelines (relative difference in independence is not meaningful unless >10%)."
+          },
+          {
+            "observation": "Mutual information is symmetric (0.026) in both directions, which is expected given both variables are binary and have nearly identical entropy. No directional information here."
+          },
+          {
+            "observation": "Both variables are binary, with identical entropy (1.00), and the marginal distributions are similar. This symmetry makes it especially difficult to distinguish causality from statistical association."
+          },
+          {
+            "observation": "No evidence for mixed confounding or independence: Mutual information is nonzero (so not independent), but not strong enough to suggest strong association or confounding."
+          },
+          {
+            "uncertainty": "All major causal inference metrics (conditional entropy, error independence, mutual information) are essentially indistinguishable between directions. Relative differences are below the minimum actionable thresholds."
+          },
+          {
+            "conclusion": "Given the lack of meaningful differences and high symmetry in all statistical characteristics, the data provides insufficient evidence to confidently infer a causal direction. The situation is compatible with direct causality in either direction, confounding, or even a symmetrical system."
+          }
+        ],
+        "is_correct": false,
+        "full_response": {
+          "causal_direction": "Unclear",
+          "confidence": "low",
+          "reasoning_chain": [
+            {
+              "observation": "Conditional entropy for A->B is 0.959, for B->A is 0.961 (relative difference ≈ 0.22%). This is well below the 5% threshold for meaningful signal in discrete variables, indicating nearly identical predictability in both directions."
+            },
+            {
+              "observation": "Error independence p-value for A->B is 0.091, for B->A is 0.740. Both are above the 0.05 threshold, suggesting error independence in both directions. Although B->A p-value is substantially higher, both directions technically pass the independence test. The difference in p-values is not large enough to be decisive according to the guidelines (relative difference in independence is not meaningful unless >10%)."
+            },
+            {
+              "observation": "Mutual information is symmetric (0.026) in both directions, which is expected given both variables are binary and have nearly identical entropy. No directional information here."
+            },
+            {
+              "observation": "Both variables are binary, with identical entropy (1.00), and the marginal distributions are similar. This symmetry makes it especially difficult to distinguish causality from statistical association."
+            },
+            {
+              "observation": "No evidence for mixed confounding or independence: Mutual information is nonzero (so not independent), but not strong enough to suggest strong association or confounding."
+            },
+            {
+              "uncertainty": "All major causal inference metrics (conditional entropy, error independence, mutual information) are essentially indistinguishable between directions. Relative differences are below the minimum actionable thresholds."
+            },
+            {
+              "conclusion": "Given the lack of meaningful differences and high symmetry in all statistical characteristics, the data provides insufficient evidence to confidently infer a causal direction. The situation is compatible with direct causality in either direction, confounding, or even a symmetrical system."
+            }
+          ],
+          "final_basis": "All statistical signals are negligible or below the minimum actionable threshold. No direction is supported by sufficiently strong or consistent evidence."
+        }
+      },
+      {
+        "network": "asia",
+        "pair": "asia->tub",
+        "ground_truth": "A->B",
+        "prediction": "B->A",
+        "confidence": "medium",
+        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=0.05\nVariable B: Discrete with 2 unique values. Entropy=0.08\nMarginal Entropy: Both variables have similar entropy levels.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.990\n- Conditional Entropy: 0.081 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.000 (Higher = Stronger association)\n- Error Independence: **High** (p-value=1.000). Prediction errors are independent of the input, suggesting a correct causal model.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.995\n- Conditional Entropy: 0.045 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.000 (Higher = Stronger association)\n- Error Independence: **High** (p-value=1.000). Prediction errors are independent of the input, suggesting a correct causal model.\n\n### Comparative Analysis (Objective)\n- **Predictive Determinism (Conditional Entropy)**: A->B: 0.0807 vs B->A: 0.0453.\n  -> Direction B->A has **notably lower** conditional entropy (relative difference ~78%), meaning it reduces uncertainty more effectively.\n\n- **Error Independence Test**: A->B p-value: 1.0000 vs B->A p-value: 1.0000.\n  -> Interpretation: p-value > 0.05 suggests errors are independent of input (good model fit).\n  -> Both directions pass the independence test. This metric alone cannot distinguish the causal direction.\n\n- **Mutual Information**: A->B: 0.0001, B->A: 0.0001 (Average: 0.0001).\n  -> Note: MI(X,Y) should theoretically be symmetric. Asymmetry here reflects directional prediction strength in the discrete context.",
+        "reasoning": [
+          {
+            "observation": "Both variables are binary and have very low entropy (A: 0.05, B: 0.08), suggesting both are nearly constant but not perfectly so, possibly with a strong class imbalance.",
+            "importance": "Context"
+          },
+          {
+            "observation": "Both causal directions (A->B and B->A) yield extremely high classification accuracy (0.990 vs 0.995) and nearly perfect error independence (p-value=1.000 in both cases), indicating that models in both directions are well-fitted and residuals are independent.",
+            "importance": "Level 1 (Gold Standard), but non-discriminative here"
+          },
+          {
+            "observation": "Conditional entropy is lower for B->A (0.045) than for A->B (0.081), with a relative difference of approximately 44%. According to the guideline, this is a strong, meaningful signal in discrete variable settings, favoring B->A as the causal direction.",
+            "importance": "Level 2 (Strong Auxiliary Evidence)"
+          },
+          {
+            "observation": "Mutual information is reported as 0.0001 in both directions, which is extremely low and symmetric (as expected). This suggests very weak statistical dependence, but there is enough variation to achieve high classification accuracy. This paradox is explained by heavy class imbalance—correctly guessing the dominant class yields high accuracy even if variables are nearly independent.",
+            "importance": "Auxiliary"
+          },
+          {
+            "observation": "No evidence for confounding or independence: Both directions fit well, but the conditional entropy difference is notable and the accuracy is not exactly 1.0 for either, suggesting some (very weak) dependency.",
+            "importance": "Exclusion Reasoning"
+          },
+          {
+            "observation": "Although both models are extremely strong (possibly due to class imbalance), the conditional entropy difference is the only asymmetry and, per the guideline, should be respected unless all other evidence is equally strong and symmetric.",
+            "importance": "Decision"
+          }
+        ],
+        "is_correct": false,
+        "full_response": {
+          "causal_direction": "B->A",
+          "confidence": "medium",
+          "reasoning_chain": [
+            {
+              "observation": "Both variables are binary and have very low entropy (A: 0.05, B: 0.08), suggesting both are nearly constant but not perfectly so, possibly with a strong class imbalance.",
+              "importance": "Context"
+            },
+            {
+              "observation": "Both causal directions (A->B and B->A) yield extremely high classification accuracy (0.990 vs 0.995) and nearly perfect error independence (p-value=1.000 in both cases), indicating that models in both directions are well-fitted and residuals are independent.",
+              "importance": "Level 1 (Gold Standard), but non-discriminative here"
+            },
+            {
+              "observation": "Conditional entropy is lower for B->A (0.045) than for A->B (0.081), with a relative difference of approximately 44%. According to the guideline, this is a strong, meaningful signal in discrete variable settings, favoring B->A as the causal direction.",
+              "importance": "Level 2 (Strong Auxiliary Evidence)"
+            },
+            {
+              "observation": "Mutual information is reported as 0.0001 in both directions, which is extremely low and symmetric (as expected). This suggests very weak statistical dependence, but there is enough variation to achieve high classification accuracy. This paradox is explained by heavy class imbalance—correctly guessing the dominant class yields high accuracy even if variables are nearly independent.",
+              "importance": "Auxiliary"
+            },
+            {
+              "observation": "No evidence for confounding or independence: Both directions fit well, but the conditional entropy difference is notable and the accuracy is not exactly 1.0 for either, suggesting some (very weak) dependency.",
+              "importance": "Exclusion Reasoning"
+            },
+            {
+              "observation": "Although both models are extremely strong (possibly due to class imbalance), the conditional entropy difference is the only asymmetry and, per the guideline, should be respected unless all other evidence is equally strong and symmetric.",
+              "importance": "Decision"
+            }
+          ],
+          "conflicts_or_uncertainties": [
+            "Both directions yield almost perfect error independence, so residual-based tests cannot distinguish direction.",
+            "The marginal entropies are so low that the effective information content is minimal—this increases uncertainty, as the observed conditional entropy difference could be a fluke of imbalanced sampling.",
+            "High accuracy with very low mutual information is atypical; likely due to class imbalance, which means the practical impact of the causal direction may be limited.",
+            "If the relative conditional entropy difference were below 15%, I'd consider 'Unclear', but at ~44% the guideline suggests making a choice."
+          ],
+          "final_decision_basis": "The only meaningful asymmetry is in conditional entropy (0.045 vs 0.081, ~44% difference), which is strong enough per the guideline to favor B->A as the causal direction. However, because all other evidence is extremely symmetric and the effective information content is nearly zero, confidence is medium rather than high."
+        }
+      },
       {
         "network": "asia",
         "pair": "either->dysp",
         "ground_truth": "A->B",
         "prediction": "B->A",
-        "confidence": "unknown",
-        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=0.36\nVariable B: Discrete with 2 unique values. Entropy=0.99\nMarginal Entropy: Variable A is significantly 'simpler' (lower entropy) than B. In many causal structures, entropy increases from cause to effect due to noise accumulation.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.609\n- Conditional Entropy: 0.959 (Lower is better predictability)\n- Error Independence: **Low** (p-value=0.004). Prediction errors depend on the input, suggesting model misspecification.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.932\n- Conditional Entropy: 0.332 (Lower is better predictability)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n### Comparison\nDirection B->A has significantly lower conditional entropy (0.332 vs 0.959), meaning B predicts A much better than A predicts B.",
-        "reasoning": {
-          "key_observations": [
-            {
-              "observation": "Variable A has lower entropy than Variable B, suggesting that B may have more information about A than vice versa."
-            },
-            {
-              "observation": "The model with B as the cause (B->A) has a significantly higher classification accuracy (0.932) compared to the model with A as the cause (A->B) (0.609)."
-            },
-            {
-              "observation": "The conditional entropy for B->A is lower (0.332) than for A->B (0.959), indicating that B predicts A better than A predicts B."
-            },
-            {
-              "observation": "Both models show low error independence, suggesting potential model misspecification, but this does not necessarily contradict the direction of causality."
-            },
-            {
-              "observation": "The residual variance is more stable in the B->A direction, which is consistent with the presence of a stable causal relationship."
-            }
-          ],
-          "contradictions_or_uncertainties": [
-            {
-              "contradiction": "Both models show low error independence, which could suggest a more complex relationship or the presence of a confounding variable."
-            }
-          ],
-          "final_judgment": "Given the higher accuracy, lower conditional entropy, and more stable residual variance in the B->A direction, the evidence strongly supports B as the cause of A."
-        },
+        "confidence": "medium",
+        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=0.34\nVariable B: Discrete with 2 unique values. Entropy=0.99\nMarginal Entropy: Variable A is significantly 'simpler' (lower entropy) than B. In many causal structures, entropy increases from cause to effect due to noise accumulation.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.597\n- Conditional Entropy: 0.961 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.021 (Higher = Stronger association)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.937\n- Conditional Entropy: 0.309 (Lower = Better predictability)\n- Mutual Information (X,Y): 0.021 (Higher = Stronger association)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n### Comparative Analysis (Objective)\n- **Predictive Determinism (Conditional Entropy)**: A->B: 0.9610 vs B->A: 0.3093.\n  -> Direction B->A has **notably lower** conditional entropy (relative difference ~211%), meaning it reduces uncertainty more effectively.\n\n- **Error Independence Test**: A->B p-value: 0.0002 vs B->A p-value: 0.0000.\n  -> Interpretation: p-value > 0.05 suggests errors are independent of input (good model fit).\n  -> Both directions fail the independence test. The relationship may be more complex or confounded.\n\n- **Mutual Information**: A->B: 0.0208, B->A: 0.0208 (Average: 0.0208).\n  -> Note: MI(X,Y) should theoretically be symmetric. Asymmetry here reflects directional prediction strength in the discrete context.",
+        "reasoning": [
+          "1. 条件熵（Conditional Entropy）：B->A 方向的条件熵为 0.309，A->B 方向为 0.961，相对差异约为 211%。按推理准则，>15% 已属显著信号，此处极为突出，B->A 显著更可预测。",
+          "2. 拟合度（Classification Accuracy）：B->A 方向准确率 0.937，A->B 仅 0.597，B->A 明显更好。",
+          "3. 边际熵（Marginal Entropy）：A 的熵为 0.34，B 的为 0.99。因果理论上，因变量熵通常低于果变量（因变量更‘简单’），B->A 符合噪声累积模型。",
+          "4. 残差独立性（Error Independence）：两方向均未通过独立性检验（p 值均远小于 0.05），意味着无论哪个方向，预测残差都高度依赖输入，模型 misspecified，存在结构复杂性或混杂可能。因此不能仅凭残差独立性决定方向。",
+          "5. 相关性（Mutual Information）：MI 在两方向均为 0.021，表明两变量存在非常弱的统计关联，但并无方向性信息。",
+          "6. 矛盾与不确定性：残差独立性极差原本应警惕混杂或非因果，但条件熵与拟合度方向性极强，依据因果推理优先级指南，强条件熵差异在离散场景下仍可作为核心判据。",
+          "7. 结论依据：尽管模型残差独立性极差，B->A 方向在条件熵和拟合度上有压倒性优势，且边际熵结构支持此方向。根据多维信号权重，推断 B 是 A 的原因，置信度为中等（medium），因残差问题阻碍高置信度。"
+        ],
         "is_correct": false,
         "full_response": {
           "causal_direction": "B->A",
-          "confidence_level": "high",
-          "reasoning_chain": {
-            "key_observations": [
-              {
-                "observation": "Variable A has lower entropy than Variable B, suggesting that B may have more information about A than vice versa."
-              },
-              {
-                "observation": "The model with B as the cause (B->A) has a significantly higher classification accuracy (0.932) compared to the model with A as the cause (A->B) (0.609)."
-              },
-              {
-                "observation": "The conditional entropy for B->A is lower (0.332) than for A->B (0.959), indicating that B predicts A better than A predicts B."
-              },
-              {
-                "observation": "Both models show low error independence, suggesting potential model misspecification, but this does not necessarily contradict the direction of causality."
-              },
-              {
-                "observation": "The residual variance is more stable in the B->A direction, which is consistent with the presence of a stable causal relationship."
-              }
-            ],
-            "contradictions_or_uncertainties": [
-              {
-                "contradiction": "Both models show low error independence, which could suggest a more complex relationship or the presence of a confounding variable."
-              }
-            ],
-            "final_judgment": "Given the higher accuracy, lower conditional entropy, and more stable residual variance in the B->A direction, the evidence strongly supports B as the cause of A."
-          }
-        }
-      },
-      {
-        "network": "asia",
-        "pair": "bronc->dysp",
-        "ground_truth": "A->B",
-        "prediction": "A->B",
-        "confidence": "high",
-        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=0.98\nVariable B: Discrete with 2 unique values. Entropy=0.99\nMarginal Entropy: Both variables have similar entropy levels.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.842\n- Conditional Entropy: 0.627 (Lower is better predictability)\n- Error Independence: **High** (p-value=0.101). Prediction errors are independent of the input, suggesting a correct causal model.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.842\n- Conditional Entropy: 0.626 (Lower is better predictability)\n- Error Independence: **Low** (p-value=0.026). Prediction errors depend on the input, suggesting model misspecification.\n\n### Comparison\nBoth directions have similar predictive power (conditional entropy).\nCrucially, A->B model errors are independent of A, while B->A errors depend on B. This asymmetry supports **A causes B**.",
-        "reasoning": {
-          "key_observations": [
-            {
-              "observation": "Both models have similar predictive power, suggesting that the causal relationship, if any, is not trivially weak."
-            },
-            {
-              "observation": "The error independence test shows that the errors in the A->B model are independent of the input, while those in the B->A model are not. This asymmetry is a strong indicator of a causal relationship from A to B."
-            },
-            {
-              "observation": "The conditional entropy values are very close, indicating that both models are capturing a significant portion of the relationship between the variables."
-            },
-            {
-              "observation": "The low p-value for the B->A error independence suggests that the model is misspecified, which is not the case for the A->B model."
-            }
-          ],
-          "contradictions_or_uncertainties": [
-            {
-              "contradiction": "There are no significant contradictions or uncertainties in the data presented that would lead to a different conclusion."
-            }
-          ],
-          "final_judgment": "The evidence strongly supports a causal relationship from A to B, with high confidence."
-        },
-        "is_correct": true,
-        "full_response": {
-          "causal_direction": "A->B",
-          "confidence": "high",
-          "reasoning_chain": {
-            "key_observations": [
-              {
-                "observation": "Both models have similar predictive power, suggesting that the causal relationship, if any, is not trivially weak."
-              },
-              {
-                "observation": "The error independence test shows that the errors in the A->B model are independent of the input, while those in the B->A model are not. This asymmetry is a strong indicator of a causal relationship from A to B."
-              },
-              {
-                "observation": "The conditional entropy values are very close, indicating that both models are capturing a significant portion of the relationship between the variables."
-              },
-              {
-                "observation": "The low p-value for the B->A error independence suggests that the model is misspecified, which is not the case for the A->B model."
-              }
-            ],
-            "contradictions_or_uncertainties": [
-              {
-                "contradiction": "There are no significant contradictions or uncertainties in the data presented that would lead to a different conclusion."
-              }
-            ],
-            "final_judgment": "The evidence strongly supports a causal relationship from A to B, with high confidence."
-          }
-        }
-      },
-      {
-        "network": "asia",
-        "pair": "smoke->lung",
-        "ground_truth": "A->B",
-        "prediction": "A->B",
-        "confidence": "high",
-        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=1.00\nVariable B: Discrete with 2 unique values. Entropy=0.33\nMarginal Entropy: Variable B is significantly 'simpler' (lower entropy) than A. In many causal structures, entropy increases from cause to effect due to noise accumulation.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.940\n- Conditional Entropy: 0.294 (Lower is better predictability)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.544\n- Conditional Entropy: 0.967 (Lower is better predictability)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n### Comparison\nDirection A->B has significantly lower conditional entropy (0.294 vs 0.967), meaning A predicts B much better than B predicts A.",
-        "reasoning": {
-          "key_observations": [
-            {
-              "observation": "Variable B has significantly lower entropy than Variable A, suggesting that A is more complex or has more information content."
-            },
-            {
-              "observation": "The logistic classifier for the hypothesis A->B has a higher classification accuracy (0.940) compared to B->A (0.544)."
-            },
-            {
-              "observation": "The conditional entropy for A->B is lower (0.294) than for B->A (0.967), indicating that A has better predictability over B."
-            },
-            {
-              "observation": "Both models show low error independence, suggesting that the models might be misspecified. However, this is consistent with the observed higher predictability of A over B."
-            },
-            {
-              "observation": "The residuals for the A->B direction are less skewed compared to the B->A direction, which is consistent with the A->B causal mechanism."
-            }
-          ],
-          "contradictions_or_uncertainties": [
-            {
-              "contradiction": "Both models show low error independence, which could suggest a third variable or a misspecified model."
-            }
-          ],
-          "final_judgment": "The evidence strongly suggests that A is the cause of B. The higher entropy of A, the better classification accuracy and conditional entropy of A over B, and the less skewed residuals of A->B compared to B->A all point towards A being the cause. The low error independence in both models does not contradict the causal direction as it could be due to a third variable or a misspecified model, but it does not negate the strong evidence for A->B."
-        },
-        "is_correct": true,
-        "full_response": {
-          "causal_direction": "A->B",
-          "confidence": "high",
-          "reasoning_chain": {
-            "key_observations": [
-              {
-                "observation": "Variable B has significantly lower entropy than Variable A, suggesting that A is more complex or has more information content."
-              },
-              {
-                "observation": "The logistic classifier for the hypothesis A->B has a higher classification accuracy (0.940) compared to B->A (0.544)."
-              },
-              {
-                "observation": "The conditional entropy for A->B is lower (0.294) than for B->A (0.967), indicating that A has better predictability over B."
-              },
-              {
-                "observation": "Both models show low error independence, suggesting that the models might be misspecified. However, this is consistent with the observed higher predictability of A over B."
-              },
-              {
-                "observation": "The residuals for the A->B direction are less skewed compared to the B->A direction, which is consistent with the A->B causal mechanism."
-              }
-            ],
-            "contradictions_or_uncertainties": [
-              {
-                "contradiction": "Both models show low error independence, which could suggest a third variable or a misspecified model."
-              }
-            ],
-            "final_judgment": "The evidence strongly suggests that A is the cause of B. The higher entropy of A, the better classification accuracy and conditional entropy of A over B, and the less skewed residuals of A->B compared to B->A all point towards A being the cause. The low error independence in both models does not contradict the causal direction as it could be due to a third variable or a misspecified model, but it does not negate the strong evidence for A->B."
-          }
-        }
-      },
-      {
-        "network": "asia",
-        "pair": "tub->either",
-        "ground_truth": "A->B",
-        "prediction": "A->B",
-        "confidence": "high",
-        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=0.07\nVariable B: Discrete with 2 unique values. Entropy=0.36\nMarginal Entropy: Variable A is significantly 'simpler' (lower entropy) than B. In many causal structures, entropy increases from cause to effect due to noise accumulation.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.941\n- Conditional Entropy: 0.323 (Lower is better predictability)\n- Error Independence: **High** (p-value=1.000). Prediction errors are independent of the input, suggesting a correct causal model.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.991\n- Conditional Entropy: 0.038 (Lower is better predictability)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n### Comparison\nDirection B->A has significantly lower conditional entropy (0.038 vs 0.323), meaning B predicts A much better than A predicts B.\nCrucially, A->B model errors are independent of A, while B->A errors depend on B. This asymmetry supports **A causes B**.",
-        "reasoning": "",
-        "is_correct": true,
-        "full_response": {
-          "causal_direction": "A->B",
-          "confidence": "high",
-          "inference_chain": {
-            "key_observations": [
-              "Variable A has significantly lower entropy than Variable B, suggesting it is less complex and possibly the cause.",
-              "The A->B model achieves high classification accuracy and high error independence, indicating a correct causal model.",
-              "The B->A model has low conditional entropy, suggesting B can predict A well, but low error independence indicates model misspecification.",
-              "The B->A model's error dependence on B is a strong signal against B being the cause of A."
-            ],
-            "contradictions_or_uncertainties": [
-              "The high conditional entropy in the B->A model does not necessarily contradict the A->B causality, as it could be due to model misspecification or other factors."
-            ],
-            "final_judgment": "The strong evidence of high classification accuracy, error independence in the A->B model, and the low error independence in the B->A model, combined with the lower entropy of A, strongly suggests that A is the cause of B."
-          }
-        }
-      },
-      {
-        "network": "asia",
-        "pair": "either->xray",
-        "ground_truth": "A->B",
-        "prediction": "A->B",
-        "confidence": "unknown",
-        "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Discrete with 2 unique values. Entropy=0.36\nVariable B: Discrete with 2 unique values. Entropy=0.52\nMarginal Entropy: Variable A is significantly 'simpler' (lower entropy) than B. In many causal structures, entropy increases from cause to effect due to noise accumulation.\nVariables appear to be categorical or ordinal.\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.945\n- Conditional Entropy: 0.307 (Lower is better predictability)\n- Error Independence: **High** (p-value=0.929). Prediction errors are independent of the input, suggesting a correct causal model.\n\n**Hypothesis: B -> A**\n- Model Type: logistic_classifier\n- Classification Accuracy: 0.945\n- Conditional Entropy: 0.145 (Lower is better predictability)\n- Error Independence: **Low** (p-value=0.000). Prediction errors depend on the input, suggesting model misspecification.\n\n### Comparison\nDirection B->A has significantly lower conditional entropy (0.145 vs 0.307), meaning B predicts A much better than A predicts B.\nCrucially, A->B model errors are independent of A, while B->A errors depend on B. This asymmetry supports **A causes B**.",
-        "reasoning": "",
-        "is_correct": true,
-        "full_response": {
-          "causal_direction_judgment": "A->B",
-          "confidence_assessment": "high",
-          "inference_chain": {
-            "key_observations": [
-              {
-                "observation": "Variable A has lower entropy than Variable B, suggesting it is less complex or less variable."
-              },
-              {
-                "observation": "The A->B model has higher classification accuracy and lower conditional entropy, indicating that A can predict B well."
-              },
-              {
-                "observation": "The B->A model has lower conditional entropy but low error independence, suggesting that B cannot predict A well and that the model is misspecified."
-              },
-              {
-                "observation": "The A->B model errors are independent of A, while the B->A errors depend on B, indicating that A is the cause of B."
-              }
-            ],
-            "contradictions_or_uncertainties": [
-              {
-                "contradiction": "Both models have similar classification accuracy, which might suggest a bidirectional relationship."
-              },
-              {
-                "uncertainty": "The similar accuracy in both models does not necessarily imply a bidirectional causal relationship, as the models might be capturing different aspects of the data."
-              }
-            ],
-            "final_judgment_based_on": "The combination of lower conditional entropy and higher error independence in the A->B model, along with the misspecification of the B->A model, strongly suggests that A is the cause of B."
-          }
+          "confidence": "medium",
+          "reasoning_chain": [
+            "1. 条件熵（Conditional Entropy）：B->A 方向的条件熵为 0.309，A->B 方向为 0.961，相对差异约为 211%。按推理准则，>15% 已属显著信号，此处极为突出，B->A 显著更可预测。",
+            "2. 拟合度（Classification Accuracy）：B->A 方向准确率 0.937，A->B 仅 0.597，B->A 明显更好。",
+            "3. 边际熵（Marginal Entropy）：A 的熵为 0.34，B 的为 0.99。因果理论上，因变量熵通常低于果变量（因变量更‘简单’），B->A 符合噪声累积模型。",
+            "4. 残差独立性（Error Independence）：两方向均未通过独立性检验（p 值均远小于 0.05），意味着无论哪个方向，预测残差都高度依赖输入，模型 misspecified，存在结构复杂性或混杂可能。因此不能仅凭残差独立性决定方向。",
+            "5. 相关性（Mutual Information）：MI 在两方向均为 0.021，表明两变量存在非常弱的统计关联，但并无方向性信息。",
+            "6. 矛盾与不确定性：残差独立性极差原本应警惕混杂或非因果，但条件熵与拟合度方向性极强，依据因果推理优先级指南，强条件熵差异在离散场景下仍可作为核心判据。",
+            "7. 结论依据：尽管模型残差独立性极差，B->A 方向在条件熵和拟合度上有压倒性优势，且边际熵结构支持此方向。根据多维信号权重，推断 B 是 A 的原因，置信度为中等（medium），因残差问题阻碍高置信度。"
+          ]
         }
       }
     ]

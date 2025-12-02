@@ -1,3 +1,4 @@
+import time
 from typing import Dict, List, Any, Optional
 from .base import BaseLLM
 from .providers.openai_provider import OpenAILLM
@@ -81,12 +82,20 @@ class LLMManager:
         if not model:
             raise ValueError(f"Model '{model_name}' not found. Available models: {self.list_models()}")
 
+        # 调用 API
         if mode == 'text':
-            return model.generate(prompt, **kwargs)
+            result = model.generate(prompt, **kwargs)
         elif mode == 'image':
-            return model.generate_image(prompt, **kwargs)
+            result = model.generate_image(prompt, **kwargs)
         else:
             raise ValueError("Mode must be 'text' or 'image'")
+        
+        # 添加延迟避免 API 速率限制
+        api_delay = self.config.get('api_delay', 0)
+        if api_delay > 0:
+            time.sleep(api_delay)
+        
+        return result
 
     def call_structured(self, model_name: str, prompt: str, response_format: Any, **kwargs) -> Any:
         """
@@ -96,7 +105,15 @@ class LLMManager:
         if not model:
             raise ValueError(f"Model '{model_name}' not found. Available models: {self.list_models()}")
         
-        return model.generate_structured(prompt, response_format, **kwargs)
+        # 调用 API
+        result = model.generate_structured(prompt, response_format, **kwargs)
+        
+        # 添加延迟避免 API 速率限制
+        api_delay = self.config.get('api_delay', 0)
+        if api_delay > 0:
+            time.sleep(api_delay)
+        
+        return result
 
 # Global instance
 llm_manager = LLMManager()

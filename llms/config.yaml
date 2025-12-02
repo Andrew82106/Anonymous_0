@@ -4,6 +4,9 @@
 # 默认使用的模型
 used_model: "gpt-4-turbo"
 
+# API 调用延迟（秒），用于避免速率限制
+api_delay: 1.5
+
 models:
   # 文本模型列表
   text_models:

@@ -372,27 +372,47 @@ class StatTranslator:
             lines.append(describe_discrete("A -> B", stats['dir_ab']))
             lines.append(describe_discrete("B -> A", stats['dir_ba']))
             
-            lines.append("\n### Comparison")
+            lines.append("\n### Comparative Analysis (Objective)")
             acc_ab = stats['dir_ab']['accuracy']
             acc_ba = stats['dir_ba']['accuracy']
             ent_ab = stats['dir_ab']['conditional_entropy']
             ent_ba = stats['dir_ba']['conditional_entropy']
             p_ab = stats['dir_ab']['error_independence_p']
             p_ba = stats['dir_ba']['error_independence_p']
+            mi_ab = stats['dir_ab']['mutual_information']
+            mi_ba = stats['dir_ba']['mutual_information']
             
-            # Entropy Comparison (Lower is better)
-            if ent_ab < ent_ba - 0.1:
-                lines.append(f"Direction A->B has significantly lower conditional entropy ({ent_ab:.3f} vs {ent_ba:.3f}), meaning A predicts B much better than B predicts A.")
-            elif ent_ba < ent_ab - 0.1:
-                lines.append(f"Direction B->A has significantly lower conditional entropy ({ent_ba:.3f} vs {ent_ab:.3f}), meaning B predicts A much better than A predicts B.")
+            # 1. Predictive Determinism (Conditional Entropy - Lower is better)
+            ent_diff = ent_ba - ent_ab  # Positive means A->B has lower entropy (better)
+            ent_rel_diff = abs(ent_diff) / (min(ent_ab, ent_ba) + 1e-9)
+            
+            lines.append(f"- **Predictive Determinism (Conditional Entropy)**: A->B: {ent_ab:.4f} vs B->A: {ent_ba:.4f}.")
+            if ent_rel_diff < 0.05:  # < 5% difference
+                lines.append(f"  -> The conditional entropies are nearly identical (relative difference < 5%). Both directions have similar predictive power.")
+            elif ent_rel_diff < 0.15:  # 5-15% difference
+                better_dir = "A->B" if ent_diff > 0 else "B->A"
+                lines.append(f"  -> Direction {better_dir} shows **slightly lower** conditional entropy (relative difference ~{ent_rel_diff*100:.0f}%), indicating moderately better predictability.")
+            else:  # > 15% difference
+                better_dir = "A->B" if ent_diff > 0 else "B->A"
+                lines.append(f"  -> Direction {better_dir} has **notably lower** conditional entropy (relative difference ~{ent_rel_diff*100:.0f}%), meaning it reduces uncertainty more effectively.")
+            
+            # 2. Error Independence (Higher p-value is better)
+            lines.append(f"\n- **Error Independence Test**: A->B p-value: {p_ab:.4f} vs B->A p-value: {p_ba:.4f}.")
+            lines.append(f"  -> Interpretation: p-value > 0.05 suggests errors are independent of input (good model fit).")
+            
+            if p_ab > 0.05 and p_ba > 0.05:
+                lines.append(f"  -> Both directions pass the independence test. This metric alone cannot distinguish the causal direction.")
+            elif p_ab < 0.05 and p_ba < 0.05:
+                lines.append(f"  -> Both directions fail the independence test. The relationship may be more complex or confounded.")
             else:
-                lines.append("Both directions have similar predictive power (conditional entropy).")
-                
-            # Independence Comparison (Higher p-value is better)
-            if p_ab > 0.05 and p_ba < 0.05:
-                lines.append("Crucially, A->B model errors are independent of A, while B->A errors depend on B. This asymmetry supports **A causes B**.")
-            elif p_ba > 0.05 and p_ab < 0.05:
-                lines.append("Crucially, B->A model errors are independent of B, while A->B errors depend on A. This asymmetry supports **B causes A**.")
+                pass_dir = "A->B" if p_ab > 0.05 else "B->A"
+                fail_dir = "B->A" if p_ab > 0.05 else "A->B"
+                lines.append(f"  -> Direction {pass_dir} passes (p={p_ab if p_ab > 0.05 else p_ba:.4f}), while {fail_dir} fails (p={p_ba if p_ab > 0.05 else p_ab:.4f}). This asymmetry is a notable signal.")
+            
+            # 3. Mutual Information Symmetry Check
+            mi_avg = (mi_ab + mi_ba) / 2
+            lines.append(f"\n- **Mutual Information**: A->B: {mi_ab:.4f}, B->A: {mi_ba:.4f} (Average: {mi_avg:.4f}).")
+            lines.append(f"  -> Note: MI(X,Y) should theoretically be symmetric. Asymmetry here reflects directional prediction strength in the discrete context.")
             
         else:
             # === Continuous Narrative (Existing Logic) ===
@@ -434,46 +454,60 @@ class StatTranslator:
             lines.append(describe_model("B -> A", stats['dir_ba']))
 
             # Comparative Summary
-            lines.append("\n### Comparison")
+            lines.append("\n### Comparative Analysis (Objective)")
             # Use HSIC as primary metric (fallback to MI for backward compatibility)
             score_ab = stats['dir_ab'].get('resid_hsic_score', stats['dir_ab']['resid_mi_score'])
             score_ba = stats['dir_ba'].get('resid_hsic_score', stats['dir_ba']['resid_mi_score'])
             r2_ab = stats['dir_ab']['r2']
             r2_ba = stats['dir_ba']['r2']
             
-            diff = score_ba - score_ab # Positive means A->B has lower score (better independence)
+            diff_score = score_ba - score_ab  # Positive means A->B has lower score (better independence)
+            rel_diff = abs(diff_score) / (min(score_ab, score_ba) + 1e-9)  # Relative difference
             
-            # Complexity & Goodness-of-Fit Analysis
+            # 1. Model Fit Comparison (Goodness of Fit)
+            r2_diff = r2_ab - r2_ba
+            r2_rel_diff = abs(r2_diff) / (max(r2_ab, r2_ba) + 1e-9)
+            
+            lines.append(f"- **Model Fit (R²)**: A->B: {r2_ab:.4f} vs B->A: {r2_ba:.4f}.")
+            if r2_rel_diff < 0.02:  # < 2% difference
+                lines.append(f"  -> Both directions explain the data equally well (relative difference < 2%).")
+            else:
+                better_dir = "A->B" if r2_diff > 0 else "B->A"
+                worse_dir = "B->A" if r2_diff > 0 else "A->B"
+                lines.append(f"  -> Direction {better_dir} achieves better fit (R² is {abs(r2_diff):.4f} or ~{r2_rel_diff*100:.0f}% higher than {worse_dir}).")
+            
+            # 2. Mechanism Complexity Analysis
             nonlin_ab = stats['dir_ab']['nonlinearity_detected']
             nonlin_ba = stats['dir_ba']['nonlinearity_detected']
             
+            lines.append(f"\n- **Mechanism Complexity**: A->B: {stats['dir_ab']['best_model']}, B->A: {stats['dir_ba']['best_model']}.")
             if nonlin_ab and not nonlin_ba:
-                # A->B is Non-Linear, B->A is Linear
-                if r2_ab > r2_ba + 0.1:
-                    lines.append("⚠️ **Mechanism Analysis**: A->B requires a non-linear model but achieves a significantly better fit (R²) than B->A.")
-                    lines.append("B->A appears to be an underfit linear model (linear approximation of a non-linear inverse).")
-                    lines.append("In ANM, the direction with the better functional fit (even if non-linear) is usually correct, provided residuals are independent.")
+                lines.append(f"  -> A->B requires a non-linear model (R²={r2_ab:.3f}), while B->A is adequately modeled as linear (R²={r2_ba:.3f}).")
+                lines.append(f"  -> Note: In ANM theory, if the non-linear model achieves much better independence, complexity is justified.")
             elif nonlin_ba and not nonlin_ab:
-                # B->A is Non-Linear, A->B is Linear
-                if r2_ba > r2_ab + 0.1:
-                    lines.append("⚠️ **Mechanism Analysis**: B->A requires a non-linear model but achieves a significantly better fit (R²) than A->B.")
-                    lines.append("A->B appears to be an underfit linear model.")
-                    lines.append("In ANM, the direction with the better functional fit is usually correct.")
-            
-            # Residual independence asymmetry (HSIC Score - more robust than MI for non-linear)
-            metric_name = "HSIC" if 'resid_hsic_score' in stats['dir_ab'] else "MI"
-            lines.append(f"\n**Residual Independence Comparison ({metric_name})**:")
-            threshold = 0.1 if metric_name == "HSIC" else 0.05
-            
-            if diff > threshold:
-                lines.append(f"Direction A->B has significantly lower {metric_name} between residuals and predictor ({score_ab:.3f} vs {score_ba:.3f}).")
-                lines.append("This means A->B successfully decoupled the noise from the signal, while B->A failed.")
-                lines.append("This asymmetry strongly supports **A causes B**.")
-            elif diff < -threshold:
-                lines.append(f"Direction B->A has significantly lower {metric_name} between residuals and predictor ({score_ba:.3f} vs {score_ab:.3f}).")
-                lines.append("This means B->A successfully decoupled the noise from the signal, while A->B failed.")
-                lines.append("This asymmetry strongly supports **B causes A**.")
+                lines.append(f"  -> B->A requires a non-linear model (R²={r2_ba:.3f}), while A->B is adequately modeled as linear (R²={r2_ab:.3f}).")
+                lines.append(f"  -> Note: In ANM theory, if the non-linear model achieves much better independence, complexity is justified.")
             else:
-                lines.append("The independence scores are very close. The statistical evidence is ambiguous.")
+                lines.append(f"  -> Both directions imply similar functional complexity.")
+            
+            # 3. Residual Independence Comparison (THE KEY METRIC)
+            metric_name = "HSIC" if 'resid_hsic_score' in stats['dir_ab'] else "MI"
+            lines.append(f"\n- **Residual Independence ({metric_name})**: A->B: {score_ab:.4f} vs B->A: {score_ba:.4f}.")
+            lines.append(f"  -> Lower score = Better independence (residuals are decoupled from predictor).")
+            
+            if rel_diff < 0.1:  # < 10% relative difference
+                lines.append(f"  -> The independence scores are very close (relative difference < 10%). Distinguishing direction based solely on this metric is challenging.")
+            elif rel_diff < 0.5:  # 10-50% difference
+                better_dir = "A->B" if diff_score > 0 else "B->A"
+                lines.append(f"  -> Direction {better_dir} shows **moderately better** residual independence (relative improvement ~{rel_diff*100:.0f}%).")
+            else:  # > 50% difference
+                better_dir = "A->B" if diff_score > 0 else "B->A"
+                lines.append(f"  -> Direction {better_dir} demonstrates **substantially better** residual independence (relative improvement >{rel_diff*100:.0f}%). This is a strong signal.")
+            
+            # 4. Heteroscedasticity Signal
+            hetero_ab = stats['dir_ab']['resid_hetero_score']
+            hetero_ba = stats['dir_ba']['resid_hetero_score']
+            lines.append(f"\n- **Heteroscedasticity**: A->B: {hetero_ab:.3f}, B->A: {hetero_ba:.3f}.")
+            lines.append(f"  -> Higher value indicates variance of residuals changes with predictor (often a sign of wrong direction in ANM).")
 
         return "\n".join(lines)
