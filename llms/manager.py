@@ -3,7 +3,7 @@ from .base import BaseLLM
 from .providers.openai_provider import OpenAILLM
 from .providers.zhipuai_provider import ZhipuAILLM
 from .providers.modelscope_provider import ModelScopeLLM
-from utils import config_loader
+from utils_set.utils import config_loader
 
 class LLMManager:
     """
