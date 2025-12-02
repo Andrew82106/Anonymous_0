@@ -17,7 +17,7 @@ class ConfigLoader:
             # 使用 PathConfig 获取默认配置文件路径（需要延迟导入避免循环依赖）
             # 这里直接计算，避免循环依赖
             project_root = Path(__file__).parent.parent
-            config_path = project_root / 'llms' / 'config.yaml'
+            config_path = os.path.join(project_root, 'llms', 'config.yaml')
         
         self.config_path = Path(config_path)
         self.config = self._load_config()
