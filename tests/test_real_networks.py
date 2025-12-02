@@ -8,10 +8,10 @@ import pandas as pd
 import numpy as np
 import json
 from utils_set.causal_reasoning_engine import CausalReasoningEngine
-from utils_set.utils import ConfigLoader
+from utils_set.utils import ConfigLoader, path_config
 
-# 设置结果保存路径
-RESULTS_FILE = '../results/real_network_results.json'
+# 设置结果保存路径（使用路径配置）
+RESULTS_FILE = str(path_config.real_network_results_file)
 
 def test_network(network_name, engine, sample_size=1000, max_pairs=10):
     """

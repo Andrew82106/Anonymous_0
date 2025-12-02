@@ -4,73 +4,37 @@
     "ground_truth": "A->B",
     "description": "Linear Non-Gaussian (LiNGAM): A causes B with uniform noise",
     "llm_prediction": "Unclear",
-    "llm_confidence": "medium",
+    "llm_confidence": "low",
     "is_correct": false,
-    "primary_evidence": "",
-    "reasoning_chain": [
-      "1. Both directions (A->B and B->A) yield identical linear model fits (R²=0.726), with no improvement from polynomial models. This means the relationship is well explained by a simple linear mechanism in both directions.",
-      "2. Residual independence is very high in both directions (HSIC: 0.001 vs 0.042). The difference between HSIC values is minimal, suggesting no clear directionality from independence.",
-      "3. Residuals in both directions are non-Gaussian (Kurtosis: -1.22 for A->B, -0.71 for B->A). Non-Gaussian noise is a requirement for LiNGAM identifiability, but here both directions satisfy it.",
-      "4. Both variables have symmetric, slightly platykurtic distributions (close to Gaussian but with negative kurtosis). There is no clear skewness signal to exploit.",
-      "5. Correlation is very strong (r=0.85), but this by itself does not indicate directionality.",
-      "6. Residual heterogeneity is very low in A->B (0.02) and higher in B->A (0.46), which might weakly favor A->B as the causal direction, since more stable residuals are a causal clue. However, the difference is not dramatic enough to strongly favor one direction.",
-      "7. Both models fit well, with independent, non-Gaussian residuals, which is also consistent with the possibility of a hidden confounder (A<-Z->B), especially given the strong correlation.",
-      "8. No evidence supports statistical independence (A_|_B), as the correlation is strong and models fit well.",
-      "9. There is no single, striking statistical feature that decisively indicates the causal direction."
-    ],
+    "primary_evidence": "Failed to parse",
+    "reasoning_chain": "Error generating text: Request timed out.",
     "statistical_signals": {},
     "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Skewness=0.04 (Symmetric (Gaussian-like)), Kurtosis=-1.23.\nVariable B: Skewness=0.00 (Symmetric (Gaussian-like)), Kurtosis=-0.72.\nCorrelation: strong (Pearson r=0.85).\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Best Model: linear (R²=0.726)\n- Linear Model Sufficient: Polynomial fit did not significantly improve R² (Linear=0.726)\n- Residual Independence: **High** (HSIC: 0.001, Heterogeneity: 0.02). The residuals are effectively independent of the predictor.\n- Residual Distribution: Clearly Non-Gaussian (Kurtosis: -1.22). This is a good sign for a causal mechanism if the noise is non-Gaussian.\n\n**Hypothesis: B -> A**\n- Best Model: linear (R²=0.726)\n- Linear Model Sufficient: Polynomial fit did not significantly improve R² (Linear=0.726)\n- Residual Independence: **High** (HSIC: 0.042, Heterogeneity: 0.46). The residuals are effectively independent of the predictor.\n- Residual Distribution: Clearly Non-Gaussian (Kurtosis: -0.71). This is a good sign for a causal mechanism if the noise is non-Gaussian.\n\n### Comparison\n\n**Residual Independence Comparison (HSIC)**:\nThe independence scores are very close. The statistical evidence is ambiguous.",
     "full_llm_response": {
-      "causal_direction": "Unclear",
-      "confidence": "medium",
-      "reasoning_chain": [
-        "1. Both directions (A->B and B->A) yield identical linear model fits (R²=0.726), with no improvement from polynomial models. This means the relationship is well explained by a simple linear mechanism in both directions.",
-        "2. Residual independence is very high in both directions (HSIC: 0.001 vs 0.042). The difference between HSIC values is minimal, suggesting no clear directionality from independence.",
-        "3. Residuals in both directions are non-Gaussian (Kurtosis: -1.22 for A->B, -0.71 for B->A). Non-Gaussian noise is a requirement for LiNGAM identifiability, but here both directions satisfy it.",
-        "4. Both variables have symmetric, slightly platykurtic distributions (close to Gaussian but with negative kurtosis). There is no clear skewness signal to exploit.",
-        "5. Correlation is very strong (r=0.85), but this by itself does not indicate directionality.",
-        "6. Residual heterogeneity is very low in A->B (0.02) and higher in B->A (0.46), which might weakly favor A->B as the causal direction, since more stable residuals are a causal clue. However, the difference is not dramatic enough to strongly favor one direction.",
-        "7. Both models fit well, with independent, non-Gaussian residuals, which is also consistent with the possibility of a hidden confounder (A<-Z->B), especially given the strong correlation.",
-        "8. No evidence supports statistical independence (A_|_B), as the correlation is strong and models fit well.",
-        "9. There is no single, striking statistical feature that decisively indicates the causal direction."
-      ],
-      "rationale": "The statistical evidence is ambiguous, as both directions yield similarly strong model fits, independent and non-Gaussian residuals, and no clear distributional asymmetry. The only weak clue is lower residual heterogeneity in A->B, but it is not conclusive. The presence of strong correlation and clean residuals in both directions also raises the possibility of a hidden confounder. Therefore, the most justified conclusion is that the causal structure is unclear, with some possibility of A<-Z->B or direct causation in either direction. Confidence is medium due to the consistency and strength of the evidence, but lack of clear directionality."
+      "direction": "Unclear",
+      "confidence": "low",
+      "primary_evidence": "Failed to parse",
+      "reasoning_chain": "Error generating text: Request timed out.",
+      "raw_response": "Error generating text: Request timed out."
     }
   },
   {
     "dataset_name": "anm",
     "ground_truth": "A->B",
     "description": "Non-linear ANM: B = tanh(A) + 0.5*cos(A) + noise",
-    "llm_prediction": "A->B",
-    "llm_confidence": "medium",
-    "is_correct": true,
-    "primary_evidence": "",
-    "reasoning_chain": [
-      "1. 模型拟合度：A->B 的多项式模型 R²=0.911，明显优于 B->A 的线性模型 R²=0.797。B->A 用多项式拟合无法进一步提升 R²，说明 B->A 被线性模型‘错误简化’了。",
-      "2. 非线性机制：A->B 方向明显存在非线性（线性提升到多项式 R² 增加 0.114），而 B->A 方向没有类似非线性信号。因果机制往往是非线性的，反向很难用线性拟合解释清楚。",
-      "3. 残差独立性：两者残差独立性均为‘moderate’，A->B (HSIC=0.227, heterogeneity=0.87) 略高于 B->A (HSIC=0.190, heterogeneity=0.84)，但差距不大，未能提供决定性证据。",
-      "4. 残差分布非高斯性：两者残差均明显非高斯（高峰度），但 B->A 残差高峰度（12.63）更高，理论上 LiNGAM 偏好因变量更偏斜，但这里两者都很非高斯，无法单独作为决定性证据。",
-      "5. 变量分布：A 近似高斯，B 有中度负偏（skewness=-0.72），这与常见因果结构一致（原因高斯，结果偏斜），但不是绝对。",
-      "6. 强相关性 (r=0.89)：理论存在混杂因素可能，但两方向残差都不够独立，且模型复杂度与拟合度有明显差异，混杂因素假设不占主导。",
-      "7. 奥卡姆剃刀：A->B 方向用更复杂但更拟合的模型解释数据，B->A 方向是残差更大、拟合更差的线性近似，符合 ANM 原则。",
-      "8. 不确定性：残差独立性分数非常接近，且两方向残差都非高斯，留有一定矛盾空间，因而无法给出高置信度。"
-    ],
+    "llm_prediction": "Unclear",
+    "llm_confidence": "low",
+    "is_correct": false,
+    "primary_evidence": "Failed to parse",
+    "reasoning_chain": "Error generating text: Request timed out.",
     "statistical_signals": {},
     "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Skewness=0.02 (Symmetric (Gaussian-like)), Kurtosis=0.15.\nVariable B: Skewness=-0.72 (Moderately Skewed), Kurtosis=-0.52.\nCorrelation: strong (Pearson r=0.89).\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Best Model: polynomial_2 (R²=0.911)\n- Non-linearity Detected: R² improved by 0.114 with polynomial fit (Linear R²=0.797)\n- Residual Independence: **Moderate** (HSIC: 0.227, Heterogeneity: 0.87). Some dependency detected.\n- Residual Distribution: Clearly Non-Gaussian (Kurtosis: 4.88). This is a good sign for a causal mechanism if the noise is non-Gaussian.\n\n**Hypothesis: B -> A**\n- Best Model: linear (R²=0.797)\n- Linear Model Sufficient: Polynomial fit did not significantly improve R² (Linear=0.797)\n- Residual Independence: **Moderate** (HSIC: 0.190, Heterogeneity: 0.84). Some dependency detected.\n- Residual Distribution: Clearly Non-Gaussian (Kurtosis: 12.63). This is a good sign for a causal mechanism if the noise is non-Gaussian.\n\n### Comparison\n⚠️ **Mechanism Analysis**: A->B requires a non-linear model but achieves a significantly better fit (R²) than B->A.\nB->A appears to be an underfit linear model (linear approximation of a non-linear inverse).\nIn ANM, the direction with the better functional fit (even if non-linear) is usually correct, provided residuals are independent.\n\n**Residual Independence Comparison (HSIC)**:\nThe independence scores are very close. The statistical evidence is ambiguous.",
     "full_llm_response": {
-      "causal_direction": "A->B",
-      "confidence": "medium",
-      "reasoning_chain": [
-        "1. 模型拟合度：A->B 的多项式模型 R²=0.911，明显优于 B->A 的线性模型 R²=0.797。B->A 用多项式拟合无法进一步提升 R²，说明 B->A 被线性模型‘错误简化’了。",
-        "2. 非线性机制：A->B 方向明显存在非线性（线性提升到多项式 R² 增加 0.114），而 B->A 方向没有类似非线性信号。因果机制往往是非线性的，反向很难用线性拟合解释清楚。",
-        "3. 残差独立性：两者残差独立性均为‘moderate’，A->B (HSIC=0.227, heterogeneity=0.87) 略高于 B->A (HSIC=0.190, heterogeneity=0.84)，但差距不大，未能提供决定性证据。",
-        "4. 残差分布非高斯性：两者残差均明显非高斯（高峰度），但 B->A 残差高峰度（12.63）更高，理论上 LiNGAM 偏好因变量更偏斜，但这里两者都很非高斯，无法单独作为决定性证据。",
-        "5. 变量分布：A 近似高斯，B 有中度负偏（skewness=-0.72），这与常见因果结构一致（原因高斯，结果偏斜），但不是绝对。",
-        "6. 强相关性 (r=0.89)：理论存在混杂因素可能，但两方向残差都不够独立，且模型复杂度与拟合度有明显差异，混杂因素假设不占主导。",
-        "7. 奥卡姆剃刀：A->B 方向用更复杂但更拟合的模型解释数据，B->A 方向是残差更大、拟合更差的线性近似，符合 ANM 原则。",
-        "8. 不确定性：残差独立性分数非常接近，且两方向残差都非高斯，留有一定矛盾空间，因而无法给出高置信度。"
-      ],
-      "final_judgement_basis": "A->B 方向模型拟合度显著更高，且非线性机制明显优于 B->A 方向。虽然残差独立性差异不大，但结合奥卡姆剃刀和 ANM 原则，推断 A 是 B 的原因。置信度为 medium，因为残差独立性未能完全区分且分布非高斯信号两向均强。"
+      "direction": "Unclear",
+      "confidence": "low",
+      "primary_evidence": "Failed to parse",
+      "reasoning_chain": "Error generating text: Request timed out.",
+      "raw_response": "Error generating text: Request timed out."
     }
   },
   {
@@ -80,67 +44,35 @@
     "llm_prediction": "Unclear",
     "llm_confidence": "low",
     "is_correct": false,
-    "primary_evidence": "",
-    "reasoning_chain": [
-      "1. 分布特征：A 和 B 的分布极为相似（均对称且近高斯，偏度 ~0，低峰度），未提供区分因果方向的信号。",
-      "2. 相关性极高：Pearson r=0.89，提示强关联，但无法区分因果还是混杂。",
-      "3. 拟合结果：两方向（A->B 与 B->A）使用三次多项式均能很好拟合（R² ≈ 0.86），且多项式拟合均比线性拟合有明确提升（ΔR² ≈ 0.06），无一方向明显优越。",
-      "4. 残差独立性（HSIC）：两方向均极高（0.003），且几乎一致，残差分布均为高斯，异方差性非常轻微（heterogeneity ≈ 0.38/0.39）。",
-      "5. 没有非高斯性、残差结构或异方差性方面的可识别信号，LiNGAM 和 ANM 原理均无法区分。",
-      "6. 关键矛盾：两方向统计行为极度相似，且没有任何方向残差信号可用，符合混杂因素（A<-Z->B）的典型统计特征。",
-      "7. 结论：数据只能支持有强关联，但无法区分是直接因果（A->B 或 B->A）还是共同原因（A<-Z->B）；证据极度模糊。"
-    ],
+    "primary_evidence": "Failed to parse",
+    "reasoning_chain": "Error generating text: Request timed out.",
     "statistical_signals": {},
     "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Skewness=-0.02 (Symmetric (Gaussian-like)), Kurtosis=-1.63.\nVariable B: Skewness=-0.02 (Symmetric (Gaussian-like)), Kurtosis=-1.60.\nCorrelation: strong (Pearson r=0.89).\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Best Model: polynomial_3 (R²=0.856)\n- Non-linearity Detected: R² improved by 0.056 with polynomial fit (Linear R²=0.800)\n- Residual Independence: **High** (HSIC: 0.003, Heterogeneity: 0.38). The residuals are effectively independent of the predictor.\n- Residual Distribution: Gaussian-like (Kurtosis: 0.46).\n\n**Hypothesis: B -> A**\n- Best Model: polynomial_3 (R²=0.861)\n- Non-linearity Detected: R² improved by 0.061 with polynomial fit (Linear R²=0.800)\n- Residual Independence: **High** (HSIC: 0.003, Heterogeneity: 0.39). The residuals are effectively independent of the predictor.\n- Residual Distribution: Gaussian-like (Kurtosis: 0.36).\n\n### Comparison\n\n**Residual Independence Comparison (HSIC)**:\nThe independence scores are very close. The statistical evidence is ambiguous.",
     "full_llm_response": {
-      "causal_direction": "Unclear",
+      "direction": "Unclear",
       "confidence": "low",
-      "reasoning_chain": [
-        "1. 分布特征：A 和 B 的分布极为相似（均对称且近高斯，偏度 ~0，低峰度），未提供区分因果方向的信号。",
-        "2. 相关性极高：Pearson r=0.89，提示强关联，但无法区分因果还是混杂。",
-        "3. 拟合结果：两方向（A->B 与 B->A）使用三次多项式均能很好拟合（R² ≈ 0.86），且多项式拟合均比线性拟合有明确提升（ΔR² ≈ 0.06），无一方向明显优越。",
-        "4. 残差独立性（HSIC）：两方向均极高（0.003），且几乎一致，残差分布均为高斯，异方差性非常轻微（heterogeneity ≈ 0.38/0.39）。",
-        "5. 没有非高斯性、残差结构或异方差性方面的可识别信号，LiNGAM 和 ANM 原理均无法区分。",
-        "6. 关键矛盾：两方向统计行为极度相似，且没有任何方向残差信号可用，符合混杂因素（A<-Z->B）的典型统计特征。",
-        "7. 结论：数据只能支持有强关联，但无法区分是直接因果（A->B 或 B->A）还是共同原因（A<-Z->B）；证据极度模糊。"
-      ],
-      "final_judgement_basis": [
-        "1. 两方向拟合效果、残差独立性和分布完全对称，缺乏可识别信号。",
-        "2. 高相关性和对称性提示可能存在隐藏混杂变量，但证据尚不能排除直接因果。",
-        "3. 按统计因果推理标准，当前数据不足以确定因果结构，只能给出不确定结论。"
-      ]
+      "primary_evidence": "Failed to parse",
+      "reasoning_chain": "Error generating text: Request timed out.",
+      "raw_response": "Error generating text: Request timed out."
     }
   },
   {
     "dataset_name": "independent",
     "ground_truth": "A_|_B",
     "description": "Independent: A and B are statistically independent",
-    "llm_prediction": "A_|_B",
-    "llm_confidence": "high",
-    "is_correct": true,
-    "primary_evidence": "",
-    "reasoning_chain": [
-      "1. 分布特征：A 和 B 都呈现近似高斯分布（Skewness≈0，Kurtosis~0），无明显非高斯性特征可用于 LiNGAM 方向识别。",
-      "2. 相关性：Pearson r=-0.00，显示变量间几乎完全独立，无线性相关性。",
-      "3. 因果拟合度：无论是 A->B 还是 B->A，线性和多项式模型的 R² 都为 0.000，说明任一方向都无法解释数据变化。",
-      "4. 残差独立性：两个方向的残差独立性都很高（HSIC=0.001），残差分布均接近高斯，且异方差性极低，说明拟合其实是随机噪声，无法揭示因果机制。",
-      "5. 混杂因素迹象：无相关性、无拟合度，也无残差依赖，故不支持存在隐藏混杂变量。",
-      "6. 矛盾/不确定性：各项指标一致指向独立，无矛盾。"
-    ],
+    "llm_prediction": "Unclear",
+    "llm_confidence": "low",
+    "is_correct": false,
+    "primary_evidence": "Failed to parse",
+    "reasoning_chain": "Error generating text: Request timed out.",
     "statistical_signals": {},
     "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Skewness=0.11 (Symmetric (Gaussian-like)), Kurtosis=-0.15.\nVariable B: Skewness=-0.04 (Symmetric (Gaussian-like)), Kurtosis=0.10.\nCorrelation: weak (Pearson r=-0.00).\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Best Model: linear (R²=0.000)\n- Linear Model Sufficient: Polynomial fit did not significantly improve R² (Linear=0.000)\n- Residual Independence: **High** (HSIC: 0.001, Heterogeneity: 0.10). The residuals are effectively independent of the predictor.\n- Residual Distribution: Gaussian-like (Kurtosis: 0.10).\n\n**Hypothesis: B -> A**\n- Best Model: linear (R²=0.000)\n- Linear Model Sufficient: Polynomial fit did not significantly improve R² (Linear=0.000)\n- Residual Independence: **High** (HSIC: 0.001, Heterogeneity: 0.05). The residuals are effectively independent of the predictor.\n- Residual Distribution: Gaussian-like (Kurtosis: -0.15).\n\n### Comparison\n\n**Residual Independence Comparison (HSIC)**:\nThe independence scores are very close. The statistical evidence is ambiguous.",
     "full_llm_response": {
-      "causal_direction": "A_|_B",
-      "confidence": "high",
-      "reasoning_chain": [
-        "1. 分布特征：A 和 B 都呈现近似高斯分布（Skewness≈0，Kurtosis~0），无明显非高斯性特征可用于 LiNGAM 方向识别。",
-        "2. 相关性：Pearson r=-0.00，显示变量间几乎完全独立，无线性相关性。",
-        "3. 因果拟合度：无论是 A->B 还是 B->A，线性和多项式模型的 R² 都为 0.000，说明任一方向都无法解释数据变化。",
-        "4. 残差独立性：两个方向的残差独立性都很高（HSIC=0.001），残差分布均接近高斯，且异方差性极低，说明拟合其实是随机噪声，无法揭示因果机制。",
-        "5. 混杂因素迹象：无相关性、无拟合度，也无残差依赖，故不支持存在隐藏混杂变量。",
-        "6. 矛盾/不确定性：各项指标一致指向独立，无矛盾。"
-      ],
-      "final_judgement_basis": "所有统计证据（分布、拟合度、残差独立性、相关性）均表明 A 与 B 之间没有可检测的因果关系。"
+      "direction": "Unclear",
+      "confidence": "low",
+      "primary_evidence": "Failed to parse",
+      "reasoning_chain": "Error generating text: Request timed out.",
+      "raw_response": "Error generating text: Request timed out."
     }
   },
   {
@@ -150,60 +82,16 @@
     "llm_prediction": "Unclear",
     "llm_confidence": "low",
     "is_correct": false,
-    "primary_evidence": "",
-    "reasoning_chain": [
-      {
-        "observation": "Both Variable A and Variable B have highly skewed, non-Gaussian distributions (Skewness ≈ 1.8, Kurtosis ≈ 5.4)."
-      },
-      {
-        "observation": "Pearson correlation is extremely strong (r = 0.99), suggesting a very tight linear association."
-      },
-      {
-        "observation": "Both causal directions (A->B and B->A) are best fit by a linear model (R² = 0.977), with polynomial fits not improving explanatory power."
-      },
-      {
-        "observation": "Residual independence is high in both directions (HSIC: 0.019 vs. 0.001), with very similar heterogeneity (0.16 vs. 0.05), indicating residuals are nearly independent of predictors for both directions."
-      },
-      {
-        "observation": "Residuals in both directions are clearly non-Gaussian (Kurtosis ≈ -1.2), which is a positive sign for additive noise model (ANM) identifiability, but does not distinguish direction since both show similar non-Gaussianity."
-      },
-      {
-        "observation": "No direction shows a clear advantage in model simplicity, residual independence, or stability."
-      },
-      {
-        "uncertainty": "The near-equal fit and residual independence in both directions, combined with extremely high correlation, could indicate a latent confounder (A<-Z->B) or simply a deterministic relationship with identical mechanisms in both directions. There is no statistical evidence to favor one causal direction over the other, nor to clearly indicate independence."
-      }
-    ],
+    "primary_evidence": "Failed to parse",
+    "reasoning_chain": "Error generating text: Request timed out.",
     "statistical_signals": {},
     "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Skewness=1.81 (Highly Skewed (e.g., Exponential-like)), Kurtosis=5.34.\nVariable B: Skewness=1.85 (Highly Skewed (e.g., Exponential-like)), Kurtosis=5.40.\nCorrelation: strong (Pearson r=0.99).\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Best Model: linear (R²=0.977)\n- Linear Model Sufficient: Polynomial fit did not significantly improve R² (Linear=0.977)\n- Residual Independence: **High** (HSIC: 0.019, Heterogeneity: 0.16). The residuals are effectively independent of the predictor.\n- Residual Distribution: Clearly Non-Gaussian (Kurtosis: -1.18). This is a good sign for a causal mechanism if the noise is non-Gaussian.\n\n**Hypothesis: B -> A**\n- Best Model: linear (R²=0.977)\n- Linear Model Sufficient: Polynomial fit did not significantly improve R² (Linear=0.977)\n- Residual Independence: **High** (HSIC: 0.001, Heterogeneity: 0.05). The residuals are effectively independent of the predictor.\n- Residual Distribution: Clearly Non-Gaussian (Kurtosis: -1.25). This is a good sign for a causal mechanism if the noise is non-Gaussian.\n\n### Comparison\n\n**Residual Independence Comparison (HSIC)**:\nThe independence scores are very close. The statistical evidence is ambiguous.",
     "full_llm_response": {
-      "causal_direction": "Unclear",
+      "direction": "Unclear",
       "confidence": "low",
-      "reasoning_chain": [
-        {
-          "observation": "Both Variable A and Variable B have highly skewed, non-Gaussian distributions (Skewness ≈ 1.8, Kurtosis ≈ 5.4)."
-        },
-        {
-          "observation": "Pearson correlation is extremely strong (r = 0.99), suggesting a very tight linear association."
-        },
-        {
-          "observation": "Both causal directions (A->B and B->A) are best fit by a linear model (R² = 0.977), with polynomial fits not improving explanatory power."
-        },
-        {
-          "observation": "Residual independence is high in both directions (HSIC: 0.019 vs. 0.001), with very similar heterogeneity (0.16 vs. 0.05), indicating residuals are nearly independent of predictors for both directions."
-        },
-        {
-          "observation": "Residuals in both directions are clearly non-Gaussian (Kurtosis ≈ -1.2), which is a positive sign for additive noise model (ANM) identifiability, but does not distinguish direction since both show similar non-Gaussianity."
-        },
-        {
-          "observation": "No direction shows a clear advantage in model simplicity, residual independence, or stability."
-        },
-        {
-          "uncertainty": "The near-equal fit and residual independence in both directions, combined with extremely high correlation, could indicate a latent confounder (A<-Z->B) or simply a deterministic relationship with identical mechanisms in both directions. There is no statistical evidence to favor one causal direction over the other, nor to clearly indicate independence."
-        }
-      ],
-      "final_judgement_basis": "The causal mechanism tests (ANM, LiNGAM principles) fail to distinguish between A->B and B->A, as both directions are equally plausible with nearly identical statistical properties. The evidence is ambiguous, possibly suggesting a hidden confounder or deterministic relationship, but not allowing confident causal direction inference.",
-      "recommendation": "Additional information (e.g., time ordering, intervention, or external variable tests) would be necessary to resolve causal direction. Based on current statistics alone, the cause-effect structure remains unclear."
+      "primary_evidence": "Failed to parse",
+      "reasoning_chain": "Error generating text: Request timed out.",
+      "raw_response": "Error generating text: Request timed out."
     }
   }
 ]

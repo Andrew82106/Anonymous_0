@@ -6,7 +6,7 @@ from .stat_translator import StatTranslator
 from .data_generator import CausalDataGenerator
 from .causal_reasoning_engine import CausalReasoningEngine
 from .prompts import get_prompt
-from .utils import config_loader, ConfigLoader
+from .utils import config_loader, ConfigLoader, path_config, PathConfig
 
 __all__ = [
     'StatTranslator',
@@ -14,5 +14,7 @@ __all__ = [
     'CausalReasoningEngine',
     'get_prompt',
     'config_loader',
-    'ConfigLoader'
+    'ConfigLoader',
+    'path_config',
+    'PathConfig'
 ]

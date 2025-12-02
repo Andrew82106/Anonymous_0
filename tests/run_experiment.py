@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 import argparse
 from utils_set.data_generator import CausalDataGenerator
 from utils_set.causal_reasoning_engine import CausalReasoningEngine
+from utils_set.utils import path_config
 
 def main():
     parser = argparse.ArgumentParser(description='ACR 框架 - 因果推理实验')
@@ -19,7 +20,7 @@ def main():
                        help='Prompt 模板类型')
     parser.add_argument('--samples', type=int, default=1000,
                        help='每个数据集的样本数量')
-    parser.add_argument('--output', type=str, default='../results/experiment_results.json',
+    parser.add_argument('--output', type=str, default=str(path_config.experiment_results_file),
                        help='结果输出文件名')
     
     args = parser.parse_args()
