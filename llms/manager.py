@@ -1,0 +1,102 @@
+from typing import Dict, List, Any, Optional
+from .base import BaseLLM
+from .providers.openai_provider import OpenAILLM
+from .providers.zhipuai_provider import ZhipuAILLM
+from .providers.modelscope_provider import ModelScopeLLM
+from utils import config_loader
+
+class LLMManager:
+    """
+    Manager class to handle multiple LLM providers and models.
+    """
+    def __init__(self):
+        self.config = config_loader
+        self.models: Dict[str, BaseLLM] = {}
+        self._initialize_models()
+
+    def _initialize_models(self):
+        """
+        Initialize all models defined in config.yaml
+        """
+        # Initialize Text Models
+        text_models_config = self.config.get('models.text_models', [])
+        for model_conf in text_models_config:
+            self._register_model(model_conf)
+
+        # Initialize Image Models
+        image_models_config = self.config.get('models.image_models', [])
+        for model_conf in image_models_config:
+            self._register_model(model_conf)
+
+    def _register_model(self, model_conf: Dict[str, Any]):
+        """
+        Instantiate and register a model based on its API_provider.
+        """
+        name = model_conf.get('name')
+        api_provider = model_conf.get('API_provider', '').lower()
+
+        if not name:
+            print(f"Warning: Found model config without name, skipping: {model_conf}")
+            return
+
+        try:
+            model_instance = None
+            
+            # Factory logic based on API_provider
+            if api_provider == 'openai':
+                model_instance = OpenAILLM(model_conf)
+            elif api_provider == 'zhipuai':
+                model_instance = ZhipuAILLM(model_conf)
+            elif api_provider == 'modelscope':
+                model_instance = ModelScopeLLM(model_conf)
+            # Add other providers here e.g., elif api_provider == 'anthropic': ...
+            else:
+                print(f"Warning: Unsupported API_provider '{api_provider}' for model '{name}'")
+                return
+
+            if model_instance:
+                self.models[name] = model_instance
+                
+        except Exception as e:
+            print(f"Error initializing model '{name}': {e}")
+
+    def get_model(self, model_name: str) -> Optional[BaseLLM]:
+        """
+        Retrieve a loaded model instance by name.
+        """
+        return self.models.get(model_name)
+
+    def list_models(self) -> List[str]:
+        """
+        Return a list of available model names.
+        """
+        return list(self.models.keys())
+
+    def call_model(self, model_name: str, prompt: str, mode: str = 'text', **kwargs) -> str:
+        """
+        Unified interface to call a model.
+        mode: 'text' or 'image'
+        """
+        model = self.get_model(model_name)
+        if not model:
+            raise ValueError(f"Model '{model_name}' not found. Available models: {self.list_models()}")
+
+        if mode == 'text':
+            return model.generate(prompt, **kwargs)
+        elif mode == 'image':
+            return model.generate_image(prompt, **kwargs)
+        else:
+            raise ValueError("Mode must be 'text' or 'image'")
+
+    def call_structured(self, model_name: str, prompt: str, response_format: Any, **kwargs) -> Any:
+        """
+        Call model for structured output.
+        """
+        model = self.get_model(model_name)
+        if not model:
+            raise ValueError(f"Model '{model_name}' not found. Available models: {self.list_models()}")
+        
+        return model.generate_structured(prompt, response_format, **kwargs)
+
+# Global instance
+llm_manager = LLMManager()

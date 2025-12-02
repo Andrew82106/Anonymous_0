@@ -1,0 +1,105 @@
+# 模型配置
+# API接口模块是指调用该模型时使用的接口模块，如果是OPENAI那就是调用openai的接口，如果是zhipuAI那就是调用zhipuAI的接口，以此类推
+
+# 默认使用的模型
+used_model: "gpt-4-turbo"
+
+models:
+  # 文本模型列表
+  text_models:
+    - name: "gpt-4-turbo"           # 配置名称标识
+      provider: "openai"      # 提供商
+      API_provider: "openai"  # API接口模块
+      model_name: "gpt-4-turbo"     # 模型具体名称
+      api_key: "sk-si6EG386b22VnzJ90TgmPLz1fri1dYxJ6XSTLKrtQivcoF8c" 
+      base_url: "https://sg.uiuiapi.com/v1"
+      temperature: 0.7
+
+    - name: "deepseek-chat"
+      provider: "openai"
+      API_provider: "openai"
+      model_name: "deepseek-chat"
+      base_url: "https://sg.uiuiapi.com/v1"
+      api_key: "sk-si6EG386b22VnzJ90TgmPLz1fri1dYxJ6XSTLKrtQivcoF8c"
+      temperature: 0.7
+
+    - name: "glm-4-flash"
+      provider: "zhipuai"
+      API_provider: "zhipuai"
+      model_name: "glm-4-flash"
+      api_key: "9c3ef5af054f4a6bb76a07fe25414608.BzaQiX7gC6faH8be"
+      temperature: 0.7
+
+    - name: "Qwen/Qwen3-Next-80B-A3B-Instruct"
+      provider: "modelscope"
+      API_provider: "modelscope"
+      model_name: "Qwen/Qwen3-Next-80B-A3B-Instruct"
+      api_key: "ms-245704bb-0cf9-4072-95a4-788e6e200a43"
+      base_url: "https://api-inference.modelscope.cn/"
+      temperature: 0.7
+    
+    - name: "deepseek-ai/DeepSeek-V3.1"
+      provider: "modelscope"
+      API_provider: "modelscope"
+      model_name: "deepseek-ai/DeepSeek-V3.1"
+      api_key: "ms-245704bb-0cf9-4072-95a4-788e6e200a43"
+      base_url: "https://api-inference.modelscope.cn/"
+      temperature: 0.7
+
+    - name: "Qwen/Qwen3-235B-A22B-Thinking-2507"
+      provider: "modelscope"
+      API_provider: "modelscope"
+      model_name: "Qwen/Qwen3-235B-A22B-Thinking-2507"
+      api_key: "ms-245704bb-0cf9-4072-95a4-788e6e200a43"
+      base_url: "https://api-inference.modelscope.cn/"
+      temperature: 0.7
+
+    - name: "MiniMax/MiniMax-M1-80k"
+      provider: "modelscope"
+      API_provider: "modelscope"
+      model_name: "MiniMax/MiniMax-M1-80k"
+      api_key: "ms-245704bb-0cf9-4072-95a4-788e6e200a43"
+      base_url: "https://api-inference.modelscope.cn/"
+      temperature: 0.7
+
+  # 图形模型列表
+  image_models:
+    - name: "gpt-image-1"
+      provider: "openai"      
+      API_provider: "openai"  # API接口模块
+      model_name: "gpt-image-1"  
+      api_key: "sk-si6EG386b22VnzJ90TgmPLz1fri1dYxJ6XSTLKrtQivcoF8c" 
+      base_url: "https://sg.uiuiapi.com/v1"
+      size: "1024x1024"  
+
+    - name: "doubao-seedream-4-0-250828"
+      provider: "openai"      
+      API_provider: "openai"  # API接口模块
+      model_name: "doubao-seedream-4-0-250828"  
+      api_key: "sk-si6EG386b22VnzJ90TgmPLz1fri1dYxJ6XSTLKrtQivcoF8c" 
+      base_url: "https://sg.uiuiapi.com/v1"
+      size: "1024x1024"  
+
+    - name: "dall-e-3"
+      provider: "openai"      
+      API_provider: "openai"  # API接口模块
+      model_name: "dall-e-3"  
+      api_key: "sk-si6EG386b22VnzJ90TgmPLz1fri1dYxJ6XSTLKrtQivcoF8c" 
+      base_url: "https://sg.uiuiapi.com/v1"
+      size: "1024x1024"  
+
+    - name: "nano-banana"
+      provider: "openai"
+      API_provider: "openai"
+      model_name: "nano-banana"
+      api_key: "sk-si6EG386b22VnzJ90TgmPLz1fri1dYxJ6XSTLKrtQivcoF8c"
+      base_url: "https://sg.uiuiapi.com/v1"
+      size: "1024x1024"
+
+    - name: "Z-Image-Turbo"
+      provider: "modelscope"
+      API_provider: "modelscope"
+      api_key: "ms-245704bb-0cf9-4072-95a4-788e6e200a43"
+      base_url: "https://api-inference.modelscope.cn/"
+      model_name: "Tongyi-MAI/Z-Image-Turbo"
+      size: "1024x1024"
