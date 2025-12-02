@@ -2,7 +2,8 @@ import numpy as np
 from scipy.stats import skew, kurtosis, pearsonr, spearmanr, chi2_contingency, entropy, fisher_exact
 from scipy.spatial.distance import pdist, squareform
 from sklearn.linear_model import LinearRegression, LogisticRegression
-from sklearn.preprocessing import PolynomialFeatures, LabelEncoder
+from sklearn.preprocessing import PolynomialFeatures, LabelEncoder, StandardScaler
+from sklearn.neural_network import MLPRegressor
 from sklearn.pipeline import make_pipeline
 from sklearn.metrics import accuracy_score, log_loss, mutual_info_score
 from sklearn.feature_selection import mutual_info_regression
@@ -168,31 +169,32 @@ class StatTranslator:
         residuals_linear = residuals_linear.flatten()
         r2_linear = model_linear.score(X2, y2)
         
-        # 2. Non-linear Fit (Polynomial degree 2)
-        model_poly2 = make_pipeline(PolynomialFeatures(2), LinearRegression())
-        model_poly2.fit(X2, y2.ravel())
-        residuals_poly2 = y2.ravel() - model_poly2.predict(X2)
-        r2_poly2 = model_poly2.score(X2, y2.ravel())
+        # 2. Non-linear Fit (MLP - Universal Approximator)
+        # Use a strong MLP to ensure we catch any functional relationship f(x)
+        # Hidden layers: (100, 50) usually enough for 1D->1D
+        model_mlp = make_pipeline(
+            StandardScaler(),
+            MLPRegressor(hidden_layer_sizes=(100, 50), activation='tanh', 
+                         solver='lbfgs', max_iter=1000, random_state=42)
+        )
         
-        # 3. Non-linear Fit (Polynomial degree 3)
-        model_poly3 = make_pipeline(PolynomialFeatures(3), LinearRegression())
-        model_poly3.fit(X2, y2.ravel())
-        residuals_poly3 = y2.ravel() - model_poly3.predict(X2)
-        r2_poly3 = model_poly3.score(X2, y2.ravel())
+        try:
+            model_mlp.fit(X2, y2.ravel())
+            residuals_mlp = y2.ravel() - model_mlp.predict(X2)
+            r2_mlp = model_mlp.score(X2, y2.ravel())
+        except:
+            # Fallback if MLP fails to converge
+            residuals_mlp = residuals_linear
+            r2_mlp = r2_linear
         
         # Select best model based on R2 improvement
-        r2_improvement_poly2 = r2_poly2 - r2_linear
-        r2_improvement_poly3 = r2_poly3 - r2_poly2
+        r2_improvement = r2_mlp - r2_linear
         
         # Use the best model's residuals
-        if r2_improvement_poly3 > 0.05:  # Significant improvement with degree 3
-            best_residuals = residuals_poly3
-            best_r2 = r2_poly3
-            best_model_type = 'polynomial_3'
-        elif r2_improvement_poly2 > 0.05:  # Significant improvement with degree 2
-            best_residuals = residuals_poly2
-            best_r2 = r2_poly2
-            best_model_type = 'polynomial_2'
+        if r2_improvement > 0.05:  # Significant improvement with MLP
+            best_residuals = residuals_mlp
+            best_r2 = r2_mlp
+            best_model_type = 'nonlinear_mlp'
         else:
             best_residuals = residuals_linear
             best_r2 = r2_linear
@@ -227,8 +229,6 @@ class StatTranslator:
             'resid_kurt': res_kurt,
             'r2': best_r2,
             'r2_linear': r2_linear,
-            'r2_poly2': r2_poly2,
-            'r2_poly3': r2_poly3,
             'best_model': best_model_type,
             'nonlinearity_detected': (best_model_type != 'linear')
         }
@@ -425,9 +425,9 @@ class StatTranslator:
                 # Non-linearity signal
                 if metrics['nonlinearity_detected']:
                     r2_gain = metrics['r2'] - metrics['r2_linear']
-                    desc.append(f"- Non-linearity Detected: R² improved by {r2_gain:.3f} with polynomial fit (Linear R²={metrics['r2_linear']:.3f})")
+                    desc.append(f"- Non-linearity Detected: R² improved by {r2_gain:.3f} with MLP fit (Linear R²={metrics['r2_linear']:.3f})")
                 else:
-                    desc.append(f"- Linear Model Sufficient: Polynomial fit did not significantly improve R² (Linear={metrics['r2_linear']:.3f})")
+                    desc.append(f"- Linear Model Sufficient: MLP fit did not significantly improve R² (Linear={metrics['r2_linear']:.3f})")
                 
                 # Independence (Using HSIC as primary metric - more robust for non-linear patterns)
                 # HSIC Score: 0 = Independent, Higher = Dependent

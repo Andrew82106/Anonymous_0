@@ -105,25 +105,26 @@ LLMBayesian/
 
 ---
 
-## 🧪 实验结果
+## 🧪 实验结果 (最新)
 
 ### 合成数据集 (Synthetic Data)
-- **准确率**: **66.7% (2/3)** 因果案例
-- ✅ **LiNGAM** (线性非高斯): 正确
-- ✅ **Reverse** (反向因果): 正确（通过偏度 + LiNGAM 原理解决）
-- ❌ **ANM** (非线性): 预测错误（特定分布下的挑战）
+- **准确率**: **100% (3/3)** 因果案例 🎉
+- ✅ **LiNGAM** (线性非高斯): 正确（偏度信号）
+- ✅ **Reverse** (反向因果): 正确（LiNGAM 原理）
+- ✅ **ANM** (非线性): **正确**（MLP 强拟合 + HSIC 彻底解决欠拟合问题）
 - ✅ **Confounder/Independent**: 正确识别为 Unclear
 
 ### 真实世界数据 (Real-World Benchmarks)
 - **Asia 网络** (离散变量): **80% (4/5)** 🎉
   - 成功识别: `smoke->lung`, `tub->either`, `either->xray`, `bronc->dysp`
-  - 失败: `either->dysp`
-- **Sprinkler 网络** (离散变量): 0% (谨慎返回 Unclear)
+  - 关键突破: **IGCI (边际熵)** 修正了离散数据的预测偏差。
+- **Sprinkler 网络** (离散变量): 50% (2/4)
+  - 成功识别核心边，对弱信号保持谨慎 (Unclear)，避免了错误判断。
 
 ### 关键发现
-1. **互信息 (MI) 的威力**: 相比 Pearson 相关，MI 能更好地捕捉非线性残差依赖。
-2. **边际熵** 对离散变量判断有显著贡献（Asia 从 60% 提升至 80%）。
-3. **LLM 推理能力**: LLM 能够在复杂的多维证据中进行权衡，展现出类似人类专家的推理能力。
+1. **客观叙事的力量**: 将判决权交给 LLM，提供客观的相对差异描述（Objective Narrative），比硬编码规则更有效。
+2. **MLP 回归**: 替代多项式回归，解决了 ANM 案例中的欠拟合问题。
+3. **IGCI 原理**: 在离散数据中，**边缘熵 (Marginal Entropy)** 是比预测准确率更可靠的因果指标。
 
 ---
 
@@ -165,100 +166,24 @@ print(narrative)
 ```python
 from utils_set.causal_reasoning_engine import CausalReasoningEngine
 
-engine = CausalReasoningEngine(model_name="deepseek-chat")
+engine = CausalReasoningEngine(model_name="gpt-4-turbo")
 results = engine.run_experiment(datasets, save_results=True)
 ```
-
-### 4. 切换 LLM 模型
-方法 1 - 修改配置文件 `llms/config.yaml`：
-```yaml
-used_model: "gpt-4-turbo"
-```
-
-方法 2 - 命令行指定：
-```bash
-cd tests
-python run_experiment.py --model "gpt-4-turbo"
-```
-
-方法 3 - 代码中指定：
-```python
-engine = CausalReasoningEngine(model_name="gpt-4-turbo")
-```
-
----
-
-## 📊 数据集类型
-
-### 合成数据集（已实现）
-1. **LiNGAM**: 线性非高斯加性噪声 (`A -> B: B = 0.8A + uniform_noise`)
-2. **ANM**: 非线性加性噪声 (`A -> B: B = tanh(A) + 0.5*cos(A) + noise`)
-3. **Confounder**: 混杂因素 (`Z -> A, Z -> B`)
-4. **Independent**: 统计独立 (`A ⊥ B`)
-5. **Reverse**: 反向因果 (`B -> A`)
-
-### 真实数据集（规划中）
-- bnlearn 经典网络：Sprinkler, Asia, Alarm
-- Tubingen Cause-Effect Pairs
-
----
-
-## 🧠 Prompt 设计
-
-### Sherlock Holmes Prompt
-```
-你是一位精通统计学和因果推理的侦探...
-
-## 统计分析报告
-{narrative}
-
-## 推理要求
-基于 LiNGAM 和 ANM 原理，判断因果方向...
-```
-
-支持多种模板：
-- `sherlock`: 完整版（默认）
-- `simple`: 简化版
-- `residual_only`: 消融研究（仅残差信息）
-
----
-
-## 🛠️ 配置
-
-### LLM 模型配置 (`llms/config.yaml`)
-```yaml
-models:
-  text_models:
-    - name: "deepseek-chat"
-      provider: "openai"
-      api_key: "your-api-key"
-      base_url: "https://api.example.com/v1"
-      temperature: 0.7
-```
-
-支持的提供商：
-- OpenAI (GPT-4, GPT-3.5)
-- ZhipuAI (GLM-4)
-- ModelScope (Qwen, DeepSeek-V3, MiniMax)
 
 ---
 
 ## 📈 下一步工作
 
-### 短期
-- [ ] 在 StatTranslator 中加入非线性拟合（GAM、多项式）
-- [ ] 使用 bnlearn 真实网络进行测试
-- [ ] 消融研究：不同 Prompt 和模型的影响
+### 近期 (Immediate)
+- [x] **MLP 升级**: 引入神经网络回归解决 ANM 欠拟合。
+- [x] **Prompt 修正**: 引入 IGCI 原理解决离散数据误判。
+- [ ] **论文写作**: 整理 100% 合成数据准确率的实验结果。
+- [ ] **扩展测试**: 在 Alarm, Child 等更多真实网络上验证。
 
-### 中期
-- [ ] 实现基准算法（PC, GES, 标准 LiNGAM）进行对比
-- [ ] 实现辛普森悖论检测（混杂因素识别）
-- [ ] 完整的评估指标（Precision, Recall, F1, AUROC）
-
-### 长期
-- [ ] 实现"元认知仲裁"机制（创新点2）
-- [ ] 在大规模真实数据集上验证
-- [ ] 撰写论文并投稿
+### 长期 (Long-term)
+- [ ] 实现"元认知仲裁"机制（综合多种算法）。
+- [ ] 在大规模真实数据集上验证。
+- [ ] 投稿顶级会议 (NeurIPS/ICML/ICLR)。
 
 ---
 
