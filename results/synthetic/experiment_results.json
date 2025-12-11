@@ -1,0 +1,377 @@
+[
+  {
+    "dataset_name": "lingam",
+    "ground_truth": "A->B",
+    "description": "Linear Non-Gaussian (LiNGAM): A causes B with uniform noise",
+    "llm_prediction": "A->B",
+    "llm_confidence": "high",
+    "is_correct": true,
+    "primary_evidence": "",
+    "reasoning_chain": [
+      {
+        "observation": "Residual Independence (HSIC)",
+        "details": "A->B: 0.0010, B->A: 0.0418. A->B residuals are much more independent of predictor than B->A. Relative difference > 4200%. This is a Gold Standard signal.",
+        "impact": "Strongly supports A->B as the causal direction according to ANM principle."
+      },
+      {
+        "observation": "Heteroscedasticity",
+        "details": "A->B: 0.025, B->A: 0.462. Residuals in A->B are much more homoscedastic. High heteroscedasticity in B->A is a typical sign of the wrong direction in ANM.",
+        "impact": "Strong auxiliary evidence for A->B."
+      },
+      {
+        "observation": "Model Fit (R²)",
+        "details": "A->B: 0.7265, B->A: 0.7265. No difference.",
+        "impact": "No preference, both directions fit data equally well."
+      },
+      {
+        "observation": "Model Complexity",
+        "details": "Both directions are well-explained by a linear model, with no improvement from non-linear MLP.",
+        "impact": "No preference, both directions are equally simple."
+      },
+      {
+        "observation": "Residual Non-Gaussianity",
+        "details": "Both directions have clearly non-Gaussian (platykurtic) residuals, which is favorable for identifiability in LiNGAM/ANM settings.",
+        "impact": "Non-Gaussianity present in both, so does not distinguish directions."
+      },
+      {
+        "observation": "No evidence for confounding or independence",
+        "details": "Strong correlation (r=0.85) and very high residual independence in A->B make hidden confounding or independence unlikely.",
+        "impact": "Supports a direct causal relationship rather than confounding or independence."
+      }
+    ],
+    "statistical_signals": {},
+    "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Skewness=0.04 (Symmetric (Gaussian-like)), Kurtosis=-1.23.\nVariable B: Skewness=0.00 (Symmetric (Gaussian-like)), Kurtosis=-0.72.\nCorrelation: strong (Pearson r=0.85).\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Best Model: linear (R²=0.726)\n- Linear Model Sufficient: MLP fit did not significantly improve R² (Linear=0.726)\n- Residual Independence: **High** (HSIC: 0.001, Heterogeneity: 0.02). The residuals are effectively independent of the predictor.\n- Residual Distribution: Clearly Non-Gaussian (Kurtosis: -1.22). This is a good sign for a causal mechanism if the noise is non-Gaussian.\n\n**Hypothesis: B -> A**\n- Best Model: linear (R²=0.726)\n- Linear Model Sufficient: MLP fit did not significantly improve R² (Linear=0.726)\n- Residual Independence: **High** (HSIC: 0.042, Heterogeneity: 0.46). The residuals are effectively independent of the predictor.\n- Residual Distribution: Clearly Non-Gaussian (Kurtosis: -0.71). This is a good sign for a causal mechanism if the noise is non-Gaussian.\n\n### Comparative Analysis (Objective)\n- **Model Fit (R²)**: A->B: 0.7265 vs B->A: 0.7265.\n  -> Both directions explain the data equally well (relative difference < 2%).\n\n- **Mechanism Complexity**: A->B: linear, B->A: linear.\n  -> Both directions imply similar functional complexity.\n\n- **Residual Independence (HSIC)**: A->B: 0.0010 vs B->A: 0.0418.\n  -> Lower score = Better independence (residuals are decoupled from predictor).\n  -> Direction A->B demonstrates **substantially better** residual independence (relative improvement >4202%). This is a strong signal.\n\n- **Heteroscedasticity**: A->B: 0.025, B->A: 0.462.\n  -> Higher value indicates variance of residuals changes with predictor (often a sign of wrong direction in ANM).",
+    "full_llm_response": {
+      "causal_direction": "A->B",
+      "confidence": "high",
+      "reasoning_chain": [
+        {
+          "observation": "Residual Independence (HSIC)",
+          "details": "A->B: 0.0010, B->A: 0.0418. A->B residuals are much more independent of predictor than B->A. Relative difference > 4200%. This is a Gold Standard signal.",
+          "impact": "Strongly supports A->B as the causal direction according to ANM principle."
+        },
+        {
+          "observation": "Heteroscedasticity",
+          "details": "A->B: 0.025, B->A: 0.462. Residuals in A->B are much more homoscedastic. High heteroscedasticity in B->A is a typical sign of the wrong direction in ANM.",
+          "impact": "Strong auxiliary evidence for A->B."
+        },
+        {
+          "observation": "Model Fit (R²)",
+          "details": "A->B: 0.7265, B->A: 0.7265. No difference.",
+          "impact": "No preference, both directions fit data equally well."
+        },
+        {
+          "observation": "Model Complexity",
+          "details": "Both directions are well-explained by a linear model, with no improvement from non-linear MLP.",
+          "impact": "No preference, both directions are equally simple."
+        },
+        {
+          "observation": "Residual Non-Gaussianity",
+          "details": "Both directions have clearly non-Gaussian (platykurtic) residuals, which is favorable for identifiability in LiNGAM/ANM settings.",
+          "impact": "Non-Gaussianity present in both, so does not distinguish directions."
+        },
+        {
+          "observation": "No evidence for confounding or independence",
+          "details": "Strong correlation (r=0.85) and very high residual independence in A->B make hidden confounding or independence unlikely.",
+          "impact": "Supports a direct causal relationship rather than confounding or independence."
+        }
+      ],
+      "contradiction_or_uncertainty": [
+        {
+          "observation": "Both directions have high residual independence and non-Gaussianity.",
+          "details": "B->A also shows good (but not as good) residual independence, so the evidence is not perfectly one-sided.",
+          "impact": "Does not contradict main conclusion due to the much stronger independence in A->B and standard ANM criteria."
+        }
+      ],
+      "final_judgement_basis": "The extremely strong difference in residual independence and heteroscedasticity, with all other factors being equal, is decisive. According to established causal inference criteria, this points to A->B with high confidence."
+    }
+  },
+  {
+    "dataset_name": "anm",
+    "ground_truth": "A->B",
+    "description": "Non-linear ANM: B = tanh(A) + 0.5*cos(A) + noise",
+    "llm_prediction": "A->B",
+    "llm_confidence": "high",
+    "is_correct": true,
+    "primary_evidence": "",
+    "reasoning_chain": [
+      {
+        "observation": "Residual independence (HSIC) for A->B is 0.001 vs B->A is 0.190, a relative improvement of over 21600%. This is a Level 1 Gold Standard signal strongly favoring A->B.",
+        "importance": "Highest (core criterion in ANM theory)"
+      },
+      {
+        "observation": "Model fit (R²) for A->B is 0.977 vs B->A is 0.797; the A->B direction achieves an 18% higher fit. This is a strong Level 2 auxiliary signal.",
+        "importance": "Very important (captures actual relationship quality)"
+      },
+      {
+        "observation": "Heteroscedasticity is much lower for A->B (0.074) than B->A (0.836), indicating the noise in A->B is more homoscedastic, which is typical of the correct causal direction in ANM.",
+        "importance": "Strong auxiliary evidence"
+      },
+      {
+        "observation": "A->B requires a nonlinear model with significant improvement in independence, while B->A is linear but cannot achieve similar independence. In ANM, complexity is justified if independence is achieved.",
+        "importance": "Confirms complexity is not penalized if residuals are independent"
+      },
+      {
+        "observation": "Residuals in A->B are Gaussian-like (kurtosis -0.08), while in B->A they are highly non-Gaussian (kurtosis 12.63), which could suggest LiNGAM in B->A, but the lack of residual independence in B->A prevents this direction from being plausible.",
+        "importance": "Potentially conflicting, but outweighed by independence and fit"
+      },
+      {
+        "observation": "Both variables are strongly correlated (r=0.89), ruling out independence. The residual independence is much stronger in one direction, so confounding is unlikely unless both directions had nearly perfect residuals, which is not the case.",
+        "importance": "Rules out A_|_B and A<-Z->B"
+      }
+    ],
+    "statistical_signals": {},
+    "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Skewness=0.02 (Symmetric (Gaussian-like)), Kurtosis=0.15.\nVariable B: Skewness=-0.72 (Moderately Skewed), Kurtosis=-0.52.\nCorrelation: strong (Pearson r=0.89).\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Best Model: nonlinear_mlp (R²=0.977)\n- Non-linearity Detected: R² improved by 0.180 with MLP fit (Linear R²=0.797)\n- Residual Independence: **High** (HSIC: 0.001, Heterogeneity: 0.07). The residuals are effectively independent of the predictor.\n- Residual Distribution: Gaussian-like (Kurtosis: -0.08).\n\n**Hypothesis: B -> A**\n- Best Model: linear (R²=0.797)\n- Linear Model Sufficient: MLP fit did not significantly improve R² (Linear=0.797)\n- Residual Independence: **Moderate** (HSIC: 0.190, Heterogeneity: 0.84). Some dependency detected.\n- Residual Distribution: Clearly Non-Gaussian (Kurtosis: 12.63). This is a good sign for a causal mechanism if the noise is non-Gaussian.\n\n### Comparative Analysis (Objective)\n- **Model Fit (R²)**: A->B: 0.9765 vs B->A: 0.7968.\n  -> Direction A->B achieves better fit (R² is 0.1797 or ~18% higher than B->A).\n\n- **Mechanism Complexity**: A->B: nonlinear_mlp, B->A: linear.\n  -> A->B requires a non-linear model (R²=0.977), while B->A is adequately modeled as linear (R²=0.797).\n  -> Note: In ANM theory, if the non-linear model achieves much better independence, complexity is justified.\n\n- **Residual Independence (HSIC)**: A->B: 0.0009 vs B->A: 0.1904.\n  -> Lower score = Better independence (residuals are decoupled from predictor).\n  -> Direction A->B demonstrates **substantially better** residual independence (relative improvement >21615%). This is a strong signal.\n\n- **Heteroscedasticity**: A->B: 0.074, B->A: 0.836.\n  -> Higher value indicates variance of residuals changes with predictor (often a sign of wrong direction in ANM).",
+    "full_llm_response": {
+      "causal_direction": "A->B",
+      "confidence": "high",
+      "reasoning_chain": [
+        {
+          "observation": "Residual independence (HSIC) for A->B is 0.001 vs B->A is 0.190, a relative improvement of over 21600%. This is a Level 1 Gold Standard signal strongly favoring A->B.",
+          "importance": "Highest (core criterion in ANM theory)"
+        },
+        {
+          "observation": "Model fit (R²) for A->B is 0.977 vs B->A is 0.797; the A->B direction achieves an 18% higher fit. This is a strong Level 2 auxiliary signal.",
+          "importance": "Very important (captures actual relationship quality)"
+        },
+        {
+          "observation": "Heteroscedasticity is much lower for A->B (0.074) than B->A (0.836), indicating the noise in A->B is more homoscedastic, which is typical of the correct causal direction in ANM.",
+          "importance": "Strong auxiliary evidence"
+        },
+        {
+          "observation": "A->B requires a nonlinear model with significant improvement in independence, while B->A is linear but cannot achieve similar independence. In ANM, complexity is justified if independence is achieved.",
+          "importance": "Confirms complexity is not penalized if residuals are independent"
+        },
+        {
+          "observation": "Residuals in A->B are Gaussian-like (kurtosis -0.08), while in B->A they are highly non-Gaussian (kurtosis 12.63), which could suggest LiNGAM in B->A, but the lack of residual independence in B->A prevents this direction from being plausible.",
+          "importance": "Potentially conflicting, but outweighed by independence and fit"
+        },
+        {
+          "observation": "Both variables are strongly correlated (r=0.89), ruling out independence. The residual independence is much stronger in one direction, so confounding is unlikely unless both directions had nearly perfect residuals, which is not the case.",
+          "importance": "Rules out A_|_B and A<-Z->B"
+        }
+      ],
+      "uncertainty_notes": [
+        "Residual non-Gaussianity in B->A could be a hint for LiNGAM, but poor independence of residuals in that direction (HSIC=0.19) is decisive against it.",
+        "No evidence supports confounding or independence."
+      ],
+      "final_judgment_basis": "Extreme superiority of residual independence and model fit in A->B, supported by low heteroscedasticity and justified nonlinearity, greatly outweighs any minor conflicting signals; this meets all major standards for causal inference from observational data."
+    }
+  },
+  {
+    "dataset_name": "confounder",
+    "ground_truth": "A<-Z->B",
+    "description": "Confounder: Both A and B are caused by hidden variable Z",
+    "llm_prediction": "A->B",
+    "llm_confidence": "high",
+    "is_correct": false,
+    "primary_evidence": "",
+    "reasoning_chain": [
+      {
+        "observation": "Residual Independence (HSIC)",
+        "details": "A->B: 0.0004, B->A: 0.0014. Relative improvement in A->B is >241%, which is a strong signal favoring A->B per Gold Standard rules."
+      },
+      {
+        "observation": "Heteroscedasticity",
+        "details": "A->B: 0.080, B->A: 0.126. Lower heteroscedasticity in A->B direction supports correct ANM direction."
+      },
+      {
+        "observation": "Model Fit (R²)",
+        "details": "A->B: 0.8939, B->A: 0.9041. The difference is <2%, considered negligible per guidelines."
+      },
+      {
+        "observation": "Model Complexity",
+        "details": "Both directions select nonlinear MLP models with similar complexity. No evidence for overfitting or excessive complexity in either direction."
+      },
+      {
+        "observation": "Residual Distribution",
+        "details": "Residuals in both directions are Gaussian-like, ruling out linear non-Gaussian cues (LiNGAM) as decisive."
+      }
+    ],
+    "statistical_signals": {},
+    "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Skewness=-0.02 (Symmetric (Gaussian-like)), Kurtosis=-1.63.\nVariable B: Skewness=-0.02 (Symmetric (Gaussian-like)), Kurtosis=-1.60.\nCorrelation: strong (Pearson r=0.89).\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Best Model: nonlinear_mlp (R²=0.894)\n- Non-linearity Detected: R² improved by 0.093 with MLP fit (Linear R²=0.800)\n- Residual Independence: **High** (HSIC: 0.000, Heterogeneity: 0.08). The residuals are effectively independent of the predictor.\n- Residual Distribution: Gaussian-like (Kurtosis: 0.21).\n\n**Hypothesis: B -> A**\n- Best Model: nonlinear_mlp (R²=0.904)\n- Non-linearity Detected: R² improved by 0.104 with MLP fit (Linear R²=0.800)\n- Residual Independence: **High** (HSIC: 0.001, Heterogeneity: 0.13). The residuals are effectively independent of the predictor.\n- Residual Distribution: Gaussian-like (Kurtosis: 0.13).\n\n### Comparative Analysis (Objective)\n- **Model Fit (R²)**: A->B: 0.8939 vs B->A: 0.9041.\n  -> Both directions explain the data equally well (relative difference < 2%).\n\n- **Mechanism Complexity**: A->B: nonlinear_mlp, B->A: nonlinear_mlp.\n  -> Both directions imply similar functional complexity.\n\n- **Residual Independence (HSIC)**: A->B: 0.0004 vs B->A: 0.0014.\n  -> Lower score = Better independence (residuals are decoupled from predictor).\n  -> Direction A->B demonstrates **substantially better** residual independence (relative improvement >241%). This is a strong signal.\n\n- **Heteroscedasticity**: A->B: 0.080, B->A: 0.126.\n  -> Higher value indicates variance of residuals changes with predictor (often a sign of wrong direction in ANM).",
+    "full_llm_response": {
+      "causal_direction": "A->B",
+      "confidence": "high",
+      "reasoning_chain": [
+        {
+          "observation": "Residual Independence (HSIC)",
+          "details": "A->B: 0.0004, B->A: 0.0014. Relative improvement in A->B is >241%, which is a strong signal favoring A->B per Gold Standard rules."
+        },
+        {
+          "observation": "Heteroscedasticity",
+          "details": "A->B: 0.080, B->A: 0.126. Lower heteroscedasticity in A->B direction supports correct ANM direction."
+        },
+        {
+          "observation": "Model Fit (R²)",
+          "details": "A->B: 0.8939, B->A: 0.9041. The difference is <2%, considered negligible per guidelines."
+        },
+        {
+          "observation": "Model Complexity",
+          "details": "Both directions select nonlinear MLP models with similar complexity. No evidence for overfitting or excessive complexity in either direction."
+        },
+        {
+          "observation": "Residual Distribution",
+          "details": "Residuals in both directions are Gaussian-like, ruling out linear non-Gaussian cues (LiNGAM) as decisive."
+        }
+      ],
+      "contradictions_or_uncertainties": [
+        {
+          "issue": "Model Fit Slightly Higher for B->A",
+          "details": "B->A model explains marginally more variance, but difference is minor and does not outweigh the much stronger residual independence and heteroscedasticity signals."
+        }
+      ],
+      "final_basis": "The substantially stronger residual independence and lower heteroscedasticity in A->B direction are decisive per ANM principles. Model fit is nearly equal, so does not contradict the primary evidence. No statistical characteristics (e.g., non-Gaussianity) provide alternative cues. Therefore, the most probable causal direction is A->B, with high confidence."
+    }
+  },
+  {
+    "dataset_name": "independent",
+    "ground_truth": "A_|_B",
+    "description": "Independent: A and B are statistically independent",
+    "llm_prediction": "A_|_B",
+    "llm_confidence": "high",
+    "is_correct": true,
+    "primary_evidence": "",
+    "reasoning_chain": [
+      {
+        "observation": "Correlation is essentially zero (Pearson r = -0.00), indicating no linear association between Variable A and Variable B."
+      },
+      {
+        "observation": "Both causal directions (A->B and B->A) yield R² = 0.0000, meaning no predictive power in either direction."
+      },
+      {
+        "observation": "Best-fit model is linear in both directions, and nonlinear (MLP) models do not improve fit, further reinforcing the absence of any relationship."
+      },
+      {
+        "observation": "Residual independence (HSIC) is extremely high and effectively identical in both directions (0.0009), indicating that residuals are fully decoupled from predictors regardless of direction—this is expected when there is no causal relationship."
+      },
+      {
+        "observation": "Heteroscedasticity is low in both cases (0.10 vs 0.05), and does not indicate any model misspecification or variance structure that would favor a causal direction."
+      },
+      {
+        "observation": "Both variables are approximately Gaussian (Skewness and Kurtosis near 0), so LiNGAM is not informative here."
+      },
+      {
+        "contradiction_or_uncertainty": "All major causal discovery metrics (fit, independence, complexity, distribution shape) are at null or random levels, with negligible relative differences (<5%) in all cases."
+      },
+      {
+        "conclusion": "The only statistically supported structure is that Variables A and B are statistically independent (A_|_B) with no evidence of direct causality, confounding, or association."
+      }
+    ],
+    "statistical_signals": {},
+    "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Skewness=0.11 (Symmetric (Gaussian-like)), Kurtosis=-0.15.\nVariable B: Skewness=-0.04 (Symmetric (Gaussian-like)), Kurtosis=0.10.\nCorrelation: weak (Pearson r=-0.00).\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Best Model: linear (R²=0.000)\n- Linear Model Sufficient: MLP fit did not significantly improve R² (Linear=0.000)\n- Residual Independence: **High** (HSIC: 0.001, Heterogeneity: 0.10). The residuals are effectively independent of the predictor.\n- Residual Distribution: Gaussian-like (Kurtosis: 0.10).\n\n**Hypothesis: B -> A**\n- Best Model: linear (R²=0.000)\n- Linear Model Sufficient: MLP fit did not significantly improve R² (Linear=0.000)\n- Residual Independence: **High** (HSIC: 0.001, Heterogeneity: 0.05). The residuals are effectively independent of the predictor.\n- Residual Distribution: Gaussian-like (Kurtosis: -0.15).\n\n### Comparative Analysis (Objective)\n- **Model Fit (R²)**: A->B: 0.0000 vs B->A: 0.0000.\n  -> Both directions explain the data equally well (relative difference < 2%).\n\n- **Mechanism Complexity**: A->B: linear, B->A: linear.\n  -> Both directions imply similar functional complexity.\n\n- **Residual Independence (HSIC)**: A->B: 0.0009 vs B->A: 0.0009.\n  -> Lower score = Better independence (residuals are decoupled from predictor).\n  -> The independence scores are very close (relative difference < 10%). Distinguishing direction based solely on this metric is challenging.\n\n- **Heteroscedasticity**: A->B: 0.101, B->A: 0.053.\n  -> Higher value indicates variance of residuals changes with predictor (often a sign of wrong direction in ANM).",
+    "full_llm_response": {
+      "causal_direction": "A_|_B",
+      "confidence": "high",
+      "reasoning_chain": [
+        {
+          "observation": "Correlation is essentially zero (Pearson r = -0.00), indicating no linear association between Variable A and Variable B."
+        },
+        {
+          "observation": "Both causal directions (A->B and B->A) yield R² = 0.0000, meaning no predictive power in either direction."
+        },
+        {
+          "observation": "Best-fit model is linear in both directions, and nonlinear (MLP) models do not improve fit, further reinforcing the absence of any relationship."
+        },
+        {
+          "observation": "Residual independence (HSIC) is extremely high and effectively identical in both directions (0.0009), indicating that residuals are fully decoupled from predictors regardless of direction—this is expected when there is no causal relationship."
+        },
+        {
+          "observation": "Heteroscedasticity is low in both cases (0.10 vs 0.05), and does not indicate any model misspecification or variance structure that would favor a causal direction."
+        },
+        {
+          "observation": "Both variables are approximately Gaussian (Skewness and Kurtosis near 0), so LiNGAM is not informative here."
+        },
+        {
+          "contradiction_or_uncertainty": "All major causal discovery metrics (fit, independence, complexity, distribution shape) are at null or random levels, with negligible relative differences (<5%) in all cases."
+        },
+        {
+          "conclusion": "The only statistically supported structure is that Variables A and B are statistically independent (A_|_B) with no evidence of direct causality, confounding, or association."
+        }
+      ]
+    }
+  },
+  {
+    "dataset_name": "reverse",
+    "ground_truth": "B->A",
+    "description": "Reverse Causation: B causes A (exponential + uniform noise)",
+    "llm_prediction": "B->A",
+    "llm_confidence": "high",
+    "is_correct": true,
+    "primary_evidence": "",
+    "reasoning_chain": [
+      {
+        "observation": "Residual Independence (HSIC):",
+        "details": "B->A residual HSIC is 0.0006, substantially lower than A->B (0.0194). Relative difference is over 3000%, far above the 50% threshold for strong signal.",
+        "implication": "Strongly favors B->A as the correct causal direction according to ANM principles."
+      },
+      {
+        "observation": "Heteroscedasticity:",
+        "details": "B->A heteroscedasticity is 0.049, much lower than A->B (0.163). Lower heteroscedasticity is expected in the true causal direction.",
+        "implication": "Reinforces B->A as the likely causal direction."
+      },
+      {
+        "observation": "Model Fit (R²):",
+        "details": "Both directions have virtually identical fit (0.977), so this does not help distinguish direction.",
+        "implication": "No evidence for or against either direction from model fit."
+      },
+      {
+        "observation": "Model Complexity:",
+        "details": "Both directions are best fit by a linear model; no difference in functional complexity.",
+        "implication": "No evidence for or against either direction from model complexity."
+      },
+      {
+        "observation": "Residual Non-Gaussianity:",
+        "details": "Both directions have clear non-Gaussian residuals (negative kurtosis), supporting identifiability in the LiNGAM framework.",
+        "implication": "Both directions are suitable for linear non-Gaussian modeling, but does not distinguish direction."
+      },
+      {
+        "observation": "Skewness & Kurtosis of Variables:",
+        "details": "Both variables are highly skewed and leptokurtic, but are nearly identical; this does not help determine direction."
+      }
+    ],
+    "statistical_signals": {},
+    "narrative": "### Statistical Profile\nWe are analyzing a dataset with 1000 samples.\nVariable A: Skewness=1.81 (Highly Skewed (e.g., Exponential-like)), Kurtosis=5.34.\nVariable B: Skewness=1.85 (Highly Skewed (e.g., Exponential-like)), Kurtosis=5.40.\nCorrelation: strong (Pearson r=0.99).\n\n### Causal Mechanism Analysis\nWe tested two competing causal hypotheses by fitting models in both directions.\n\n**Hypothesis: A -> B**\n- Best Model: linear (R²=0.977)\n- Linear Model Sufficient: MLP fit did not significantly improve R² (Linear=0.977)\n- Residual Independence: **High** (HSIC: 0.019, Heterogeneity: 0.16). The residuals are effectively independent of the predictor.\n- Residual Distribution: Clearly Non-Gaussian (Kurtosis: -1.18). This is a good sign for a causal mechanism if the noise is non-Gaussian.\n\n**Hypothesis: B -> A**\n- Best Model: linear (R²=0.977)\n- Linear Model Sufficient: MLP fit did not significantly improve R² (Linear=0.977)\n- Residual Independence: **High** (HSIC: 0.001, Heterogeneity: 0.05). The residuals are effectively independent of the predictor.\n- Residual Distribution: Clearly Non-Gaussian (Kurtosis: -1.25). This is a good sign for a causal mechanism if the noise is non-Gaussian.\n\n### Comparative Analysis (Objective)\n- **Model Fit (R²)**: A->B: 0.9770 vs B->A: 0.9770.\n  -> Both directions explain the data equally well (relative difference < 2%).\n\n- **Mechanism Complexity**: A->B: linear, B->A: linear.\n  -> Both directions imply similar functional complexity.\n\n- **Residual Independence (HSIC)**: A->B: 0.0194 vs B->A: 0.0006.\n  -> Lower score = Better independence (residuals are decoupled from predictor).\n  -> Direction B->A demonstrates **substantially better** residual independence (relative improvement >3007%). This is a strong signal.\n\n- **Heteroscedasticity**: A->B: 0.163, B->A: 0.049.\n  -> Higher value indicates variance of residuals changes with predictor (often a sign of wrong direction in ANM).",
+    "full_llm_response": {
+      "causal_direction": "B->A",
+      "confidence": "high",
+      "reasoning_chain": [
+        {
+          "observation": "Residual Independence (HSIC):",
+          "details": "B->A residual HSIC is 0.0006, substantially lower than A->B (0.0194). Relative difference is over 3000%, far above the 50% threshold for strong signal.",
+          "implication": "Strongly favors B->A as the correct causal direction according to ANM principles."
+        },
+        {
+          "observation": "Heteroscedasticity:",
+          "details": "B->A heteroscedasticity is 0.049, much lower than A->B (0.163). Lower heteroscedasticity is expected in the true causal direction.",
+          "implication": "Reinforces B->A as the likely causal direction."
+        },
+        {
+          "observation": "Model Fit (R²):",
+          "details": "Both directions have virtually identical fit (0.977), so this does not help distinguish direction.",
+          "implication": "No evidence for or against either direction from model fit."
+        },
+        {
+          "observation": "Model Complexity:",
+          "details": "Both directions are best fit by a linear model; no difference in functional complexity.",
+          "implication": "No evidence for or against either direction from model complexity."
+        },
+        {
+          "observation": "Residual Non-Gaussianity:",
+          "details": "Both directions have clear non-Gaussian residuals (negative kurtosis), supporting identifiability in the LiNGAM framework.",
+          "implication": "Both directions are suitable for linear non-Gaussian modeling, but does not distinguish direction."
+        },
+        {
+          "observation": "Skewness & Kurtosis of Variables:",
+          "details": "Both variables are highly skewed and leptokurtic, but are nearly identical; this does not help determine direction."
+        }
+      ],
+      "contradictions_or_uncertainties": [
+        "No major contradictions: all strong signals (HSIC and heteroscedasticity) point to B->A.",
+        "Both directions have excellent residual independence and fit, but B->A is substantially better on independence metrics.",
+        "No evidence of confounding: both directions fit well, but independence is best for B->A."
+      ],
+      "final_basis": "HSIC (residual independence) is the gold standard and shows a dramatic improvement for B->A (>3000% relative difference). Heteroscedasticity is also much lower for B->A, both aligning with ANM causal inference criteria. No other indicators contradict this, so the evidence is strong and consistent."
+    }
+  }
+]

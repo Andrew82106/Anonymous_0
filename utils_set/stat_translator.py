@@ -1,3 +1,26 @@
+"""
+StatTranslator: 统计特征到自然语言叙事的翻译器
+
+本模块是ACR（抽象因果推理）框架的核心组件，负责：
+1. 从变量对(X, Y)中提取多维度统计特征
+2. 将数值特征转化为客观的自然语言叙事
+3. 支持连续变量和离散变量的自适应分析
+
+核心统计特征：
+- 分布特性：偏度(Skewness)、峰度(Kurtosis) - LiNGAM原理
+- 关系强度：Pearson/Spearman相关、互信息(MI)
+- 残差独立性：HSIC(Hilbert-Schmidt Independence Criterion) - ANM原理
+- 异方差性：残差方差的变异系数
+
+理论基础：
+- LiNGAM: 线性非高斯无环模型 (Shimizu et al., 2006)
+- ANM: 加性噪声模型 (Hoyer et al., 2008)
+- HSIC: 核方法独立性检验 (Gretton et al., 2005)
+- IGCI: 信息几何因果推断 (Janzing et al., 2012)
+
+Author: ACR Framework Team
+"""
+
 import numpy as np
 from scipy.stats import skew, kurtosis, pearsonr, spearmanr, chi2_contingency, entropy, fisher_exact
 from scipy.spatial.distance import pdist, squareform
@@ -8,7 +31,16 @@ from sklearn.pipeline import make_pipeline
 from sklearn.metrics import accuracy_score, log_loss, mutual_info_score
 from sklearn.feature_selection import mutual_info_regression
 
+
 class StatTranslator:
+    """
+    统计特征翻译器：将数值统计特征转化为自然语言叙事
+    
+    使用方法：
+        translator = StatTranslator()
+        stats = translator.analyze(X, Y)  # 提取统计特征
+        narrative = translator.generate_narrative(stats)  # 生成叙事
+    """
     def __init__(self):
         pass
 

@@ -1,0 +1,457 @@
+[
+  {
+    "network": "asia",
+    "n_nodes": 8,
+    "n_edges": 8,
+    "llm": {
+      "shd": 5,
+      "accuracy": 0.625,
+      "pairwise_details": [
+        {
+          "pair": "asia->tub",
+          "prediction": "Unclear",
+          "is_correct": false
+        },
+        {
+          "pair": "tub->either",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "smoke->lung",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "smoke->bronc",
+          "prediction": "B->A",
+          "is_correct": false
+        },
+        {
+          "pair": "lung->either",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "bronc->dysp",
+          "prediction": "B->A",
+          "is_correct": false
+        },
+        {
+          "pair": "either->xray",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "either->dysp",
+          "prediction": "A->B",
+          "is_correct": true
+        }
+      ]
+    },
+    "pc": {
+      "shd": 12
+    },
+    "hillclimb": {
+      "shd": 16
+    },
+    "random": {
+      "shd": 16
+    }
+  },
+  {
+    "network": "sprinkler",
+    "n_nodes": 4,
+    "n_edges": 4,
+    "llm": {
+      "shd": 3,
+      "accuracy": 0.5,
+      "pairwise_details": [
+        {
+          "pair": "Cloudy->Sprinkler",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "Cloudy->Rain",
+          "prediction": "Unclear",
+          "is_correct": false
+        },
+        {
+          "pair": "Sprinkler->Wet_Grass",
+          "prediction": "B->A",
+          "is_correct": false
+        },
+        {
+          "pair": "Rain->Wet_Grass",
+          "prediction": "A->B",
+          "is_correct": true
+        }
+      ]
+    },
+    "pc": {
+      "shd": 0
+    },
+    "hillclimb": {
+      "shd": 2
+    },
+    "random": {
+      "shd": 6
+    }
+  },
+  {
+    "network": "alarm",
+    "n_nodes": 37,
+    "n_edges": 46,
+    "llm": {
+      "shd": 8,
+      "accuracy": 0.8913043478260869,
+      "pairwise_details": [
+        {
+          "pair": "LVFAILURE->HISTORY",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "LVFAILURE->LVEDVOLUME",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "LVFAILURE->STROKEVOLUME",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "LVEDVOLUME->CVP",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "LVEDVOLUME->PCWP",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "HYPOVOLEMIA->LVEDVOLUME",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "HYPOVOLEMIA->STROKEVOLUME",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "STROKEVOLUME->CO",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "ERRLOWOUTPUT->HRBP",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "HR->HRBP",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "HR->HREKG",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "HR->HRSAT",
+          "prediction": "B->A",
+          "is_correct": false
+        },
+        {
+          "pair": "HR->CO",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "ERRCAUTER->HREKG",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "ERRCAUTER->HRSAT",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "ANAPHYLAXIS->TPR",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "TPR->CATECHOL",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "TPR->BP",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "ARTCO2->EXPCO2",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "ARTCO2->CATECHOL",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "VENTLUNG->EXPCO2",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "VENTLUNG->MINVOL",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "VENTLUNG->VENTALV",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "INTUBATION->VENTLUNG",
+          "prediction": "B->A",
+          "is_correct": false
+        },
+        {
+          "pair": "INTUBATION->MINVOL",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "INTUBATION->VENTALV",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "INTUBATION->SHUNT",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "INTUBATION->PRESS",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "FIO2->PVSAT",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "PVSAT->SAO2",
+          "prediction": "B->A",
+          "is_correct": false
+        },
+        {
+          "pair": "VENTALV->ARTCO2",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "VENTALV->PVSAT",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "SAO2->CATECHOL",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "SHUNT->SAO2",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "PULMEMBOLUS->SHUNT",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "PULMEMBOLUS->PAP",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "KINKEDTUBE->VENTLUNG",
+          "prediction": "Unclear",
+          "is_correct": false
+        },
+        {
+          "pair": "KINKEDTUBE->PRESS",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "VENTTUBE->VENTLUNG",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "VENTTUBE->PRESS",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "MINVOLSET->VENTMACH",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "VENTMACH->VENTTUBE",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "DISCONNECT->VENTTUBE",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "CATECHOL->HR",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "INSUFFANESTH->CATECHOL",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "CO->BP",
+          "prediction": "Unclear",
+          "is_correct": false
+        }
+      ]
+    },
+    "pc": {
+      "shd": 75
+    },
+    "hillclimb": {
+      "shd": 85
+    },
+    "random": {
+      "shd": 84
+    }
+  },
+  {
+    "network": "sachs",
+    "n_nodes": 11,
+    "n_edges": 17,
+    "llm": {
+      "shd": 4,
+      "accuracy": 0.8235294117647058,
+      "pairwise_details": [
+        {
+          "pair": "Erk->Akt",
+          "prediction": "Unclear",
+          "is_correct": false
+        },
+        {
+          "pair": "PKA->Erk",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "PKA->Akt",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "PKA->Mek",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "PKA->Jnk",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "PKA->Raf",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "PKA->P38",
+          "prediction": "B->A",
+          "is_correct": false
+        },
+        {
+          "pair": "Mek->Erk",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "PKC->PKA",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "PKC->Mek",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "PKC->Jnk",
+          "prediction": "Unclear",
+          "is_correct": false
+        },
+        {
+          "pair": "PKC->Raf",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "PKC->P38",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "Raf->Mek",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "PIP3->PIP2",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "Plcg->PIP3",
+          "prediction": "A->B",
+          "is_correct": true
+        },
+        {
+          "pair": "Plcg->PIP2",
+          "prediction": "A->B",
+          "is_correct": true
+        }
+      ]
+    },
+    "pc": {
+      "shd": 29
+    },
+    "hillclimb": {
+      "shd": 24
+    },
+    "random": {
+      "shd": 30
+    }
+  }
+]
