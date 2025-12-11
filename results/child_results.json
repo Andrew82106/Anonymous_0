@@ -1,0 +1,146 @@
+{
+  "network": "child",
+  "n_nodes": 20,
+  "n_edges": 25,
+  "llm": {
+    "shd": 6,
+    "accuracy": 0.76,
+    "queries": 25,
+    "pairwise_details": [
+      {
+        "pair": "BirthAsphyxia->Disease",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "HypDistrib->LowerBodyO2",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "HypoxiaInO2->LowerBodyO2",
+        "prediction": "B->A",
+        "is_correct": false
+      },
+      {
+        "pair": "HypoxiaInO2->RUQO2",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "CO2->CO2Report",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ChestXray->XrayReport",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Grunting->GruntingReport",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Disease->Age",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Disease->LVH",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Disease->DuctFlow",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Disease->CardiacMixing",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Disease->LungParench",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Disease->LungFlow",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Disease->Sick",
+        "prediction": "B->A",
+        "is_correct": false
+      },
+      {
+        "pair": "LVH->LVHreport",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "DuctFlow->HypDistrib",
+        "prediction": "B->A",
+        "is_correct": false
+      },
+      {
+        "pair": "CardiacMixing->HypDistrib",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "CardiacMixing->HypoxiaInO2",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "LungParench->HypoxiaInO2",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "LungParench->CO2",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "LungParench->ChestXray",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "LungParench->Grunting",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "LungFlow->ChestXray",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Sick->Grunting",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Sick->Age",
+        "prediction": "A->B",
+        "is_correct": true
+      }
+    ]
+  },
+  "pc": {
+    "shd": 14
+  },
+  "hillclimb": {
+    "shd": 16
+  },
+  "random": {
+    "shd": 50
+  }
+}

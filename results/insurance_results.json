@@ -1,0 +1,281 @@
+{
+  "network": "insurance",
+  "n_nodes": 27,
+  "n_edges": 52,
+  "llm": {
+    "shd": 9,
+    "accuracy": 0.8269230769230769,
+    "queries": 52,
+    "pairwise_details": [
+      {
+        "pair": "Age->GoodStudent",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Age->SocioEcon",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Age->RiskAversion",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Age->DrivingSkill",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Age->SeniorTrain",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Age->MedCost",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "SocioEcon->GoodStudent",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "SocioEcon->RiskAversion",
+        "prediction": "B->A",
+        "is_correct": false
+      },
+      {
+        "pair": "SocioEcon->VehicleYear",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "SocioEcon->MakeModel",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "SocioEcon->HomeBase",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "SocioEcon->AntiTheft",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "SocioEcon->OtherCar",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RiskAversion->VehicleYear",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RiskAversion->MakeModel",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RiskAversion->DrivQuality",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RiskAversion->SeniorTrain",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RiskAversion->HomeBase",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RiskAversion->AntiTheft",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "RiskAversion->DrivHist",
+        "prediction": "B->A",
+        "is_correct": false
+      },
+      {
+        "pair": "VehicleYear->RuggedAuto",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "VehicleYear->Antilock",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "VehicleYear->CarValue",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "VehicleYear->Airbag",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ThisCarDam->ThisCarCost",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RuggedAuto->ThisCarDam",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RuggedAuto->OtherCarCost",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RuggedAuto->Cushioning",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Accident->ThisCarDam",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Accident->OtherCarCost",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Accident->MedCost",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Accident->ILiCost",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "MakeModel->RuggedAuto",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "MakeModel->Antilock",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "MakeModel->CarValue",
+        "prediction": "A<-Z->B",
+        "is_correct": false
+      },
+      {
+        "pair": "MakeModel->Airbag",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "DrivQuality->Accident",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Mileage->Accident",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Mileage->CarValue",
+        "prediction": "B->A",
+        "is_correct": false
+      },
+      {
+        "pair": "Antilock->Accident",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "DrivingSkill->DrivQuality",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "DrivingSkill->DrivHist",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "SeniorTrain->DrivingSkill",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ThisCarCost->PropCost",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Theft->ThisCarCost",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "CarValue->ThisCarCost",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "CarValue->Theft",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "HomeBase->Theft",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "AntiTheft->Theft",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "OtherCarCost->PropCost",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cushioning->MedCost",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Airbag->Cushioning",
+        "prediction": "Unclear",
+        "is_correct": false
+      }
+    ]
+  },
+  "pc": {
+    "shd": 39
+  },
+  "hillclimb": {
+    "shd": 31
+  },
+  "random": {
+    "shd": 104
+  }
+}
