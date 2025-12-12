@@ -1,0 +1,48 @@
+{
+  "p2.1": {
+    "experiment": "P2.1_ESHD",
+    "network": "sachs",
+    "sample_size": 1000,
+    "acr_shd": 2,
+    "acr_eshd": 2,
+    "acr_accuracy": 0.941,
+    "dibs_gpt_eshd": 21.7,
+    "improvement_pct": 90.8
+  },
+  "p2.2": {
+    "experiment": "P2.2_MMHC_ACR",
+    "network": "asia",
+    "sample_size": 1000,
+    "mmhc_shd": 12,
+    "mmhc_acr_shd": 10,
+    "pc_shd": 10,
+    "improvement_pct": 16.7
+  },
+  "p2.3": {
+    "experiment": "P2.3_Low_Sample",
+    "network": "asia",
+    "results_by_sample": [
+      {
+        "sample_size": 100,
+        "pc_shd": 11,
+        "hillclimb_shd": 8,
+        "acr_shd": 0,
+        "acr_accuracy": 1.0
+      },
+      {
+        "sample_size": 500,
+        "pc_shd": 8,
+        "hillclimb_shd": 14,
+        "acr_shd": 2,
+        "acr_accuracy": 0.875
+      },
+      {
+        "sample_size": 1000,
+        "pc_shd": 8,
+        "hillclimb_shd": 8,
+        "acr_shd": 2,
+        "acr_accuracy": 0.875
+      }
+    ]
+  }
+}

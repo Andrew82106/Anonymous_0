@@ -1,0 +1,347 @@
+{
+  "network": "hailfinder",
+  "n_nodes": 56,
+  "n_edges": 66,
+  "llm": {
+    "shd": 40,
+    "accuracy": 0.3939393939393939,
+    "queries": 66,
+    "pairwise_details": [
+      {
+        "pair": "N0_7muVerMo->CombVerMo",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "SubjVertMo->CombVerMo",
+        "prediction": "A<-Z->B",
+        "is_correct": false
+      },
+      {
+        "pair": "QGVertMotion->CombVerMo",
+        "prediction": "A<-Z->B",
+        "is_correct": false
+      },
+      {
+        "pair": "CombVerMo->AreaMeso_ALS",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "AreaMeso_ALS->AreaMoDryAir",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "AreaMeso_ALS->CldShadeOth",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "AreaMeso_ALS->CompPlFcst",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "SatContMoist->CombMoisture",
+        "prediction": "A<-Z->B",
+        "is_correct": false
+      },
+      {
+        "pair": "RaoContMoist->CombMoisture",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "CombMoisture->AreaMoDryAir",
+        "prediction": "A<-Z->B",
+        "is_correct": false
+      },
+      {
+        "pair": "AreaMoDryAir->CldShadeOth",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "VISCloudCov->CombClouds",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "IRCloudCover->CombClouds",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "CombClouds->CldShadeOth",
+        "prediction": "B->A",
+        "is_correct": false
+      },
+      {
+        "pair": "CldShadeOth->InsInMt",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "CldShadeOth->CompPlFcst",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "AMInstabMt->InsInMt",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "InsInMt->OutflowFrMt",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "InsInMt->CldShadeConv",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "InsInMt->MountainFcst",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "WndHodograph->OutflowFrMt",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "WndHodograph->Boundaries",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "WndHodograph->CldShadeConv",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "OutflowFrMt->Boundaries",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "MorningBound->Boundaries",
+        "prediction": "A<-Z->B",
+        "is_correct": false
+      },
+      {
+        "pair": "Boundaries->CompPlFcst",
+        "prediction": "B->A",
+        "is_correct": false
+      },
+      {
+        "pair": "CldShadeConv->CompPlFcst",
+        "prediction": "B->A",
+        "is_correct": false
+      },
+      {
+        "pair": "CompPlFcst->CapChange",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "CompPlFcst->InsChange",
+        "prediction": "A<-Z->B",
+        "is_correct": false
+      },
+      {
+        "pair": "CapChange->CapInScen",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "LoLevMoistAd->InsChange",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "InsChange->InsSclInScen",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "MountainFcst->R5Fcst",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Date->Scenario",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Scenario->ScenRelAMCIN",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Scenario->ScenRelAMIns",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Scenario->ScenRel3_4",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Scenario->ScnRelPlFcst",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Scenario->Dewpoints",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Scenario->LowLLapse",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Scenario->MeanRH",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Scenario->MidLLapse",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Scenario->MvmtFeatures",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Scenario->RHRatio",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Scenario->SfcWndShfDis",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Scenario->SynForcng",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Scenario->TempDis",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Scenario->WindAloft",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Scenario->WindFieldMt",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Scenario->WindFieldPln",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "ScenRelAMCIN->AMCINInScen",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "MorningCIN->AMCINInScen",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "AMCINInScen->CapInScen",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "CapInScen->PlainsFcst",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "ScenRelAMIns->AMInsWliScen",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "LIfr12ZDENSd->AMInsWliScen",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "AMDewptCalPl->AMInsWliScen",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "AMInsWliScen->InsSclInScen",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "InsSclInScen->PlainsFcst",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "ScenRel3_4->N34StarFcst",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "LatestCIN->CurPropConv",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "LLIW->CurPropConv",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "CurPropConv->PlainsFcst",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "ScnRelPlFcst->PlainsFcst",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "PlainsFcst->N34StarFcst",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "N34StarFcst->R5Fcst",
+        "prediction": "Unclear",
+        "is_correct": false
+      }
+    ]
+  },
+  "pc": null,
+  "hillclimb": null,
+  "random": {
+    "shd": 132
+  }
+}

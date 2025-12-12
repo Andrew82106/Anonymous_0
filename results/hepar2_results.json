@@ -1,0 +1,636 @@
+{
+  "network": "hepar2",
+  "n_nodes": 70,
+  "n_edges": 123,
+  "llm": {
+    "shd": 17,
+    "accuracy": 0.8617886178861789,
+    "queries": 123,
+    "pairwise_details": [
+      {
+        "pair": "alcoholism->THepatitis",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "alcoholism->Steatosis",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "vh_amn->ChHepatitis",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "vh_amn->hbsag",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "vh_amn->hbsag_anti",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "vh_amn->hbc_anti",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "vh_amn->hcv_anti",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "vh_amn->hbeag",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "hepatotoxic->THepatitis",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "hepatotoxic->RHepatitis",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "THepatitis->fatigue",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "THepatitis->phosphatase",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "THepatitis->inr",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "THepatitis->hepatomegaly",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "THepatitis->alt",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "THepatitis->ast",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "THepatitis->ggtp",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "THepatitis->anorexia",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "THepatitis->nausea",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "THepatitis->spleen",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "hospital->injections",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "hospital->transfusion",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "surgery->injections",
+        "prediction": "B->A",
+        "is_correct": false
+      },
+      {
+        "pair": "surgery->transfusion",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "gallstones->choledocholithotomy",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "gallstones->bilirubin",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "gallstones->upper_pain",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "gallstones->fat",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "gallstones->pressure_ruq",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "gallstones->flatulence",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "gallstones->amylase",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "choledocholithotomy->injections",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "choledocholithotomy->transfusion",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "injections->ChHepatitis",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "transfusion->ChHepatitis",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ChHepatitis->fibrosis",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "ChHepatitis->fatigue",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ChHepatitis->bilirubin",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ChHepatitis->pressure_ruq",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ChHepatitis->phosphatase",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ChHepatitis->inr",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ChHepatitis->ESR",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ChHepatitis->alt",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ChHepatitis->ast",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ChHepatitis->ggtp",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ChHepatitis->cholesterol",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ChHepatitis->hbsag",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ChHepatitis->hbsag_anti",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ChHepatitis->hbc_anti",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ChHepatitis->hcv_anti",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "ChHepatitis->hbeag",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "sex->PBC",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "sex->Hyperbilirubinemia",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "age->PBC",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "age->Hyperbilirubinemia",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "PBC->bilirubin",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "PBC->pressure_ruq",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "PBC->ama",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "PBC->le_cells",
+        "prediction": "B->A",
+        "is_correct": false
+      },
+      {
+        "pair": "PBC->joints",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "PBC->pain",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "PBC->platelet",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "PBC->encephalopathy",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "PBC->ESR",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "PBC->ggtp",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "PBC->cholesterol",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "PBC->carcinoma",
+        "prediction": "B->A",
+        "is_correct": false
+      },
+      {
+        "pair": "fibrosis->Cirrhosis",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "diabetes->obesity",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "obesity->Steatosis",
+        "prediction": "A<-Z->B",
+        "is_correct": false
+      },
+      {
+        "pair": "Steatosis->Cirrhosis",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Steatosis->triglycerides",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Steatosis->pain_ruq",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Steatosis->hepatomegaly",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Steatosis->ESR",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Steatosis->alt",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Steatosis->ast",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Steatosis->ggtp",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Steatosis->cholesterol",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cirrhosis->bilirubin",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cirrhosis->phosphatase",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cirrhosis->proteins",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cirrhosis->edema",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cirrhosis->platelet",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cirrhosis->inr",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cirrhosis->alcohol",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cirrhosis->encephalopathy",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cirrhosis->alt",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cirrhosis->ast",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cirrhosis->spleen",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Cirrhosis->spiders",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cirrhosis->albumin",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cirrhosis->edge",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cirrhosis->irregular_liver",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cirrhosis->palms",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Cirrhosis->carcinoma",
+        "prediction": "Unclear",
+        "is_correct": false
+      },
+      {
+        "pair": "Hyperbilirubinemia->bilirubin",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Hyperbilirubinemia->pain_ruq",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Hyperbilirubinemia->inr",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Hyperbilirubinemia->hepatomegaly",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Hyperbilirubinemia->ESR",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "Hyperbilirubinemia->ggtp",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RHepatitis->fatigue",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RHepatitis->phosphatase",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RHepatitis->hepatomegaly",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RHepatitis->alt",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RHepatitis->ast",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RHepatitis->ggtp",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RHepatitis->anorexia",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RHepatitis->nausea",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "RHepatitis->spleen",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "bilirubin->itching",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "bilirubin->skin",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "bilirubin->jaundice",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "joints->pain",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "proteins->ascites",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "platelet->bleeding",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "inr->bleeding",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "encephalopathy->urea",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "encephalopathy->density",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "encephalopathy->consciousness",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "hepatomegaly->hepatalgia",
+        "prediction": "A->B",
+        "is_correct": true
+      },
+      {
+        "pair": "hbsag->hbsag_anti",
+        "prediction": "A->B",
+        "is_correct": true
+      }
+    ]
+  },
+  "pc": {
+    "shd": 117
+  },
+  "hillclimb": {
+    "shd": 100
+  },
+  "random": {
+    "shd": 246
+  }
+}

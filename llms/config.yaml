@@ -2,7 +2,7 @@
 # API接口模块是指调用该模型时使用的接口模块，如果是OPENAI那就是调用openai的接口，如果是zhipuAI那就是调用zhipuAI的接口，以此类推
 
 # 默认使用的模型
-used_model: "deepseek-ai/DeepSeek-V3.1"
+used_model: "gpt-4-turbo"
 
 # API 调用延迟（秒），用于避免速率限制
 api_delay: 1.5
