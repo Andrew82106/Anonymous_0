@@ -1,6 +1,28 @@
 """
 Figure 4: Framework Overview (框架图)
 ACR 流水线架构图
+
+Note: This figure can also be created using Banana diagram tool with the following prompt:
+
+=== BANANA PROMPT FOR FIG4 ===
+Create a scientific diagram showing a two-stage causal discovery pipeline:
+
+Stage 1 (top): "Skeleton Learning"
+- Input: Observational Data (matrix icon)
+- Process: PC Algorithm (box)
+- Output: PDAG with undirected edges (graph with some directed, some undirected edges)
+
+Stage 2 (bottom): "Conservative Refinement"
+- For each undirected edge:
+  - Statistical Feature Extraction (HSIC, residual independence)
+  - StatTranslator: Convert to natural language narrative
+  - LLM Inference: Determine direction or "Unclear"
+  - Fallback mechanism: Keep undirected if uncertain
+
+Output: Final DAG
+
+Style: Clean, academic, blue/gray color scheme, arrows showing data flow
+=== END BANANA PROMPT ===
 """
 
 import matplotlib.pyplot as plt
