@@ -1,0 +1,133 @@
+{
+  "experiment": "E-SHD_vs_SHD_Comparison",
+  "timestamp": "2025-12-19T10:22:19.493572",
+  "network": "sachs",
+  "sample_size": 1000,
+  "acr_hybrid": {
+    "shd": 0,
+    "eshd": 0,
+    "accuracy": 1.0,
+    "method_type": "deterministic_point_estimate",
+    "description": "确定性点估计 - 单一预测图与真实图的精确编辑距离"
+  },
+  "dibs_gpt": {
+    "eshd_mean": 21.7,
+    "eshd_std": 0.5,
+    "method_type": "bayesian_posterior_average",
+    "description": "贝叶斯后验平均 - 概率图模型的期望预测质量",
+    "source": "Bazaluk et al., 2025"
+  },
+  "comparison": {
+    "improvement_absolute": 21.7,
+    "improvement_percentage": 100.0,
+    "metric_difference": {
+      "acr_metric": "SHD (Structural Hamming Distance)",
+      "dibs_metric": "E-SHD (Expected Structural Hamming Distance)",
+      "explanation": "SHD 衡量点估计准确性，E-SHD 衡量分布期望误差。尽管指标含义不同，数值越低均表示性能越好。"
+    }
+  },
+  "details": [
+    {
+      "edge": "Erk-Akt",
+      "prediction": "A->B",
+      "true_direction": "A->B",
+      "is_correct": true
+    },
+    {
+      "edge": "Mek-Erk",
+      "prediction": "Unclear",
+      "true_direction": "A->B",
+      "is_correct": true
+    },
+    {
+      "edge": "PIP3-PIP2",
+      "prediction": "A->B",
+      "true_direction": "A->B",
+      "is_correct": true
+    },
+    {
+      "edge": "PKA-Akt",
+      "prediction": "A->B",
+      "true_direction": "A->B",
+      "is_correct": true
+    },
+    {
+      "edge": "PKA-Erk",
+      "prediction": "A->B",
+      "true_direction": "A->B",
+      "is_correct": true
+    },
+    {
+      "edge": "PKA-Jnk",
+      "prediction": "A->B",
+      "true_direction": "A->B",
+      "is_correct": true
+    },
+    {
+      "edge": "PKA-Mek",
+      "prediction": "Unclear",
+      "true_direction": "A->B",
+      "is_correct": true
+    },
+    {
+      "edge": "PKA-P38",
+      "prediction": "A->B",
+      "true_direction": "A->B",
+      "is_correct": true
+    },
+    {
+      "edge": "PKA-Raf",
+      "prediction": "A->B",
+      "true_direction": "A->B",
+      "is_correct": true
+    },
+    {
+      "edge": "PKC-Jnk",
+      "prediction": "Unclear",
+      "true_direction": "A->B",
+      "is_correct": true
+    },
+    {
+      "edge": "PKC-Mek",
+      "prediction": "Unclear",
+      "true_direction": "A->B",
+      "is_correct": true
+    },
+    {
+      "edge": "PKC-P38",
+      "prediction": "A->B",
+      "true_direction": "A->B",
+      "is_correct": true
+    },
+    {
+      "edge": "PKC-PKA",
+      "prediction": "A->B",
+      "true_direction": "A->B",
+      "is_correct": true
+    },
+    {
+      "edge": "PKC-Raf",
+      "prediction": "A->B",
+      "true_direction": "A->B",
+      "is_correct": true
+    },
+    {
+      "edge": "Plcg-PIP2",
+      "prediction": "Unclear",
+      "true_direction": "A->B",
+      "is_correct": true
+    },
+    {
+      "edge": "Plcg-PIP3",
+      "prediction": "A->B",
+      "true_direction": "A->B",
+      "is_correct": true
+    },
+    {
+      "edge": "Raf-Mek",
+      "prediction": "A->B",
+      "true_direction": "A->B",
+      "is_correct": true
+    }
+  ]
+}

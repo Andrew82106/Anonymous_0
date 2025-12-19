@@ -1,0 +1,134 @@
+{
+  "task": "2",
+  "description": "约束类基座替代实验",
+  "timestamp": "2025-12-18T18:56:22.829588",
+  "results": {
+    "task_2_2": {
+      "task": "2.2",
+      "description": "FCI + ACR on Asia/Child networks",
+      "timestamp": "2025-12-18T18:56:22.828280",
+      "networks": {
+        "asia": {
+          "experiment": "FCI_ACR",
+          "network": "asia",
+          "sample_size": 1000,
+          "fci_shd": 10,
+          "fci_acr_shd": 10,
+          "shd_improvement": 0,
+          "f1": 0.16666666666666666,
+          "precision": 0.25,
+          "recall": 0.125,
+          "orientable_edges_count": 1,
+          "acr_accuracy": 0.0,
+          "is_fallback": false,
+          "details": [
+            {
+              "edge": "smoke-bronc",
+              "prediction": "B->A",
+              "true_direction": "A->B",
+              "is_correct": false
+            }
+          ],
+          "task": "2.2",
+          "timestamp": "2025-12-18T18:50:21.670116"
+        },
+        "child": {
+          "experiment": "FCI_ACR",
+          "network": "child",
+          "sample_size": 1000,
+          "fci_shd": 19,
+          "fci_acr_shd": 23,
+          "shd_improvement": -4,
+          "f1": 0.41025641025641024,
+          "precision": 0.5714285714285714,
+          "recall": 0.32,
+          "orientable_edges_count": 13,
+          "acr_accuracy": 0.6153846153846154,
+          "is_fallback": false,
+          "details": [
+            {
+              "edge": "HypDistrib-LowerBodyO2",
+              "prediction": "A->B",
+              "true_direction": "A->B",
+              "is_correct": true
+            },
+            {
+              "edge": "HypDistrib-DuctFlow",
+              "prediction": "A->B",
+              "true_direction": "B->A",
+              "is_correct": false
+            },
+            {
+              "edge": "HypoxiaInO2-RUQO2",
+              "prediction": "Unclear",
+              "true_direction": "A->B",
+              "is_correct": true
+            },
+            {
+              "edge": "HypoxiaInO2-CardiacMixing",
+              "prediction": "A->B",
+              "true_direction": "B->A",
+              "is_correct": false
+            },
+            {
+              "edge": "ChestXray-XrayReport",
+              "prediction": "Unclear",
+              "true_direction": "A->B",
+              "is_correct": true
+            },
+            {
+              "edge": "ChestXray-LungParench",
+              "prediction": "A->B",
+              "true_direction": "B->A",
+              "is_correct": false
+            },
+            {
+              "edge": "ChestXray-LungFlow",
+              "prediction": "A->B",
+              "true_direction": "B->A",
+              "is_correct": false
+            },
+            {
+              "edge": "LVHreport-LVH",
+              "prediction": "A<-Z->B",
+              "true_direction": "B->A",
+              "is_correct": false
+            },
+            {
+              "edge": "Disease-LVH",
+              "prediction": "A->B",
+              "true_direction": "A->B",
+              "is_correct": true
+            },
+            {
+              "edge": "Disease-DuctFlow",
+              "prediction": "A->B",
+              "true_direction": "A->B",
+              "is_correct": true
+            },
+            {
+              "edge": "Disease-CardiacMixing",
+              "prediction": "A->B",
+              "true_direction": "A->B",
+              "is_correct": true
+            },
+            {
+              "edge": "Disease-LungParench",
+              "prediction": "A->B",
+              "true_direction": "A->B",
+              "is_correct": true
+            },
+            {
+              "edge": "Disease-LungFlow",
+              "prediction": "A->B",
+              "true_direction": "A->B",
+              "is_correct": true
+            }
+          ],
+          "task": "2.2",
+          "timestamp": "2025-12-18T18:56:22.828221"
+        }
+      }
+    }
+  }
+}

@@ -1,31 +1,20 @@
 """
-Figure 2: Performance Gap (性能对比图)
+Figure 2: Performance Gap - 简洁顶刊风格
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
 
-# 查找系统中的中文字体
-def get_chinese_font():
-    fonts = ['PingFang SC', 'Heiti SC', 'STHeiti', 'Songti SC', 'Hiragino Sans GB']
-    for font in fonts:
-        try:
-            fp = fm.FontProperties(family=font)
-            if fm.findfont(fp) != fm.findfont(fm.FontProperties()):
-                return font
-        except:
-            continue
-    return None
-
-chinese_font = get_chinese_font()
-if chinese_font:
-    plt.rcParams['font.family'] = chinese_font
+# 设置中文字体 (macOS 简体中文)
+plt.rcParams['font.sans-serif'] = ['Hiragino Sans GB', 'PingFang HK', 'Heiti TC', 'Arial Unicode MS']
 plt.rcParams['axes.unicode_minus'] = False
-plt.style.use('seaborn-v0_8-whitegrid')
 
 def main():
-    # 使用英文标签避免字体问题
+    plt.rcParams['axes.facecolor'] = 'white'
+    plt.rcParams['figure.facecolor'] = 'white'
+    plt.rcParams['axes.edgecolor'] = '#333333'
+    plt.rcParams['axes.linewidth'] = 0.8
+    
     networks = ['Sprinkler\n(4)', 'Asia\n(8)', 'Sachs\n(11)', 'Child\n(20)', 
                 'Insurance\n(27)', 'Alarm\n(37)', 'Hailfinder\n(56)', 'Hepar II\n(70)']
     
@@ -39,52 +28,37 @@ def main():
     x = np.arange(len(networks))
     width = 0.2
     
-    fig, ax = plt.subplots(figsize=(16, 7))
+    fig, ax = plt.subplots(figsize=(14, 5))
     
+    # 简洁配色
     colors = {
-        'ACR-Hybrid': '#E74C3C',
-        'PC':         '#7F8C8D',
-        'HillClimb':  '#3498DB',
-        'Random':     '#BDC3C7',
+        'ACR-Hybrid': '#D62728',  # 红色强调
+        'PC':         '#7F7F7F',  # 灰色
+        'HillClimb':  '#1F77B4',  # 蓝色
+        'Random':     '#C7C7C7',  # 浅灰
     }
     
-    bars = {}
     for i, (method, values) in enumerate(data.items()):
         offset = (i - 1.5) * width
-        bars[method] = ax.bar(x + offset, values, width, label=method, 
-                              color=colors[method], edgecolor='white', linewidth=0.5)
+        ax.bar(x + offset, values, width, label=method, 
+               color=colors[method], edgecolor='none')
     
-    for i, acr_val in enumerate(data['ACR-Hybrid']):
-        all_vals = [data[m][i] for m in data.keys()]
-        if acr_val == min(all_vals):
-            ax.annotate('*', xy=(x[i] - 1.5*width, acr_val), 
-                       xytext=(0, 5), textcoords='offset points',
-                       ha='center', fontsize=16, color='#E74C3C', fontweight='bold')
-    
-    for method, bar_group in bars.items():
-        for bar in bar_group:
-            height = bar.get_height()
-            ax.annotate(f'{int(height)}',
-                       xy=(bar.get_x() + bar.get_width() / 2, height),
-                       xytext=(0, 3), textcoords='offset points',
-                       ha='center', va='bottom', fontsize=9,
-                       color='black' if method != 'ACR-Hybrid' else '#E74C3C',
-                       fontweight='bold' if method == 'ACR-Hybrid' else 'normal')
-    
-    ax.set_xlabel('Benchmark Networks (nodes)', fontsize=13)
-    ax.set_ylabel('Structural Hamming Distance (SHD)', fontsize=13)
-    ax.set_title('ACR-Hybrid vs Traditional Algorithms (Lower is Better)', 
-                 fontsize=14, fontweight='bold')
+    ax.set_xlabel('基准网络 (节点数)', fontsize=12)
+    ax.set_ylabel('SHD', fontsize=12)
+    ax.set_title('真实贝叶斯网络基准性能对比', fontsize=13, fontweight='bold', pad=10)
     ax.set_xticks(x)
-    ax.set_xticklabels(networks, fontsize=10)
-    ax.legend(loc='upper right', fontsize=10)
-    ax.yaxis.grid(True, linestyle='--', alpha=0.7)
-    ax.set_axisbelow(True)
-    ax.set_ylim(0, max(max(v) for v in data.values()) * 1.15)
+    ax.set_xticklabels(networks, fontsize=9)
+    ax.legend(loc='upper left', fontsize=10, frameon=False)
+    
+    # 简洁样式
+    ax.grid(False)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.set_ylim(0, max(max(v) for v in data.values()) * 1.1)
     
     plt.tight_layout()
-    plt.savefig('fig2_performance_gap.png', dpi=300, bbox_inches='tight')
-    plt.savefig('fig2_performance_gap.pdf', bbox_inches='tight')
+    plt.savefig('fig2_performance_gap.png', dpi=300, bbox_inches='tight', facecolor='white')
+    plt.savefig('fig2_performance_gap.pdf', bbox_inches='tight', facecolor='white')
     print("Saved: fig2_performance_gap.png, fig2_performance_gap.pdf")
     
     import shutil, os

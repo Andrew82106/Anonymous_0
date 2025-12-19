@@ -1,0 +1,61 @@
+{
+  "network": "asia",
+  "base_algorithm": "mmhc",
+  "sample_size": 1000,
+  "base_metrics": {
+    "shd": 9,
+    "skeleton": {
+      "precision": 0.8,
+      "recall": 0.5,
+      "f1": 0.6153846153846154
+    },
+    "orientation": {
+      "precision": 0.4,
+      "recall": 0.25,
+      "f1": 0.3076923076923077
+    }
+  },
+  "hybrid_metrics": {
+    "shd": 9,
+    "skeleton": {
+      "precision": 0.8,
+      "recall": 0.5,
+      "f1": 0.6153846153846154
+    },
+    "orientation": {
+      "precision": 0.42857142857142855,
+      "recall": 0.375,
+      "f1": 0.4
+    }
+  },
+  "details": {
+    "total_edges": 5,
+    "undirected_count": 5,
+    "acr_updates": 3,
+    "acr_unclear": 2,
+    "unclear_ratio": 0.4,
+    "acr_details": [
+      {
+        "edge": "bronc-dysp",
+        "prediction": "Unclear"
+      },
+      {
+        "edge": "bronc-smoke",
+        "prediction": "Unclear"
+      },
+      {
+        "edge": "either-lung",
+        "prediction": "B->A"
+      },
+      {
+        "edge": "dysp-lung",
+        "prediction": "A->B"
+      },
+      {
+        "edge": "either-xray",
+        "prediction": "A->B"
+      }
+    ]
+  },
+  "is_fallback": false
+}

@@ -1,0 +1,37 @@
+{
+  "task": "8.2",
+  "description": "更新论文讨论章节",
+  "timestamp": "2025-12-19T10:00:00",
+  "requirements_validated": ["7.1", "7.2", "7.4", "8.3"],
+  "updates": {
+    "universal_shape_of_causality": {
+      "location": "paper/sections/05_discussion.tex",
+      "section": "5.1.1 因果机制的普遍形态（Universal Shape of Causality）",
+      "content_summary": "解释了 LLM 可能在预训练中学到的因果机制普遍形态：原因变量分布简单，结果变量分布复杂。在 ANM 框架下表现为正确因果方向下残差与原因变量独立。",
+      "requirement": "7.1"
+    },
+    "igci_principle": {
+      "location": "paper/sections/05_discussion.tex",
+      "section": "5.1.2 信息几何因果推断原理（IGCI）",
+      "content_summary": "详细解释了 IGCI 原理：P(X) ⊥ P(Y|X)，即原因变量的边缘分布与因果机制独立。从信息论角度解释了原因分布熵低、结果条件熵反映机制复杂性。说明了 StatTranslator 如何将 IGCI 特征转化为自然语言叙事。",
+      "requirement": "7.2",
+      "citation": "janzing2012information"
+    },
+    "conservative_fallback_mechanism": {
+      "location": "paper/sections/05_discussion.tex",
+      "section": "5.3.2 Hailfinder网络的挑战与保守回退机制的价值",
+      "content_summary": "详细论证了保守回退机制的三个价值：(1) 避免错误传播 (2) 提供不确定性量化 (3) 与人类专家协作。以 Hailfinder 网络为例说明 60% Unclear 比例体现了负责任的策略。",
+      "requirement": "7.4"
+    }
+  },
+  "key_additions": [
+    "新增 IGCI 原理的详细解释，包括数学表达式和信息论解释",
+    "扩展了 Universal Shape of Causality 的讨论，作为独立小节",
+    "大幅扩展了保守回退机制的价值论证，包含三个具体方面",
+    "添加了 Hailfinder 网络案例的深入分析"
+  ],
+  "academic_language_compliance": {
+    "status": "verified",
+    "notes": "所有新增内容使用客观、严谨的学术语言，避免口语化表达，遵循结构化论证"
+  }
+}

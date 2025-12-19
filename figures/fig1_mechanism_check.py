@@ -12,7 +12,9 @@ import sys
 sys.path.append('..')
 
 # 设置中文字体和样式
-plt.rcParams['font.family'] = ['Arial', 'DejaVu Sans']
+import matplotlib.font_manager as fm
+# macOS 简体中文字体
+plt.rcParams['font.sans-serif'] = ['Hiragino Sans GB', 'PingFang HK', 'Heiti TC', 'Arial Unicode MS']
 plt.rcParams['axes.unicode_minus'] = False
 plt.style.use('seaborn-v0_8-whitegrid')
 
@@ -92,28 +94,28 @@ def main():
     # 添加拟合曲线
     A_sorted = np.sort(A)
     B_true = np.tanh(A_sorted) + 0.5 * np.cos(A_sorted)
-    ax1.plot(A_sorted, B_true, 'r-', linewidth=2, label='True: $B = tanh(A) + 0.5cos(A)$')
-    ax1.set_xlabel('Variable A', fontsize=12)
-    ax1.set_ylabel('Variable B', fontsize=12)
-    ax1.set_title('(a) Non-linear Causal Relationship\n$A \\rightarrow B$', fontsize=13)
+    ax1.plot(A_sorted, B_true, 'r-', linewidth=2, label='真实关系: $B = tanh(A) + 0.5cos(A)$')
+    ax1.set_xlabel('变量 A', fontsize=12)
+    ax1.set_ylabel('变量 B', fontsize=12)
+    ax1.set_title('(a) 非线性因果关系\n$A \\rightarrow B$', fontsize=13)
     ax1.legend(loc='upper left', fontsize=9)
     
     # 中图: 正向残差 (独立)
     ax2 = axes[1]
     ax2.scatter(A, resid_ab, alpha=0.4, s=10, c='forestgreen', edgecolors='none')
     ax2.axhline(y=0, color='gray', linestyle='--', linewidth=1)
-    ax2.set_xlabel('Variable A (Predictor)', fontsize=12)
-    ax2.set_ylabel('Residuals ($B - \\hat{B}$)', fontsize=12)
-    ax2.set_title(f'(b) Forward Fit Residuals ($A \\rightarrow B$)\nHSIC = {hsic_ab:.4f} (Independent)', 
+    ax2.set_xlabel('变量 A (预测变量)', fontsize=12)
+    ax2.set_ylabel('残差 ($B - \\hat{B}$)', fontsize=12)
+    ax2.set_title(f'(b) 正向拟合残差 ($A \\rightarrow B$)\nHSIC = {hsic_ab:.4f} (独立)', 
                   fontsize=13, color='darkgreen')
     
     # 右图: 反向残差 (不独立)
     ax3 = axes[2]
     ax3.scatter(B, resid_ba, alpha=0.4, s=10, c='crimson', edgecolors='none')
     ax3.axhline(y=0, color='gray', linestyle='--', linewidth=1)
-    ax3.set_xlabel('Variable B (Predictor)', fontsize=12)
-    ax3.set_ylabel('Residuals ($A - \\hat{A}$)', fontsize=12)
-    ax3.set_title(f'(c) Reverse Fit Residuals ($B \\rightarrow A$)\nHSIC = {hsic_ba:.4f} (Dependent)', 
+    ax3.set_xlabel('变量 B (预测变量)', fontsize=12)
+    ax3.set_ylabel('残差 ($A - \\hat{A}$)', fontsize=12)
+    ax3.set_title(f'(c) 反向拟合残差 ($B \\rightarrow A$)\nHSIC = {hsic_ba:.4f} (相关)', 
                   fontsize=13, color='darkred')
     
     plt.tight_layout()

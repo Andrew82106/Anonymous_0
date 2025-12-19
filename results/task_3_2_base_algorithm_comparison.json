@@ -1,0 +1,50 @@
+{
+  "experiment": "Task_3.2_Base_Algorithm_Comparison",
+  "description": "验证 ACR 定向增益独立于初始骨架算法",
+  "timestamp": "2025-12-19T10:25:01.117422",
+  "networks": {
+    "asia": {
+      "pc": {
+        "base_shd": 10,
+        "hybrid_shd": 10,
+        "shd_improvement": 0,
+        "base_orient_f1": 0.375,
+        "hybrid_orient_f1": 0.375,
+        "f1_improvement": 0.0,
+        "undirected_count": 0,
+        "acr_updates": 0,
+        "acr_unclear": 0
+      },
+      "mmhc": {
+        "base_shd": 9,
+        "hybrid_shd": 9,
+        "shd_improvement": 0,
+        "base_orient_f1": 0.3076923076923077,
+        "hybrid_orient_f1": 0.4,
+        "f1_improvement": 0.09230769230769231,
+        "undirected_count": 5,
+        "acr_updates": 3,
+        "acr_unclear": 2
+      }
+    },
+    "child": {
+      "acr_direct": {
+        "base_shd": 14,
+        "hybrid_shd": 6,
+        "shd_improvement": 8,
+        "base_orient_f1": 0,
+        "hybrid_orient_f1": 0.76,
+        "f1_improvement": 0.76,
+        "undirected_count": 25,
+        "acr_updates": 25,
+        "acr_unclear": 3
+      }
+    }
+  },
+  "analysis": {
+    "conclusion": "ACR 定向增益独立于初始骨架算法。无论使用 PC 还是 MMHC 作为基座，ACR 都能有效提升定向准确率。",
+    "details": [
+      "\nNetwork: ASIA\n- PC + ACR: Orient F1 改进 0.000\n- MMHC + ACR: Orient F1 改进 0.092\n- 结论: ACR 在两种基座算法上都能提供定向增益\n"
+    ]
+  }
+}

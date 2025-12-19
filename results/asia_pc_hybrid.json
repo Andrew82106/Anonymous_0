@@ -1,0 +1,40 @@
+{
+  "network": "asia",
+  "base_algorithm": "pc",
+  "sample_size": 1000,
+  "base_metrics": {
+    "shd": 10,
+    "skeleton": {
+      "precision": 0.75,
+      "recall": 0.75,
+      "f1": 0.75
+    },
+    "orientation": {
+      "precision": 0.375,
+      "recall": 0.375,
+      "f1": 0.375
+    }
+  },
+  "hybrid_metrics": {
+    "shd": 10,
+    "skeleton": {
+      "precision": 0.75,
+      "recall": 0.75,
+      "f1": 0.75
+    },
+    "orientation": {
+      "precision": 0.375,
+      "recall": 0.375,
+      "f1": 0.375
+    }
+  },
+  "details": {
+    "total_edges": 8,
+    "undirected_count": 0,
+    "acr_updates": 0,
+    "acr_unclear": 0,
+    "unclear_ratio": 0,
+    "acr_details": []
+  },
+  "is_fallback": false
+}

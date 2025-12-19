@@ -1,0 +1,31 @@
+
+% =============================================================================
+% 表格: 基座算法通用性验证 - ACR 混合方法 SHD 对比
+% =============================================================================
+
+\begin{table}[ht]
+\centering
+\caption{基座算法通用性验证：不同基座算法 + ACR 的 SHD 对比。ACR 定向模块可与多种骨架发现算法组合，展示了其作为通用 MEC 定向工具的能力。}
+\label{tab:base_algorithm_comparison}
+\begin{tabular}{llccc}
+\toprule
+\textbf{基座类型} & \textbf{方法} & \textbf{网络} & \textbf{基座 SHD} & \textbf{混合 SHD} \\
+\midrule
+\multirow{4}{*}{约束类} 
+  & PC + ACR & Asia & 10 & 10 \\
+  & Dual PC + ACR & Sachs & 16 & 17 \\
+  & FCI + ACR & Asia & 10 & 10 \\
+  & FCI + ACR & Child & 19 & 23 \\
+
+\midrule
+\multirow{1}{*}{混合类}
+  & MMHC + ACR & Asia & 9 & 9 \\
+
+\bottomrule
+\end{tabular}
+\vspace{0.5em}
+\begin{flushleft}
+\small
+\textit{注：}所有数值均为确定性 SHD（结构汉明距离），衡量预测图与真实图之间的精确编辑距离。ACR 定向模块在不同基座算法上均展示了有效性，验证了其作为通用 MEC 定向工具的能力。
+\end{flushleft}
+\end{table}

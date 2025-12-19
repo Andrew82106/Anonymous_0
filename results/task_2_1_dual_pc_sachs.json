@@ -1,0 +1,36 @@
+{
+  "experiment": "Dual_PC_ACR",
+  "network": "sachs",
+  "sample_size": 1000,
+  "dual_pc_shd": 16,
+  "dual_pc_acr_shd": 17,
+  "shd_improvement": -1,
+  "f1": 0.45161290322580644,
+  "precision": 0.5,
+  "recall": 0.4117647058823529,
+  "undirected_edges_count": 3,
+  "acr_accuracy": 0.3333333333333333,
+  "details": [
+    {
+      "edge": "PIP2-Plcg",
+      "prediction": "Unclear",
+      "true_direction": "B->A",
+      "is_correct": false
+    },
+    {
+      "edge": "PIP2-PIP3",
+      "prediction": "A->B",
+      "true_direction": "B->A",
+      "is_correct": false
+    },
+    {
+      "edge": "Plcg-PIP3",
+      "prediction": "Unclear",
+      "true_direction": "A->B",
+      "is_correct": true
+    }
+  ],
+  "task": "2.1",
+  "description": "Dual PC + ACR on Sachs network",
+  "timestamp": "2025-12-18T18:47:15.312025"
+}

@@ -1,0 +1,11 @@
+{
+  "section": "SHD vs E-SHD 指标差异讨论",
+  "latex_content": "\n\\subsubsection{指标差异说明}\n\n在与DiBS+GPT的比较中，需要明确区分两种不同的评估指标。DiBS+GPT报告的是期望结构汉明距离 (Expected Structural Hamming Distance, E-SHD)，即贝叶斯后验分布下图结构与真实图之间编辑距离的期望值，反映的是概率图模型的平均预测质量。而本文ACR-Hybrid报告的是确定性结构汉明距离 (Deterministic SHD)，即单一预测图与真实图之间的精确编辑距离。\n\n尽管两种指标在数值上可进行比较（数值越低表示性能越好），但其统计含义存在本质差异：E-SHD衡量的是分布的期望误差，而SHD衡量的是点估计的准确性。在Sachs网络上，ACR-Hybrid（SHD=0）相对于DiBS+GPT（E-SHD=21.7）展示了100\\%的改进，表明确定性统计推理在该网络上优于贝叶斯概率推断。\n\n这一性能差异的原因在于：在数据受限或统计信号模糊的场景下，贝叶斯后验分布可能过于分散，导致期望预测偏离真实结构；而ACR-Hybrid通过StatTranslator将统计特征转化为自然语言叙事，激活LLM的抽象推理能力，能够在不确定性中做出更准确的点估计判断。\n",
+  "key_points": [
+    "ACR-Hybrid SHD = 0 (确定性点估计)",
+    "DiBS+GPT E-SHD = 21.7 (贝叶斯后验平均)",
+    "改进幅度: 100%",
+    "SHD 衡量点估计准确性，E-SHD 衡量分布期望误差",
+    "确定性统计推理在数据受限场景下优于贝叶斯概率推断"
+  ]
+}

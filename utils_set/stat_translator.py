@@ -341,10 +341,22 @@ class StatTranslator:
         except:
             return 0.0
 
-    def generate_narrative(self, stats):
+    def generate_narrative(self, stats, mode="full"):
         """
         Convert the statistical dictionary into a natural language story.
+        
+        Args:
+            stats: Statistical dictionary from analyze()
+            mode: Narrative mode - "full" (default), "low_order", or "raw"
+                - "full": Complete ACR narrative with all statistical features
+                - "low_order": Only low-order statistics (correlation, R²)
+                - "raw": Raw numeric values without interpretation
         """
+        if mode == "low_order":
+            return self.generate_narrative_low_order(stats)
+        elif mode == "raw":
+            return self.generate_narrative_raw(stats)
+        # Default: full narrative
         lines = []
         
         # Section 1: Individual Behaviors
@@ -542,4 +554,178 @@ class StatTranslator:
             lines.append(f"\n- **Heteroscedasticity**: A->B: {hetero_ab:.3f}, B->A: {hetero_ba:.3f}.")
             lines.append(f"  -> Higher value indicates variance of residuals changes with predictor (often a sign of wrong direction in ANM).")
 
+        return "\n".join(lines)
+
+    def generate_narrative_low_order(self, stats):
+        """
+        Generate a low-order narrative using only basic statistics.
+        Only includes: correlation coefficient (Pearson/Spearman) and R² values.
+        Excludes: HSIC, ANM residual independence, heteroscedasticity, non-Gaussianity signals.
+        
+        This is used for ablation experiments to quantify the contribution of 
+        high-order causal statistics (Requirements 6.1, 6.2).
+        
+        Args:
+            stats: Statistical dictionary from analyze()
+        
+        Returns:
+            str: Low-order narrative text
+        """
+        lines = []
+        
+        lines.append("### Statistical Profile (Low-Order Only)")
+        lines.append(f"We are analyzing a dataset with {stats['len']} samples.")
+        
+        if stats.get('is_discrete', False):
+            # Discrete: only basic counts and correlation
+            lines.append(f"Variable A: Discrete with {stats['x_unique']} unique values.")
+            lines.append(f"Variable B: Discrete with {stats['y_unique']} unique values.")
+            
+            if 'pearson_corr' in stats:
+                corr = stats['pearson_corr']
+                corr_strength = "weak"
+                if abs(corr) > 0.7: corr_strength = "strong"
+                elif abs(corr) > 0.3: corr_strength = "moderate"
+                lines.append(f"Correlation: {corr_strength} (Pearson r={corr:.2f}).")
+            
+            lines.append("\n### Causal Mechanism Analysis (Low-Order)")
+            lines.append("We tested two competing causal hypotheses.")
+            
+            # Only report accuracy (R² equivalent for classification)
+            acc_ab = stats['dir_ab']['accuracy']
+            acc_ba = stats['dir_ba']['accuracy']
+            
+            lines.append(f"\n**Hypothesis: A -> B**")
+            lines.append(f"- Classification Accuracy: {acc_ab:.3f}")
+            
+            lines.append(f"\n**Hypothesis: B -> A**")
+            lines.append(f"- Classification Accuracy: {acc_ba:.3f}")
+            
+            lines.append("\n### Comparative Analysis")
+            lines.append(f"- **Predictive Accuracy**: A->B: {acc_ab:.4f} vs B->A: {acc_ba:.4f}.")
+            if abs(acc_ab - acc_ba) < 0.02:
+                lines.append(f"  -> Both directions have similar predictive accuracy.")
+            else:
+                better_dir = "A->B" if acc_ab > acc_ba else "B->A"
+                lines.append(f"  -> Direction {better_dir} achieves better predictive accuracy.")
+        else:
+            # Continuous: only correlation and R²
+            lines.append(f"Variable A: Skewness={stats['x_skew']:.2f}, Kurtosis={stats['x_kurt']:.2f}.")
+            lines.append(f"Variable B: Skewness={stats['y_skew']:.2f}, Kurtosis={stats['y_kurt']:.2f}.")
+            
+            corr = stats['pearson_corr']
+            corr_strength = "weak"
+            if abs(corr) > 0.7: corr_strength = "strong"
+            elif abs(corr) > 0.3: corr_strength = "moderate"
+            lines.append(f"Correlation: {corr_strength} (Pearson r={corr:.2f}).")
+            
+            lines.append("\n### Causal Mechanism Analysis (Low-Order)")
+            lines.append("We tested two competing causal hypotheses by fitting regression models.")
+            
+            r2_ab = stats['dir_ab']['r2']
+            r2_ba = stats['dir_ba']['r2']
+            r2_linear_ab = stats['dir_ab']['r2_linear']
+            r2_linear_ba = stats['dir_ba']['r2_linear']
+            
+            lines.append(f"\n**Hypothesis: A -> B**")
+            lines.append(f"- Linear R²: {r2_linear_ab:.3f}")
+            lines.append(f"- Best Model R²: {r2_ab:.3f}")
+            
+            lines.append(f"\n**Hypothesis: B -> A**")
+            lines.append(f"- Linear R²: {r2_linear_ba:.3f}")
+            lines.append(f"- Best Model R²: {r2_ba:.3f}")
+            
+            lines.append("\n### Comparative Analysis")
+            r2_diff = r2_ab - r2_ba
+            lines.append(f"- **Model Fit (R²)**: A->B: {r2_ab:.4f} vs B->A: {r2_ba:.4f}.")
+            if abs(r2_diff) < 0.02:
+                lines.append(f"  -> Both directions explain the data equally well.")
+            else:
+                better_dir = "A->B" if r2_diff > 0 else "B->A"
+                lines.append(f"  -> Direction {better_dir} achieves better fit.")
+        
+        return "\n".join(lines)
+
+    def generate_narrative_raw(self, stats):
+        """
+        Generate a raw numeric narrative without any interpretation.
+        Only presents raw statistical values without causal reasoning guidance.
+        
+        This is used for ablation experiments to measure the baseline performance
+        when LLM receives only raw numbers (Requirements 6.1, 6.2).
+        
+        Args:
+            stats: Statistical dictionary from analyze()
+        
+        Returns:
+            str: Raw numeric narrative text
+        """
+        lines = []
+        
+        lines.append("### Raw Statistical Data")
+        lines.append(f"Sample size: {stats['len']}")
+        
+        if stats.get('is_discrete', False):
+            # Discrete raw data
+            lines.append(f"\nVariable A:")
+            lines.append(f"  unique_values: {stats['x_unique']}")
+            lines.append(f"  entropy: {stats['x_entropy']:.4f}")
+            
+            lines.append(f"\nVariable B:")
+            lines.append(f"  unique_values: {stats['y_unique']}")
+            lines.append(f"  entropy: {stats['y_entropy']:.4f}")
+            
+            if 'pearson_corr' in stats:
+                lines.append(f"\nCorrelation:")
+                lines.append(f"  pearson_r: {stats['pearson_corr']:.4f}")
+            
+            lines.append(f"\nDirection A->B metrics:")
+            dir_ab = stats['dir_ab']
+            lines.append(f"  accuracy: {dir_ab['accuracy']:.4f}")
+            lines.append(f"  conditional_entropy: {dir_ab['conditional_entropy']:.4f}")
+            lines.append(f"  error_independence_p: {dir_ab['error_independence_p']:.4f}")
+            lines.append(f"  mutual_information: {dir_ab['mutual_information']:.4f}")
+            
+            lines.append(f"\nDirection B->A metrics:")
+            dir_ba = stats['dir_ba']
+            lines.append(f"  accuracy: {dir_ba['accuracy']:.4f}")
+            lines.append(f"  conditional_entropy: {dir_ba['conditional_entropy']:.4f}")
+            lines.append(f"  error_independence_p: {dir_ba['error_independence_p']:.4f}")
+            lines.append(f"  mutual_information: {dir_ba['mutual_information']:.4f}")
+        else:
+            # Continuous raw data
+            lines.append(f"\nVariable A:")
+            lines.append(f"  skewness: {stats['x_skew']:.4f}")
+            lines.append(f"  kurtosis: {stats['x_kurt']:.4f}")
+            
+            lines.append(f"\nVariable B:")
+            lines.append(f"  skewness: {stats['y_skew']:.4f}")
+            lines.append(f"  kurtosis: {stats['y_kurt']:.4f}")
+            
+            lines.append(f"\nCorrelation:")
+            lines.append(f"  pearson_r: {stats['pearson_corr']:.4f}")
+            lines.append(f"  spearman_r: {stats['spearman_corr']:.4f}")
+            
+            lines.append(f"\nDirection A->B metrics:")
+            dir_ab = stats['dir_ab']
+            lines.append(f"  r2: {dir_ab['r2']:.4f}")
+            lines.append(f"  r2_linear: {dir_ab['r2_linear']:.4f}")
+            lines.append(f"  resid_hsic_score: {dir_ab.get('resid_hsic_score', 'N/A')}")
+            lines.append(f"  resid_mi_score: {dir_ab.get('resid_mi_score', 'N/A')}")
+            lines.append(f"  resid_hetero_score: {dir_ab['resid_hetero_score']:.4f}")
+            lines.append(f"  resid_skew: {dir_ab['resid_skew']:.4f}")
+            lines.append(f"  resid_kurt: {dir_ab['resid_kurt']:.4f}")
+            
+            lines.append(f"\nDirection B->A metrics:")
+            dir_ba = stats['dir_ba']
+            lines.append(f"  r2: {dir_ba['r2']:.4f}")
+            lines.append(f"  r2_linear: {dir_ba['r2_linear']:.4f}")
+            lines.append(f"  resid_hsic_score: {dir_ba.get('resid_hsic_score', 'N/A')}")
+            lines.append(f"  resid_mi_score: {dir_ba.get('resid_mi_score', 'N/A')}")
+            lines.append(f"  resid_hetero_score: {dir_ba['resid_hetero_score']:.4f}")
+            lines.append(f"  resid_skew: {dir_ba['resid_skew']:.4f}")
+            lines.append(f"  resid_kurt: {dir_ba['resid_kurt']:.4f}")
+        
+        lines.append("\nTask: Based on the above statistics, determine the causal direction between A and B.")
+        
         return "\n".join(lines)

@@ -52,16 +52,23 @@ class CausalReasoningEngine:
         
         print(f"✅ Initialized CausalReasoningEngine with model: {self.model_name}")
     
-    def analyze_pair(self, X, Y) -> Dict[str, Any]:
+    def analyze_pair(self, X, Y, narrative_mode: str = "full") -> Dict[str, Any]:
         """
         分析一对变量并生成统计叙事
+        
+        Parameters:
+        -----------
+        X, Y : array-like
+            要分析的变量对
+        narrative_mode : str
+            叙事模式：'full' (完整), 'low_order' (仅低阶统计量), 'raw' (原始数值)
         
         Returns:
         --------
         dict : 包含统计数据和叙事文本
         """
         stats = self.translator.analyze(X, Y)
-        narrative = self.translator.generate_narrative(stats)
+        narrative = self.translator.generate_narrative(stats, mode=narrative_mode)
         
         return {
             'stats': stats,
