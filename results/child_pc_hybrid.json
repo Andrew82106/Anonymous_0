@@ -1,0 +1,61 @@
+{
+  "network": "child",
+  "base_algorithm": "pc",
+  "sample_size": 1000,
+  "base_metrics": {
+    "shd": 19,
+    "skeleton": {
+      "precision": 0.9375,
+      "recall": 0.6,
+      "f1": 0.7317073170731707
+    },
+    "orientation": {
+      "precision": 0.6875,
+      "recall": 0.44,
+      "f1": 0.5365853658536586
+    }
+  },
+  "hybrid_metrics": {
+    "shd": 19,
+    "skeleton": {
+      "precision": 0.9375,
+      "recall": 0.6,
+      "f1": 0.7317073170731707
+    },
+    "orientation": {
+      "precision": 0.6875,
+      "recall": 0.44,
+      "f1": 0.5365853658536586
+    }
+  },
+  "details": {
+    "total_edges": 21,
+    "undirected_count": 5,
+    "acr_updates": 3,
+    "acr_unclear": 2,
+    "unclear_ratio": 0.4,
+    "acr_details": [
+      {
+        "edge": "LungParench-CO2",
+        "prediction": "A->B"
+      },
+      {
+        "edge": "LVH-LVHreport",
+        "prediction": "Unclear"
+      },
+      {
+        "edge": "HypoxiaInO2-RUQO2",
+        "prediction": "A<-Z->B"
+      },
+      {
+        "edge": "HypoxiaInO2-CardiacMixing",
+        "prediction": "A->B"
+      },
+      {
+        "edge": "CO2-CO2Report",
+        "prediction": "A->B"
+      }
+    ]
+  },
+  "is_fallback": false
+}

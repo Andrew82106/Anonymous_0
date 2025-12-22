@@ -138,6 +138,6 @@ python tests/test_hybrid_pipeline.py --network alarm --all_algorithms
 | 网络 | PC+ACR | MMHC+ACR | Dual PC+ACR | FCI+ACR |
 |------|--------|----------|-------------|---------|
 | Asia | ✅ | ✅ | ✅ | ✅ |
-| Child | ❌ | ❌ | ❌ | ✅ |
-| Alarm | ✅ | ❌ | ❌ | ❌ |
+| Child | ✅ | ⏳ (Sample 100) | ❌ | ✅ |
+| Alarm | ✅ | ⏳ (Sample 100) | ❌ | ❌ |
 | Sachs | ✅ | ❌ | ✅ | ❌ |

@@ -1,7 +1,7 @@
 {
   "experiment": "Task_3.2_Base_Algorithm_Comparison",
   "description": "验证 ACR 定向增益独立于初始骨架算法",
-  "timestamp": "2025-12-19T10:25:01.117422",
+  "timestamp": "2025-12-19T20:37:17.403703",
   "networks": {
     "asia": {
       "pc": {
@@ -28,6 +28,17 @@
       }
     },
     "child": {
+      "pc": {
+        "base_shd": 19,
+        "hybrid_shd": 19,
+        "shd_improvement": 0,
+        "base_orient_f1": 0.5365853658536586,
+        "hybrid_orient_f1": 0.5365853658536586,
+        "f1_improvement": 0.0,
+        "undirected_count": 5,
+        "acr_updates": 3,
+        "acr_unclear": 2
+      },
       "acr_direct": {
         "base_shd": 14,
         "hybrid_shd": 6,

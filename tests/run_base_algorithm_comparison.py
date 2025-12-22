@@ -24,11 +24,15 @@ def load_existing_results():
     # PC + ACR results
     pc_files = [
         'asia_pc_hybrid.json',
+        'child_pc_hybrid.json',
+        'alarm_pc_hybrid.json'
     ]
     
     # MMHC + ACR results
     mmhc_files = [
         'asia_mmhc_hybrid.json',
+        'child_mmhc_hybrid.json',
+        'alarm_mmhc_hybrid.json'
     ]
     
     for filename in pc_files:

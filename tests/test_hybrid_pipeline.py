@@ -8,6 +8,8 @@ import pandas as pd
 import bnlearn as bn
 from pgmpy.estimators import PC, MmhcEstimator
 from pgmpy.base import DAG
+from pgmpy.utils import get_example_model
+from pgmpy.sampling import BayesianModelSampling
 
 # 添加项目根目录到路径
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
@@ -310,10 +312,29 @@ class HybridEvaluator:
         # 1. 加载数据
         print(f"Loading {network_name} network...")
         try:
-            dag = bn.import_DAG(network_name)
-            df = bn.sampling(dag, n=sample_size, verbose=0)
-            nodes = list(df.columns)
-            true_adjmat = dag['adjmat']
+            # 尝试从 bnlearn 加载
+            try:
+                dag = bn.import_DAG(network_name, verbose=0)
+                df = bn.sampling(dag, n=sample_size, verbose=0)
+                nodes = list(df.columns)
+                true_adjmat = dag['adjmat']
+            except:
+                print(f"  bnlearn failed to load {network_name}, trying pgmpy...")
+                # 尝试从 pgmpy 加载
+                model = get_example_model(network_name)
+                sampler = BayesianModelSampling(model)
+                df = sampler.forward_sample(size=sample_size)
+                
+                nodes = list(model.nodes())
+                # 重新排序列以匹配
+                df = df[nodes]
+                
+                # 构建邻接矩阵
+                adj = pd.DataFrame(np.zeros((len(nodes), len(nodes))), index=nodes, columns=nodes)
+                for u, v in model.edges():
+                    adj.loc[u, v] = 1
+                true_adjmat = adj
+                
         except Exception as e:
             print(f"Error loading network: {e}")
             return None
