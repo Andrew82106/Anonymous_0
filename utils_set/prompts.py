@@ -3,6 +3,63 @@ Prompt 模板库 (Prompt Templates)
 为因果推理任务设计的提示词
 """
 
+# ========== NEW: Statistical Judge Prompt for CAD Framework ==========
+STATISTICAL_JUDGE_PROMPT = """You are a Statistical Judge specializing in causal inference. The PC algorithm has confirmed a link between Variable A and Variable B, but the direction remains ambiguous (Markov Equivalence Class edge).
+
+## Your Task
+Based on the statistical evidence below, determine the most likely causal direction.
+
+## Statistical Evidence
+
+### Context
+{context}
+
+### Functional Trace (Residual Independence - ANM Principle)
+- Direction A→B: Residual Independence P-value = {p_xy:.4f}
+- Direction B→A: Residual Independence P-value = {p_yx:.4f}
+- Signal: {func_signal} (Strength: {func_strength:.3f})
+
+**Interpretation**: Higher p-value indicates residuals are more independent of the predictor, suggesting a correct causal model. In Additive Noise Models (ANM), the true causal direction typically yields higher residual independence.
+
+### Informational Trace (Entropy - IGCI Principle)
+- Entropy of A: H(A) = {h_x:.4f}
+- Entropy of B: H(B) = {h_y:.4f}
+- Signal: {info_signal} (Strength: {info_strength:.3f})
+
+**Interpretation**: In Information-Geometric Causal Inference (IGCI), causes typically have lower entropy than effects. Causal processes tend to increase entropy due to noise accumulation.
+
+### Signal Consensus
+- Functional Signal: {func_signal}
+- Informational Signal: {info_signal}
+- Overall Consensus: {consensus}
+
+## Guidance Principles
+
+1. **If signals ALIGN**: Be confident in the direction. Both functional and informational evidence point the same way.
+
+2. **If signals CONFLICT**: 
+   - **Prioritize the Functional/Residual signal** as it is often more robust for discrete data.
+   - Lower your confidence to "medium" or "low".
+   - Note the conflict in your reasoning.
+
+3. **Confidence Calibration**:
+   - `high`: Both signals align AND strength > 0.3
+   - `medium`: Signals align with moderate strength (0.1-0.3) OR one signal is ambiguous
+   - `low`: Signals conflict OR both are weak/ambiguous
+
+## Response Format
+
+Return a JSON object with:
+```json
+{{
+    "direction": "A->B" | "B->A" | "Unclear",
+    "confidence": "high" | "medium" | "low",
+    "primary_evidence": "Brief description of the key deciding factor",
+    "reasoning_chain": "Step-by-step reasoning explaining your judgment"
+}}
+```
+"""
+
 SHERLOCK_HOLMES_PROMPT = """你是一位精通统计学和因果推理的侦探，专门从**脱敏的统计证据**中推断变量之间的因果关系。
 
 ## 🔍 你的任务
@@ -118,16 +175,18 @@ ABLATION_PROMPT_RESIDUAL_ONLY = """你是一位统计学家。以下是两个匿
 **仅基于残差独立性**，判断因果方向。返回 JSON 格式结果。
 """
 
-def get_prompt(template_name: str = "sherlock", narrative: str = "") -> str:
+def get_prompt(template_name: str = "sherlock", narrative: str = "", **kwargs) -> str:
     """
     获取指定的 Prompt 模板
     
     Parameters:
     -----------
     template_name : str
-        模板名称：'sherlock', 'simple', 'residual_only'
+        模板名称：'sherlock', 'simple', 'residual_only', 'statistical_judge'
     narrative : str
         来自 StatTranslator 的统计叙事
+    **kwargs : dict
+        额外参数（用于 statistical_judge 模板）
     
     Returns:
     --------
@@ -136,8 +195,25 @@ def get_prompt(template_name: str = "sherlock", narrative: str = "") -> str:
     templates = {
         'sherlock': SHERLOCK_HOLMES_PROMPT,
         'simple': SIMPLE_PROMPT,
-        'residual_only': ABLATION_PROMPT_RESIDUAL_ONLY
+        'residual_only': ABLATION_PROMPT_RESIDUAL_ONLY,
+        'statistical_judge': STATISTICAL_JUDGE_PROMPT
     }
     
     template = templates.get(template_name, SHERLOCK_HOLMES_PROMPT)
+    
+    # statistical_judge 模板需要特殊处理
+    if template_name == 'statistical_judge':
+        return template.format(
+            context=kwargs.get('context', 'PC algorithm confirmed edge, direction ambiguous.'),
+            p_xy=kwargs.get('p_xy', 0.5),
+            p_yx=kwargs.get('p_yx', 0.5),
+            func_signal=kwargs.get('func_signal', 'ambiguous'),
+            func_strength=kwargs.get('func_strength', 0.0),
+            h_x=kwargs.get('h_x', 0.0),
+            h_y=kwargs.get('h_y', 0.0),
+            info_signal=kwargs.get('info_signal', 'ambiguous'),
+            info_strength=kwargs.get('info_strength', 0.0),
+            consensus=kwargs.get('consensus', 'weak')
+        )
+    
     return template.format(narrative=narrative)

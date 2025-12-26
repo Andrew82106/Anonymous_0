@@ -4,6 +4,7 @@ from .base import BaseLLM
 from .providers.openai_provider import OpenAILLM
 from .providers.zhipuai_provider import ZhipuAILLM
 from .providers.modelscope_provider import ModelScopeLLM
+from .providers.lanyun_provider import LanyunLLM
 from utils_set.utils import config_loader
 
 class LLMManager:
@@ -50,6 +51,8 @@ class LLMManager:
                 model_instance = ZhipuAILLM(model_conf)
             elif api_provider == 'modelscope':
                 model_instance = ModelScopeLLM(model_conf)
+            elif api_provider == 'lanyun':
+                model_instance = LanyunLLM(model_conf)
             # Add other providers here e.g., elif api_provider == 'anthropic': ...
             else:
                 print(f"Warning: Unsupported API_provider '{api_provider}' for model '{name}'")

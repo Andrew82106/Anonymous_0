@@ -134,7 +134,53 @@ class CausalReasoningEngine:
             end = text.rfind('}') + 1
             if start != -1 and end > start:
                 json_str = text[start:end]
-                return json.loads(json_str)
+                parsed = json.loads(json_str)
+                
+                # 标准化字段名（处理中英文混合情况）
+                result = {}
+                
+                # 方向字段
+                direction = (
+                    parsed.get('direction') or 
+                    parsed.get('causal_direction') or 
+                    parsed.get('causal_direction_judgment') or
+                    parsed.get('judgment') or
+                    parsed.get('因果方向判断') or
+                    parsed.get('因果方向') or
+                    'Unclear'
+                )
+                result['direction'] = direction
+                
+                # 置信度字段
+                confidence = (
+                    parsed.get('confidence') or 
+                    parsed.get('置信度评估') or 
+                    parsed.get('置信度') or
+                    'unknown'
+                )
+                result['confidence'] = confidence
+                
+                # 推理链字段
+                reasoning = (
+                    parsed.get('reasoning_chain') or 
+                    parsed.get('推理链条') or 
+                    parsed.get('reasoning') or
+                    ''
+                )
+                result['reasoning_chain'] = reasoning
+                
+                # 主要证据
+                evidence = (
+                    parsed.get('primary_evidence') or 
+                    parsed.get('主要证据') or
+                    ''
+                )
+                result['primary_evidence'] = evidence
+                
+                # 保留原始解析结果
+                result['full_parsed'] = parsed
+                
+                return result
             else:
                 # 如果找不到 JSON，返回原始文本
                 return {

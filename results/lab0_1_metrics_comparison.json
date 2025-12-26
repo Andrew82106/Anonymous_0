@@ -1,0 +1,318 @@
+{
+  "experiment": "Lab 0.1: Alternative Asymmetry Metrics Benchmark",
+  "timestamp": "2025-12-26T09:07:54.806626",
+  "sample_size": 1000,
+  "networks": [
+    {
+      "network": "sprinkler",
+      "nodes": 4,
+      "stats": {
+        "no_edge": {
+          "count": 2,
+          "avg_mi": 0.030952393574468967,
+          "avg_metric_a": 0.08863756288585911,
+          "std_metric_a": 0.047263765301632496,
+          "avg_metric_b": 0.0886940649367695,
+          "std_metric_b": 0.047244150952829654,
+          "avg_metric_c": 0.00077499423305242,
+          "std_metric_c": 0.0010554063543470051
+        },
+        "true_edge": {
+          "count": 4,
+          "avg_mi": 0.14397869145457526,
+          "avg_metric_a": 0.06102904591752656,
+          "std_metric_a": 0.04923787138918085,
+          "avg_metric_b": 0.06205927570761434,
+          "std_metric_b": 0.04946840995622149,
+          "avg_metric_c": 0.166954950440221,
+          "std_metric_c": 0.3339099008344193
+        },
+        "pc_solved": {
+          "count": 2,
+          "avg_mi": 0.13061612013532087,
+          "avg_metric_a": 0.06102904591752656,
+          "std_metric_a": 0.006913158078745016,
+          "avg_metric_b": 0.06301215415115746,
+          "std_metric_b": 0.00968996546645474,
+          "avg_metric_c": 3.451359972353871e-11,
+          "std_metric_c": 4.880960081534475e-11
+        },
+        "mec_edge": {
+          "count": 2,
+          "avg_mi": 0.15734126277382962,
+          "avg_metric_a": 0.06102904591752656,
+          "std_metric_a": 0.08500183634599211,
+          "avg_metric_b": 0.06110639726407121,
+          "std_metric_b": 0.08511077141429642,
+          "avg_metric_c": 0.33390990084592836,
+          "std_metric_c": 0.4722199103869577
+        }
+      }
+    },
+    {
+      "network": "asia",
+      "nodes": 8,
+      "stats": {
+        "no_edge": {
+          "count": 20,
+          "avg_mi": 0.013933957542594914,
+          "avg_metric_a": 0.5685211330051013,
+          "std_metric_a": 0.2888783976609987,
+          "avg_metric_b": 0.6950381988154101,
+          "std_metric_b": 0.2343193585735551,
+          "avg_metric_c": 0.13486439532505037,
+          "std_metric_c": 0.20860375250609173
+        },
+        "true_edge": {
+          "count": 8,
+          "avg_mi": 0.09307492628386632,
+          "avg_metric_a": 0.2275939495822616,
+          "std_metric_a": 0.2878453118833912,
+          "avg_metric_b": 0.3275223584777145,
+          "std_metric_b": 0.3280549440402049,
+          "avg_metric_c": 0.3711831993147181,
+          "std_metric_c": 0.42328291941123614
+        },
+        "pc_solved": {
+          "count": 3,
+          "avg_mi": 0.12357116785716145,
+          "avg_metric_a": 0.15752780283356083,
+          "std_metric_a": 0.11585124078609307,
+          "avg_metric_b": 0.39988474365876153,
+          "std_metric_b": 0.33773656175525163,
+          "avg_metric_c": 0.7621583011842507,
+          "std_metric_c": 0.4119539065073725
+        },
+        "mec_edge": {
+          "count": 5,
+          "avg_mi": 0.07477718133988923,
+          "avg_metric_a": 0.269633637631482,
+          "std_metric_a": 0.36386019753895943,
+          "avg_metric_b": 0.2841049273690862,
+          "std_metric_b": 0.3535795677370239,
+          "avg_metric_c": 0.1365981381929986,
+          "std_metric_c": 0.212739054671824
+        }
+      }
+    },
+    {
+      "network": "sachs",
+      "nodes": 11,
+      "stats": {
+        "no_edge": {
+          "count": 38,
+          "avg_mi": 0.024978669099706762,
+          "avg_metric_a": 0.288082580459002,
+          "std_metric_a": 0.16545000498911533,
+          "avg_metric_b": 0.21037634277944206,
+          "std_metric_b": 0.1180702618130394,
+          "avg_metric_c": 0.13173046382077833,
+          "std_metric_c": 0.17759539242481104
+        },
+        "true_edge": {
+          "count": 17,
+          "avg_mi": 0.14430849183614858,
+          "avg_metric_a": 0.20440695936391845,
+          "std_metric_a": 0.1933489842786983,
+          "avg_metric_b": 0.14437204121693853,
+          "std_metric_b": 0.12278018885868819,
+          "avg_metric_c": 0.0034104421534758996,
+          "std_metric_c": 0.014045332955750875
+        },
+        "pc_solved": {
+          "count": 10,
+          "avg_mi": 0.17207355807526856,
+          "avg_metric_a": 0.14533456916473836,
+          "std_metric_a": 0.0724751990166335,
+          "avg_metric_b": 0.10587139482851982,
+          "std_metric_b": 0.04994605653455166,
+          "avg_metric_c": 2.1823438327851765e-08,
+          "std_metric_c": 5.262207729338823e-08
+        },
+        "mec_edge": {
+          "count": 7,
+          "avg_mi": 0.10464411149454864,
+          "avg_metric_a": 0.28879608821989,
+          "std_metric_a": 0.2787236495680602,
+          "avg_metric_b": 0.19937296462896523,
+          "std_metric_b": 0.1745228784391598,
+          "avg_metric_c": 0.008282471196386716,
+          "std_metric_c": 0.021885595369791375
+        }
+      }
+    },
+    {
+      "network": "child",
+      "nodes": 20,
+      "stats": {
+        "no_edge": {
+          "count": 165,
+          "avg_mi": 0.0260797143988233,
+          "avg_metric_a": 0.6025747626585035,
+          "std_metric_a": 0.43033680959711446,
+          "avg_metric_b": 0.37242513938377486,
+          "std_metric_b": 0.20617221051730056,
+          "avg_metric_c": 0.10693717801759939,
+          "std_metric_c": 0.20332191394427632
+        },
+        "true_edge": {
+          "count": 25,
+          "avg_mi": 0.2100954732220478,
+          "avg_metric_a": 0.6147321353556316,
+          "std_metric_a": 0.5126240030842777,
+          "avg_metric_b": 0.3331192652469662,
+          "std_metric_b": 0.2482083154855333,
+          "avg_metric_c": 0.11702775664052435,
+          "std_metric_c": 0.2770100171107199
+        },
+        "pc_solved": {
+          "count": 15,
+          "avg_mi": 0.28133976431627783,
+          "avg_metric_a": 0.4880546772508996,
+          "std_metric_a": 0.43163549361117703,
+          "avg_metric_b": 0.24671780909153948,
+          "std_metric_b": 0.18660527973441635,
+          "avg_metric_c": 0.0018765761325599602,
+          "std_metric_c": 0.007009995048918872
+        },
+        "mec_edge": {
+          "count": 10,
+          "avg_mi": 0.10322903658070284,
+          "avg_metric_a": 0.8047483225127297,
+          "std_metric_a": 0.5865817044908703,
+          "avg_metric_b": 0.46272144948010635,
+          "std_metric_b": 0.2810950742907436,
+          "avg_metric_c": 0.289754527402471,
+          "std_metric_c": 0.38639342939547766
+        }
+      }
+    },
+    {
+      "network": "insurance",
+      "nodes": 27,
+      "stats": {
+        "no_edge": {
+          "count": 277,
+          "avg_mi": 0.0298242434257253,
+          "avg_metric_a": 0.5990442568637452,
+          "std_metric_a": 0.41135101911153416,
+          "avg_metric_b": 0.40597840910345184,
+          "std_metric_b": 0.24547095469086957,
+          "avg_metric_c": 0.18958131697375194,
+          "std_metric_c": 0.2374506314910833
+        },
+        "true_edge": {
+          "count": 48,
+          "avg_mi": 0.17333948996382345,
+          "avg_metric_a": 0.5493859281936903,
+          "std_metric_a": 0.39272883344423715,
+          "avg_metric_b": 0.35385390654909915,
+          "std_metric_b": 0.25039527363779734,
+          "avg_metric_c": 0.12144237606863277,
+          "std_metric_c": 0.23439063265682664
+        },
+        "pc_solved": {
+          "count": 14,
+          "avg_mi": 0.2772290637453151,
+          "avg_metric_a": 0.5004195455335612,
+          "std_metric_a": 0.36205242152241895,
+          "avg_metric_b": 0.3213186904548607,
+          "std_metric_b": 0.24051016229133357,
+          "avg_metric_c": 0.0031876220021429826,
+          "std_metric_c": 0.005963078076463408
+        },
+        "mec_edge": {
+          "count": 34,
+          "avg_mi": 0.1305614301714446,
+          "avg_metric_a": 0.569548556347861,
+          "std_metric_a": 0.40816045669916157,
+          "avg_metric_b": 0.367250760234962,
+          "std_metric_b": 0.25666200745003875,
+          "avg_metric_c": 0.1701355100960109,
+          "std_metric_c": 0.2643044576867132
+        }
+      }
+    },
+    {
+      "network": "alarm",
+      "nodes": 37,
+      "stats": {
+        "no_edge": {
+          "count": 620,
+          "avg_mi": 0.02170486085672551,
+          "avg_metric_a": 0.4897716482376903,
+          "std_metric_a": 0.33799682605744824,
+          "avg_metric_b": 0.45465304465789225,
+          "std_metric_b": 0.2575690008345347,
+          "avg_metric_c": 0.15429002613779136,
+          "std_metric_c": 0.21549889998216282
+        },
+        "true_edge": {
+          "count": 46,
+          "avg_mi": 0.20352545926541352,
+          "avg_metric_a": 0.44832699055654623,
+          "std_metric_a": 0.34348775227546247,
+          "avg_metric_b": 0.4010181656164063,
+          "std_metric_b": 0.2605649124794143,
+          "avg_metric_c": 0.11746182932351315,
+          "std_metric_c": 0.27872437277264767
+        },
+        "pc_solved": {
+          "count": 26,
+          "avg_mi": 0.24669720557485572,
+          "avg_metric_a": 0.42685414643793074,
+          "std_metric_a": 0.3441155901759479,
+          "avg_metric_b": 0.3701653404996925,
+          "std_metric_b": 0.27301191575191514,
+          "avg_metric_c": 0.1653838520977846,
+          "std_metric_c": 0.3383872655885546
+        },
+        "mec_edge": {
+          "count": 20,
+          "avg_mi": 0.14740218906313876,
+          "avg_metric_a": 0.4762416879107464,
+          "std_metric_a": 0.34953437959264344,
+          "avg_metric_b": 0.44112683826813415,
+          "std_metric_b": 0.24440284146773278,
+          "avg_metric_c": 0.0551631997169603,
+          "std_metric_c": 0.16156259487986263
+        }
+      }
+    }
+  ],
+  "summary": {
+    "no_edge": {
+      "total_count": 1122,
+      "avg_mi": 0.024341582352666008,
+      "avg_metric_a": 0.5271955015513319,
+      "avg_metric_b": 0.4259033049373197,
+      "avg_metric_c": 0.1546551434048311
+    },
+    "true_edge": {
+      "total_count": 148,
+      "avg_mi": 0.1804635946778885,
+      "avg_metric_a": 0.45879497021826926,
+      "avg_metric_b": 0.331638820508282,
+      "avg_metric_c": 0.12063131776403248
+    },
+    "pc_solved": {
+      "total_count": 70,
+      "avg_mi": 0.2409730289531377,
+      "avg_metric_a": 0.392469839937181,
+      "avg_metric_b": 0.28868457347567067,
+      "avg_metric_c": 0.0951318660916709
+    },
+    "mec_edge": {
+      "total_count": 78,
+      "avg_mi": 0.12616025622574187,
+      "avg_metric_a": 0.5183175230346306,
+      "avg_metric_b": 0.3701875037426768,
+      "avg_metric_c": 0.1435154410597416
+    },
+    "hypothesis_check": {
+      "metric_a_ratio": 0.9831599881057846,
+      "metric_b_ratio": 0.8691820407384662,
+      "metric_c_ratio": 0.9279706959636653
+    }
+  }
+}

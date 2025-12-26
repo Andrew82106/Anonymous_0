@@ -1,0 +1,222 @@
+{
+  "experiment": "Lab 0: Constraint-Asymmetry Orthogonality Verification",
+  "timestamp": "2025-12-26T08:55:08.892318",
+  "networks": [
+    {
+      "network": "sprinkler",
+      "nodes": 4,
+      "sample_size": 1000,
+      "timestamp": "2025-12-26T08:54:35.443323",
+      "stats": {
+        "no_edge": {
+          "count": 2,
+          "avg_mi": 0.03136457765372086,
+          "avg_asymmetry": 0.09309762265129151,
+          "std_asymmetry": 0.03968068132504578
+        },
+        "true_edge": {
+          "count": 4,
+          "avg_mi": 0.19735815013281086,
+          "avg_asymmetry": 0.06058237884871659,
+          "std_asymmetry": 0.04959519105713137
+        },
+        "pc_solved": {
+          "count": 2,
+          "avg_mi": 0.21005034538297207,
+          "avg_asymmetry": 0.06057805074916689,
+          "std_asymmetry": 0.006296696587340918
+        },
+        "mec_edge": {
+          "count": 2,
+          "avg_mi": 0.18466595488264964,
+          "avg_asymmetry": 0.06058670694826629,
+          "std_asymmetry": 0.08567030095159744
+        }
+      }
+    },
+    {
+      "network": "asia",
+      "nodes": 8,
+      "sample_size": 1000,
+      "timestamp": "2025-12-26T08:54:36.602793",
+      "stats": {
+        "no_edge": {
+          "count": 20,
+          "avg_mi": 0.01725793091608971,
+          "avg_asymmetry": 0.5749909489374934,
+          "std_asymmetry": 0.2872899514395914
+        },
+        "true_edge": {
+          "count": 8,
+          "avg_mi": 0.12797528207717082,
+          "avg_asymmetry": 0.22542142296617235,
+          "std_asymmetry": 0.27974640724958044
+        },
+        "pc_solved": {
+          "count": 0,
+          "avg_mi": 0.0,
+          "avg_asymmetry": 0.0,
+          "std_asymmetry": 0.0
+        },
+        "mec_edge": {
+          "count": 8,
+          "avg_mi": 0.12797528207717082,
+          "avg_asymmetry": 0.22542142296617235,
+          "std_asymmetry": 0.27974640724958044
+        }
+      }
+    },
+    {
+      "network": "sachs",
+      "nodes": 11,
+      "sample_size": 1000,
+      "timestamp": "2025-12-26T08:54:42.789041",
+      "stats": {
+        "no_edge": {
+          "count": 38,
+          "avg_mi": 0.04073696003064116,
+          "avg_asymmetry": 0.2972819019338148,
+          "std_asymmetry": 0.1753961182679777
+        },
+        "true_edge": {
+          "count": 17,
+          "avg_mi": 0.21486129209317106,
+          "avg_asymmetry": 0.19443001123552814,
+          "std_asymmetry": 0.20819421770191215
+        },
+        "pc_solved": {
+          "count": 9,
+          "avg_mi": 0.2262808752135401,
+          "avg_asymmetry": 0.15058537536634192,
+          "std_asymmetry": 0.09448126071486335
+        },
+        "mec_edge": {
+          "count": 8,
+          "avg_mi": 0.20201426108275589,
+          "avg_asymmetry": 0.24375522658836263,
+          "std_asymmetry": 0.28917089947806635
+        }
+      }
+    },
+    {
+      "network": "child",
+      "nodes": 20,
+      "sample_size": 1000,
+      "timestamp": "2025-12-26T08:54:49.988654",
+      "stats": {
+        "no_edge": {
+          "count": 165,
+          "avg_mi": 0.030504750988784298,
+          "avg_asymmetry": 0.5925930266350077,
+          "std_asymmetry": 0.429147692850581
+        },
+        "true_edge": {
+          "count": 25,
+          "avg_mi": 0.2836896586615911,
+          "avg_asymmetry": 0.6137076506895138,
+          "std_asymmetry": 0.5044652381074219
+        },
+        "pc_solved": {
+          "count": 12,
+          "avg_mi": 0.36820633055102864,
+          "avg_asymmetry": 0.625798214239241,
+          "std_asymmetry": 0.4500005743688047
+        },
+        "mec_edge": {
+          "count": 13,
+          "avg_mi": 0.20567426922518722,
+          "avg_asymmetry": 0.6025471304897656,
+          "std_asymmetry": 0.56838698116452
+        }
+      }
+    },
+    {
+      "network": "insurance",
+      "nodes": 27,
+      "sample_size": 1000,
+      "timestamp": "2025-12-26T08:55:00.178355",
+      "stats": {
+        "no_edge": {
+          "count": 299,
+          "avg_mi": 0.03961826695979002,
+          "avg_asymmetry": 0.6379937010612075,
+          "std_asymmetry": 0.43854122189081624
+        },
+        "true_edge": {
+          "count": 52,
+          "avg_mi": 0.2318284192882333,
+          "avg_asymmetry": 0.6090124828037257,
+          "std_asymmetry": 0.4506845662496635
+        },
+        "pc_solved": {
+          "count": 18,
+          "avg_mi": 0.39609203143435234,
+          "avg_asymmetry": 0.4893957359368896,
+          "std_asymmetry": 0.3597760946735724
+        },
+        "mec_edge": {
+          "count": 34,
+          "avg_mi": 0.14486533050499376,
+          "avg_asymmetry": 0.6723389958508741,
+          "std_asymmetry": 0.4850676254929172
+        }
+      }
+    },
+    {
+      "network": "alarm",
+      "nodes": 37,
+      "sample_size": 1000,
+      "timestamp": "2025-12-26T08:55:08.892306",
+      "stats": {
+        "no_edge": {
+          "count": 620,
+          "avg_mi": 0.02939975674811378,
+          "avg_asymmetry": 0.4906844970919443,
+          "std_asymmetry": 0.34119095392005655
+        },
+        "true_edge": {
+          "count": 46,
+          "avg_mi": 0.2847980032502369,
+          "avg_asymmetry": 0.4606624938793141,
+          "std_asymmetry": 0.34968745852001865
+        },
+        "pc_solved": {
+          "count": 18,
+          "avg_mi": 0.33842390266679395,
+          "avg_asymmetry": 0.46788415390652105,
+          "std_asymmetry": 0.3814064998696887
+        },
+        "mec_edge": {
+          "count": 28,
+          "avg_mi": 0.2503242107681646,
+          "avg_asymmetry": 0.4560199981475382,
+          "std_asymmetry": 0.33489144235889223
+        }
+      }
+    }
+  ],
+  "summary": {
+    "no_edge": {
+      "total_count": 1144,
+      "avg_mi": 0.032397628647509405,
+      "avg_asymmetry": 0.5382387069113813
+    },
+    "true_edge": {
+      "total_count": 152,
+      "avg_mi": 0.24811779106428508,
+      "avg_asymmetry": 0.4839001722474227
+    },
+    "pc_solved": {
+      "total_count": 59,
+      "avg_mi": 0.34061680251052173,
+      "avg_asymmetry": 0.444356628268605
+    },
+    "mec_edge": {
+      "total_count": 93,
+      "avg_mi": 0.18943562251237142,
+      "avg_asymmetry": 0.5089869367071027
+    },
+    "hypothesis_1_mi_separates": true,
+    "hypothesis_2_asymmetry_signal": false
+  }
+}

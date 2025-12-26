@@ -1,0 +1,21 @@
+{
+  "experiment": "Lab 0: CAD Final Evidence",
+  "timestamp": "2025-12-26T14:55:33.406372",
+  "sample_size": 500,
+  "networks": [
+    "sprinkler",
+    "child",
+    "insurance",
+    "alarm"
+  ],
+  "summary": {
+    "mi_separation": 7.477222545163886,
+    "res_gain": 2.328326030311692,
+    "ent_gain": 1.060232135378052
+  },
+  "counts": {
+    "no_edge": 1064,
+    "pc_solved": 46,
+    "mec_edge": 77
+  }
+}

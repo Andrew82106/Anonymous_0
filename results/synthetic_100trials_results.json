@@ -1,0 +1,87 @@
+{
+  "experiment": "synthetic_100_trials",
+  "timestamp": "2025-12-25T20:19:58.621063",
+  "config": {
+    "n_trials": 10,
+    "n_samples": 1000,
+    "dataset_types": [
+      "lingam",
+      "anm",
+      "reverse",
+      "independent",
+      "confounder"
+    ]
+  },
+  "results": {
+    "lingam": {
+      "accuracy": 1.0,
+      "correct_count": 10,
+      "n_trials": 10,
+      "prediction_distribution": {
+        "A->B": 10
+      },
+      "confidence_distribution": {
+        "high": 10
+      }
+    },
+    "anm": {
+      "accuracy": 1.0,
+      "correct_count": 10,
+      "n_trials": 10,
+      "prediction_distribution": {
+        "A->B": 10
+      },
+      "confidence_distribution": {
+        "high": 10
+      }
+    },
+    "reverse": {
+      "accuracy": 1.0,
+      "correct_count": 10,
+      "n_trials": 10,
+      "prediction_distribution": {
+        "B->A": 10
+      },
+      "confidence_distribution": {
+        "high": 9,
+        "medium": 1
+      }
+    },
+    "independent": {
+      "accuracy": 0.6,
+      "correct_count": 6,
+      "n_trials": 10,
+      "prediction_distribution": {
+        "B->A": 2,
+        "A_|_B": 5,
+        "A->B": 2,
+        "Unclear": 1
+      },
+      "confidence_distribution": {
+        "medium": 5,
+        "high": 4,
+        "low": 1
+      }
+    },
+    "confounder": {
+      "accuracy": 0.0,
+      "correct_count": 0,
+      "n_trials": 10,
+      "prediction_distribution": {
+        "A->B": 6,
+        "B->A": 3,
+        "Unclear": 1
+      },
+      "confidence_distribution": {
+        "medium": 7,
+        "high": 2,
+        "low": 1
+      }
+    }
+  },
+  "summary": {
+    "direct_causal_accuracy": 0.9,
+    "direct_causal_correct": 36,
+    "direct_causal_total": 40
+  }
+}

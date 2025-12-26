@@ -22,12 +22,17 @@ Author: ACR Framework Team
 """
 
 import numpy as np
+import warnings
 from scipy.stats import skew, kurtosis, pearsonr, spearmanr, chi2_contingency, entropy, fisher_exact
 from scipy.spatial.distance import pdist, squareform
 from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.preprocessing import PolynomialFeatures, LabelEncoder, StandardScaler
 from sklearn.neural_network import MLPRegressor
 from sklearn.pipeline import make_pipeline
+from sklearn.exceptions import ConvergenceWarning
+
+# 抑制 MLP 收敛警告 - 在 Independent/Confounder 数据上无法收敛是正常的
+warnings.filterwarnings('ignore', category=ConvergenceWarning)
 from sklearn.metrics import accuracy_score, log_loss, mutual_info_score
 from sklearn.feature_selection import mutual_info_regression
 
@@ -40,9 +45,173 @@ class StatTranslator:
         translator = StatTranslator()
         stats = translator.analyze(X, Y)  # 提取统计特征
         narrative = translator.generate_narrative(stats)  # 生成叙事
+        
+        # NEW: Composite Profile for CAD Framework
+        profile = translator.compute_composite_profile(df, 'X', 'Y')
     """
     def __init__(self):
         pass
+    
+    def compute_composite_profile(self, df, node_x: str, node_y: str) -> dict:
+        """
+        计算复合信号配置文件 (Composite Signal Profile)
+        
+        用于 CAD (Constraint-Asymmetry Decoupling) 框架：
+        - Evidence A (Functional/ANM): 残差独立性 P-value
+        - Evidence B (Informational/IGCI): 边缘熵
+        
+        Parameters:
+        -----------
+        df : pd.DataFrame
+            数据框
+        node_x, node_y : str
+            变量名
+        
+        Returns:
+        --------
+        dict : 复合配置文件
+            {
+                'functional': {
+                    'p_xy': float,  # X->Y 残差独立性 p-value (高=好)
+                    'p_yx': float,  # Y->X 残差独立性 p-value (高=好)
+                    'direction_signal': str,  # 'X->Y', 'Y->X', 'ambiguous'
+                    'strength': float  # |p_xy - p_yx|
+                },
+                'informational': {
+                    'h_x': float,  # X 的边缘熵
+                    'h_y': float,  # Y 的边缘熵
+                    'direction_signal': str,  # 'X->Y' (if H(X)<H(Y)), 'Y->X', 'ambiguous'
+                    'strength': float  # |H(X) - H(Y)| / max(H(X), H(Y))
+                },
+                'consensus': str,  # 'aligned', 'conflict', 'weak'
+                'recommended_direction': str,  # 最终推荐方向
+                'confidence': str  # 'high', 'medium', 'low'
+            }
+        """
+        epsilon = 1e-9
+        
+        try:
+            X = df[node_x].values
+            Y = df[node_y].values
+        except KeyError as e:
+            return self._default_composite_profile(f"Variable not found: {e}")
+        
+        # 检查常量值
+        if len(np.unique(X)) < 2 or len(np.unique(Y)) < 2:
+            return self._default_composite_profile("Constant variable detected")
+        
+        try:
+            stats = self.analyze(X, Y)
+        except Exception as e:
+            return self._default_composite_profile(f"Analysis failed: {e}")
+        
+        # ========== Evidence A: Functional (ANM) ==========
+        # 残差独立性 P-value: 高 p-value = 残差与输入独立 = 好的因果模型
+        if stats.get('is_discrete', False):
+            p_xy = stats['dir_ab'].get('error_independence_p', 0.5)
+            p_yx = stats['dir_ba'].get('error_independence_p', 0.5)
+        else:
+            # 连续变量：使用 HSIC (低=独立) 转换为 p-value 风格 (高=独立)
+            hsic_xy = stats['dir_ab'].get('resid_hsic_score', 0.5)
+            hsic_yx = stats['dir_ba'].get('resid_hsic_score', 0.5)
+            # 转换: p = 1 - hsic (HSIC 低=独立=高 p-value)
+            p_xy = max(0, 1 - hsic_xy)
+            p_yx = max(0, 1 - hsic_yx)
+        
+        func_strength = abs(p_xy - p_yx)
+        if func_strength < 0.05:
+            func_signal = 'ambiguous'
+        elif p_xy > p_yx:
+            func_signal = 'X->Y'
+        else:
+            func_signal = 'Y->X'
+        
+        functional = {
+            'p_xy': float(p_xy),
+            'p_yx': float(p_yx),
+            'direction_signal': func_signal,
+            'strength': float(func_strength)
+        }
+        
+        # ========== Evidence B: Informational (IGCI) ==========
+        # 边缘熵: 原因通常熵更低 (更简单)
+        if stats.get('is_discrete', False):
+            h_x = stats.get('x_entropy', 0)
+            h_y = stats.get('y_entropy', 0)
+        else:
+            # 连续变量：使用偏度/峰度作为复杂度代理
+            # 更高的非高斯性 = 更复杂 = 更可能是结果
+            h_x = abs(stats.get('x_skew', 0)) + abs(stats.get('x_kurt', 0))
+            h_y = abs(stats.get('y_skew', 0)) + abs(stats.get('y_kurt', 0))
+        
+        max_h = max(h_x, h_y) + epsilon
+        info_strength = abs(h_x - h_y) / max_h
+        
+        if info_strength < 0.1:
+            info_signal = 'ambiguous'
+        elif h_x < h_y:
+            info_signal = 'X->Y'  # X 更简单 → X 是原因
+        else:
+            info_signal = 'Y->X'  # Y 更简单 → Y 是原因
+        
+        informational = {
+            'h_x': float(h_x),
+            'h_y': float(h_y),
+            'direction_signal': info_signal,
+            'strength': float(info_strength)
+        }
+        
+        # ========== Consensus Analysis ==========
+        signals = [func_signal, info_signal]
+        non_ambiguous = [s for s in signals if s != 'ambiguous']
+        
+        if len(non_ambiguous) == 0:
+            consensus = 'weak'
+            recommended = 'Unclear'
+            confidence = 'low'
+        elif len(set(non_ambiguous)) == 1:
+            consensus = 'aligned'
+            recommended = non_ambiguous[0]
+            # 置信度基于信号强度
+            avg_strength = (func_strength + info_strength) / 2
+            if avg_strength > 0.3:
+                confidence = 'high'
+            elif avg_strength > 0.15:
+                confidence = 'medium'
+            else:
+                confidence = 'low'
+        else:
+            consensus = 'conflict'
+            # 冲突时优先 Functional (残差独立性更可靠)
+            recommended = func_signal if func_signal != 'ambiguous' else info_signal
+            confidence = 'low'
+        
+        return {
+            'functional': functional,
+            'informational': informational,
+            'consensus': consensus,
+            'recommended_direction': recommended,
+            'confidence': confidence,
+            'node_x': node_x,
+            'node_y': node_y
+        }
+    
+    def _default_composite_profile(self, error_msg: str) -> dict:
+        """返回默认的复合配置文件（用于错误处理）"""
+        return {
+            'functional': {
+                'p_xy': 0.5, 'p_yx': 0.5,
+                'direction_signal': 'ambiguous', 'strength': 0.0
+            },
+            'informational': {
+                'h_x': 0.0, 'h_y': 0.0,
+                'direction_signal': 'ambiguous', 'strength': 0.0
+            },
+            'consensus': 'weak',
+            'recommended_direction': 'Unclear',
+            'confidence': 'low',
+            'error': error_msg
+        }
 
     def analyze(self, X, Y):
         """

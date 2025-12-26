@@ -1,0 +1,361 @@
+{
+  "experiment": "Lab 0: CAD Grand Verification",
+  "timestamp": "2025-12-26T11:07:57.356587",
+  "sample_size": 1000,
+  "networks": [
+    {
+      "network": "sprinkler",
+      "nodes": 4,
+      "stats": {
+        "no_edge": {
+          "count": 2,
+          "avg_mi": 0.026159973922753696,
+          "avg_metric_a": 0.10006674803840948,
+          "std_metric_a": 0.06989683956871008,
+          "avg_metric_b": 0.10011496843953296,
+          "std_metric_b": 0.06994829023968878,
+          "avg_metric_c": 0.020688363380899317,
+          "std_metric_c": 0.015412608073651721
+        },
+        "true_edge": {
+          "count": 4,
+          "avg_mi": 0.13570649375566,
+          "avg_metric_a": 0.07491157921898606,
+          "std_metric_a": 0.0642082523427431,
+          "avg_metric_b": 0.076256573456995,
+          "std_metric_b": 0.06493847264385721,
+          "avg_metric_c": 0.01303391556657212,
+          "std_metric_c": 0.026067337024237483
+        },
+        "pc_solved": {
+          "count": 2,
+          "avg_mi": 0.14239886646737426,
+          "avg_metric_a": 0.07474563864047618,
+          "std_metric_a": 0.034556734077173065,
+          "avg_metric_b": 0.07741807527914861,
+          "std_metric_b": 0.03829586458228624,
+          "avg_metric_c": 3.698973610255537e-07,
+          "std_metric_c": 5.231138646483551e-07
+        },
+        "mec_edge": {
+          "count": 2,
+          "avg_mi": 0.1290141210439457,
+          "avg_metric_a": 0.07507751979749594,
+          "std_metric_a": 0.10570629589359988,
+          "avg_metric_b": 0.07509507163484141,
+          "std_metric_b": 0.10573100821383813,
+          "avg_metric_c": 0.026067461235783213,
+          "std_metric_c": 0.036864955275793476
+        },
+        "pc_performance": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 4,
+          "fp": 0,
+          "fn": 0
+        }
+      }
+    },
+    {
+      "network": "asia",
+      "nodes": 8,
+      "stats": {
+        "no_edge": {
+          "count": 20,
+          "avg_mi": 0.01264142168595321,
+          "avg_metric_a": 0.5628128167441139,
+          "std_metric_a": 0.28745980833716445,
+          "avg_metric_b": 0.6840930323210472,
+          "std_metric_b": 0.2311983865701842,
+          "avg_metric_c": 0.17011080123814146,
+          "std_metric_c": 0.22429525031762854
+        },
+        "true_edge": {
+          "count": 8,
+          "avg_mi": 0.08966587165644013,
+          "avg_metric_a": 0.23489183981549253,
+          "std_metric_a": 0.286568591952391,
+          "avg_metric_b": 0.3556892455287976,
+          "std_metric_b": 0.31403484476429216,
+          "avg_metric_c": 0.37263554708940716,
+          "std_metric_c": 0.42055419494565655
+        },
+        "pc_solved": {
+          "count": 5,
+          "avg_mi": 0.08743178463526377,
+          "avg_metric_a": 0.24057823919548796,
+          "std_metric_a": 0.27645836688636394,
+          "avg_metric_b": 0.38989203557610014,
+          "std_metric_b": 0.33808629621363634,
+          "avg_metric_c": 0.5085180719055395,
+          "std_metric_c": 0.46476926124402823
+        },
+        "mec_edge": {
+          "count": 3,
+          "avg_mi": 0.09338935002506739,
+          "avg_metric_a": 0.2254145075155001,
+          "std_metric_a": 0.36653980383923707,
+          "avg_metric_b": 0.29868459544996,
+          "std_metric_b": 0.3297863450070223,
+          "avg_metric_c": 0.14616467239585318,
+          "std_metric_c": 0.25281562195602275
+        },
+        "pc_performance": {
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1": 0.8571428571428571,
+          "tp": 6,
+          "fp": 0,
+          "fn": 2
+        }
+      }
+    },
+    {
+      "network": "sachs",
+      "nodes": 11,
+      "stats": {
+        "no_edge": {
+          "count": 38,
+          "avg_mi": 0.02905310737276815,
+          "avg_metric_a": 0.32674116508630974,
+          "std_metric_a": 0.2120096118840625,
+          "avg_metric_b": 0.23985107628029287,
+          "std_metric_b": 0.15805466831386322,
+          "avg_metric_c": 0.13572099436135293,
+          "std_metric_c": 0.19444182177221556
+        },
+        "true_edge": {
+          "count": 17,
+          "avg_mi": 0.14834460970408322,
+          "avg_metric_a": 0.1887363962808956,
+          "std_metric_a": 0.22891855072758807,
+          "avg_metric_b": 0.1317567045389677,
+          "std_metric_b": 0.14612453877986464,
+          "avg_metric_c": 0.0006282149069931044,
+          "std_metric_c": 0.002433016994301125
+        },
+        "pc_solved": {
+          "count": 10,
+          "avg_mi": 0.17077402846474393,
+          "avg_metric_a": 0.12517964622072464,
+          "std_metric_a": 0.0768396949230004,
+          "avg_metric_b": 0.08990199150348993,
+          "std_metric_b": 0.05302882345515333,
+          "avg_metric_c": 6.919868470235371e-08,
+          "std_metric_c": 2.1545770706849505e-07
+        },
+        "mec_edge": {
+          "count": 7,
+          "avg_mi": 0.11630258290313926,
+          "avg_metric_a": 0.2795317535097113,
+          "std_metric_a": 0.33843241924853645,
+          "avg_metric_b": 0.19154915173250742,
+          "std_metric_b": 0.21361392786291764,
+          "avg_metric_c": 0.00152556591886225,
+          "std_metric_c": 0.0037667582109144893
+        },
+        "pc_performance": {
+          "precision": 1.0,
+          "recall": 0.8235294117647058,
+          "f1": 0.9032258064516129,
+          "tp": 14,
+          "fp": 0,
+          "fn": 3
+        }
+      }
+    },
+    {
+      "network": "child",
+      "nodes": 20,
+      "stats": {
+        "no_edge": {
+          "count": 165,
+          "avg_mi": 0.02144394218913594,
+          "avg_metric_a": 0.5893503583823676,
+          "std_metric_a": 0.4292475160871294,
+          "avg_metric_b": 0.3631034509779522,
+          "std_metric_b": 0.20338077833177193,
+          "avg_metric_c": 0.12172004775217347,
+          "std_metric_c": 0.21894655054124978
+        },
+        "true_edge": {
+          "count": 25,
+          "avg_mi": 0.19861924795724709,
+          "avg_metric_a": 0.6009358857849673,
+          "std_metric_a": 0.4896605824789019,
+          "avg_metric_b": 0.3299113856352001,
+          "std_metric_b": 0.23702462033120358,
+          "avg_metric_c": 0.15423438958213836,
+          "std_metric_c": 0.32304922432801303
+        },
+        "pc_solved": {
+          "count": 11,
+          "avg_mi": 0.31850873024716003,
+          "avg_metric_a": 0.70417523592448,
+          "std_metric_a": 0.39113889693703285,
+          "avg_metric_b": 0.35790606326598023,
+          "std_metric_b": 0.19245313749297097,
+          "avg_metric_c": 0.09138124478871452,
+          "std_metric_c": 0.3008862932666016
+        },
+        "mec_edge": {
+          "count": 14,
+          "avg_mi": 0.1044203690151726,
+          "avg_metric_a": 0.519819253532493,
+          "std_metric_a": 0.5557505381050989,
+          "avg_metric_b": 0.30791556749673016,
+          "std_metric_b": 0.2721085541550329,
+          "avg_metric_c": 0.20361900334839994,
+          "std_metric_c": 0.3421351690135093
+        },
+        "pc_performance": {
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.888888888888889,
+          "tp": 20,
+          "fp": 0,
+          "fn": 5
+        }
+      }
+    },
+    {
+      "network": "insurance",
+      "nodes": 27,
+      "stats": {
+        "no_edge": {
+          "count": 299,
+          "avg_mi": 0.029448065145731058,
+          "avg_metric_a": 0.6298224844042725,
+          "std_metric_a": 0.43996557987802576,
+          "avg_metric_b": 0.44023556806716513,
+          "std_metric_b": 0.2824335110834741,
+          "avg_metric_c": 0.17954658337465668,
+          "std_metric_c": 0.24680773814818657
+        },
+        "true_edge": {
+          "count": 52,
+          "avg_mi": 0.16677267738314422,
+          "avg_metric_a": 0.6008044104798282,
+          "std_metric_a": 0.44658677864992496,
+          "avg_metric_b": 0.3926184837728571,
+          "std_metric_b": 0.2868658399442595,
+          "avg_metric_c": 0.11202185871461029,
+          "std_metric_c": 0.17041415321024309
+        },
+        "pc_solved": {
+          "count": 19,
+          "avg_mi": 0.2893087366317123,
+          "avg_metric_a": 0.479171152268668,
+          "std_metric_a": 0.354415716385569,
+          "avg_metric_b": 0.3022717681547474,
+          "std_metric_b": 0.22822923606779819,
+          "avg_metric_c": 0.03947666722649229,
+          "std_metric_c": 0.10860574122856112
+        },
+        "mec_edge": {
+          "count": 33,
+          "avg_mi": 0.09622161296730197,
+          "avg_metric_a": 0.6708356803589812,
+          "std_metric_a": 0.48307269943507164,
+          "avg_metric_b": 0.4446362897347989,
+          "std_metric_b": 0.3069464951839553,
+          "avg_metric_c": 0.1537903022986782,
+          "std_metric_c": 0.18634739495913633
+        },
+        "pc_performance": {
+          "precision": 1.0,
+          "recall": 0.5192307692307693,
+          "f1": 0.6835443037974684,
+          "tp": 27,
+          "fp": 0,
+          "fn": 25
+        }
+      }
+    },
+    {
+      "network": "alarm",
+      "nodes": 37,
+      "stats": {
+        "no_edge": {
+          "count": 620,
+          "avg_mi": 0.021978608083617884,
+          "avg_metric_a": 0.48815170476428654,
+          "std_metric_a": 0.34305681764299656,
+          "avg_metric_b": 0.4623882061288143,
+          "std_metric_b": 0.2681031066085851,
+          "avg_metric_c": 0.15490769187084616,
+          "std_metric_c": 0.21387123800281593
+        },
+        "true_edge": {
+          "count": 46,
+          "avg_mi": 0.19960689301724432,
+          "avg_metric_a": 0.4537404728666158,
+          "std_metric_a": 0.34286861245180356,
+          "avg_metric_b": 0.4102989039072057,
+          "std_metric_b": 0.2657080940338485,
+          "avg_metric_c": 0.09200136115980503,
+          "std_metric_c": 0.22463573662079028
+        },
+        "pc_solved": {
+          "count": 20,
+          "avg_mi": 0.2148932782875276,
+          "avg_metric_a": 0.4130458264702243,
+          "std_metric_a": 0.3140810698834926,
+          "avg_metric_b": 0.3824942610394962,
+          "std_metric_b": 0.2674091962219613,
+          "avg_metric_c": 0.07087728471088506,
+          "std_metric_c": 0.21350790677468015
+        },
+        "mec_edge": {
+          "count": 26,
+          "avg_mi": 0.18784813511702642,
+          "avg_metric_a": 0.4850440470176859,
+          "std_metric_a": 0.36645652129316136,
+          "avg_metric_b": 0.4316870907285206,
+          "std_metric_b": 0.26765903221068266,
+          "avg_metric_c": 0.10825065073589732,
+          "std_metric_c": 0.23569795772134353
+        },
+        "pc_performance": {
+          "precision": 1.0,
+          "recall": 0.6956521739130435,
+          "f1": 0.8205128205128205,
+          "tp": 32,
+          "fp": 0,
+          "fn": 14
+        }
+      }
+    }
+  ],
+  "summary": {
+    "no_edge": {
+      "total_count": 1144,
+      "avg_mi": 0.023932801934749885,
+      "avg_metric_a": 0.5350405096399167,
+      "avg_metric_b": 0.4381290415605424,
+      "avg_metric_c": 0.1559545417878598
+    },
+    "true_edge": {
+      "total_count": 152,
+      "avg_mi": 0.1750104527295493,
+      "avg_metric_a": 0.47713544745799136,
+      "avg_metric_b": 0.3482111816580319,
+      "avg_metric_c": 0.11155893880568851
+    },
+    "pc_solved": {
+      "total_count": 67,
+      "avg_mi": 0.23474663485418437,
+      "avg_metric_a": 0.41366082019618056,
+      "avg_metric_b": 0.30348256350939706,
+      "avg_metric_c": 0.08530429635083853
+    },
+    "mec_edge": {
+      "total_count": 85,
+      "avg_mi": 0.1279242856430722,
+      "avg_metric_a": 0.5271683889467128,
+      "avg_metric_b": 0.3834678571398969,
+      "avg_metric_c": 0.13225377462304086
+    }
+  }
+}

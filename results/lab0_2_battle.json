@@ -1,0 +1,61 @@
+{
+  "experiment": "Lab 0.2: Metric Battle",
+  "timestamp": "2025-12-26T14:29:41.292540",
+  "sample_size": 1000,
+  "networks": [
+    "child",
+    "insurance",
+    "alarm"
+  ],
+  "ranking": [
+    {
+      "metric": "BIC Score",
+      "metric_col": "metric_b",
+      "no_edge_mean": 9.910891295841988e-14,
+      "no_edge_std": 1.434454512410469e-13,
+      "pc_solved_mean": 1.4029439548624957e-13,
+      "mec_mean": 9.199658578788666e-14,
+      "mec_std": 1.2417985937677475e-13,
+      "snr": 0.9282372598162072
+    },
+    {
+      "metric": "BDeu Score",
+      "metric_col": "metric_c",
+      "no_edge_mean": 3.078144545322353e-13,
+      "no_edge_std": 4.239974057714761e-13,
+      "pc_solved_mean": 2.636567087586414e-13,
+      "mec_mean": 2.8197327513848185e-13,
+      "mec_std": 4.098449435422575e-13,
+      "snr": 0.9160494934098449
+    },
+    {
+      "metric": "Entropy (IGCI)",
+      "metric_col": "metric_d",
+      "no_edge_mean": 0.44288450509029986,
+      "no_edge_std": 0.26933774016845885,
+      "pc_solved_mean": 0.35076469006118616,
+      "mec_mean": 0.40309895292679304,
+      "mec_std": 0.2840707961276764,
+      "snr": 0.910167206785898
+    },
+    {
+      "metric": "Residual Independence",
+      "metric_col": "metric_a",
+      "no_edge_mean": 0.1414668174034392,
+      "no_edge_std": 0.19954075754573916,
+      "pc_solved_mean": 0.054273289995621435,
+      "mec_mean": 0.12099160102113307,
+      "mec_std": 0.22201375503041235,
+      "snr": 0.8552648829024385
+    }
+  ],
+  "winner": {
+    "metric": "BIC Score",
+    "snr": 0.9282372598162072
+  },
+  "sample_counts": {
+    "no_edge": 1084,
+    "pc_solved": 47,
+    "mec_edge": 76
+  }
+}

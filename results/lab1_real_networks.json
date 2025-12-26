@@ -1,0 +1,600 @@
+[
+  {
+    "network": "sprinkler",
+    "n_nodes": 4,
+    "n_edges": 4,
+    "sample_size": 1000,
+    "model": "acr-hybrid",
+    "timestamp": "2025-12-26T15:58:10.270008",
+    "acr": {
+      "method": "ACR-Hybrid",
+      "shd": 2,
+      "accuracy": 0.0,
+      "correct_count": 0,
+      "total_edges": 4,
+      "llm_calls": 1,
+      "unclear_count": 0,
+      "unclear_ratio": 0.0,
+      "pc_oriented_count": 2,
+      "mec_edge_count": 2,
+      "meek_propagated": 1,
+      "cycle_rejected": 0,
+      "pairwise_results": [
+        {
+          "edge": "Cloudy-Rain",
+          "priority_score": 0.5861840878274045,
+          "prediction": "B->A",
+          "final_direction": "Rain->Cloudy",
+          "confidence": "medium",
+          "is_correct": false,
+          "true_direction": "u->v",
+          "signal": {
+            "res_strength": 0.5855836382359344,
+            "ent_strength": 0.0006004495914701194
+          }
+        }
+      ]
+    },
+    "pc": {
+      "shd": 0
+    },
+    "hillclimb": {
+      "shd": 0
+    },
+    "random": {
+      "shd": 6
+    }
+  },
+  {
+    "network": "asia",
+    "n_nodes": 8,
+    "n_edges": 8,
+    "sample_size": 1000,
+    "model": "acr-hybrid",
+    "timestamp": "2025-12-26T16:00:31.221029",
+    "acr": {
+      "method": "ACR-Hybrid",
+      "shd": 8,
+      "accuracy": 0.6666666666666666,
+      "correct_count": 2,
+      "total_edges": 8,
+      "llm_calls": 3,
+      "unclear_count": 0,
+      "unclear_ratio": 0.0,
+      "pc_oriented_count": 0,
+      "mec_edge_count": 4,
+      "meek_propagated": 1,
+      "cycle_rejected": 0,
+      "pairwise_results": [
+        {
+          "edge": "either-xray",
+          "priority_score": 1.2786407909426896,
+          "prediction": "A->B",
+          "final_direction": "either->xray",
+          "confidence": "high",
+          "is_correct": true,
+          "true_direction": "u->v",
+          "signal": {
+            "res_strength": 1.0,
+            "ent_strength": 0.27864079094268956
+          }
+        },
+        {
+          "edge": "either-lung",
+          "priority_score": 1.1103464126151235,
+          "prediction": "B->A",
+          "final_direction": "lung->either",
+          "confidence": "high",
+          "is_correct": true,
+          "true_direction": "v->u",
+          "signal": {
+            "res_strength": 0.9999999999999999,
+            "ent_strength": 0.11034641261512348
+          }
+        },
+        {
+          "edge": "bronc-dysp",
+          "priority_score": 0.11747818382294754,
+          "prediction": "B->A",
+          "final_direction": "dysp->bronc",
+          "confidence": "medium",
+          "is_correct": false,
+          "true_direction": "u->v",
+          "signal": {
+            "res_strength": 0.11467275354716368,
+            "ent_strength": 0.002805430275783869
+          }
+        }
+      ]
+    },
+    "pc": {
+      "shd": 8
+    },
+    "hillclimb": {
+      "shd": 8
+    },
+    "random": {
+      "shd": 14
+    }
+  },
+  {
+    "network": "sachs",
+    "n_nodes": 11,
+    "n_edges": 17,
+    "sample_size": 1000,
+    "model": "acr-hybrid",
+    "timestamp": "2025-12-26T15:58:41.985262",
+    "acr": {
+      "method": "ACR-Hybrid",
+      "shd": 18,
+      "accuracy": 0.0,
+      "correct_count": 0,
+      "total_edges": 17,
+      "llm_calls": 3,
+      "unclear_count": 0,
+      "unclear_ratio": 0.0,
+      "pc_oriented_count": 11,
+      "mec_edge_count": 3,
+      "meek_propagated": 0,
+      "cycle_rejected": 6,
+      "pairwise_results": [
+        {
+          "edge": "PIP3-Plcg",
+          "priority_score": 0.8297234935745272,
+          "prediction": "A->B",
+          "final_direction": null,
+          "confidence": "low",
+          "is_correct": false,
+          "true_direction": "v->u",
+          "signal": {
+            "res_strength": 0.3893470601591072,
+            "ent_strength": 0.44037643341542
+          }
+        },
+        {
+          "edge": "PIP2-PIP3",
+          "priority_score": 0.5485342795439555,
+          "prediction": "A->B",
+          "final_direction": null,
+          "confidence": "high",
+          "is_correct": false,
+          "true_direction": "v->u",
+          "signal": {
+            "res_strength": 0.049292381600903636,
+            "ent_strength": 0.49924189794305185
+          }
+        },
+        {
+          "edge": "PIP2-Plcg",
+          "priority_score": 0.1051876083183769,
+          "prediction": "A->B",
+          "final_direction": null,
+          "confidence": "medium",
+          "is_correct": false,
+          "true_direction": "v->u",
+          "signal": {
+            "res_strength": 1.9880628319430713e-85,
+            "ent_strength": 0.1051876083183769
+          }
+        }
+      ]
+    },
+    "pc": {
+      "shd": 24
+    },
+    "hillclimb": {
+      "shd": 15
+    },
+    "random": {
+      "shd": 28
+    }
+  },
+  {
+    "network": "child",
+    "n_nodes": 20,
+    "n_edges": 25,
+    "sample_size": 1000,
+    "model": "acr-hybrid",
+    "timestamp": "2025-12-26T16:01:20.244298",
+    "acr": {
+      "method": "ACR-Hybrid",
+      "shd": 16,
+      "accuracy": 0.5,
+      "correct_count": 2,
+      "total_edges": 25,
+      "llm_calls": 4,
+      "unclear_count": 0,
+      "unclear_ratio": 0.0,
+      "pc_oriented_count": 8,
+      "mec_edge_count": 9,
+      "meek_propagated": 5,
+      "cycle_rejected": 0,
+      "pairwise_results": [
+        {
+          "edge": "DuctFlow-HypDistrib",
+          "priority_score": 1.6141593550628368,
+          "prediction": "B->A",
+          "final_direction": "HypDistrib->DuctFlow",
+          "confidence": "high",
+          "is_correct": false,
+          "true_direction": "u->v",
+          "signal": {
+            "res_strength": 0.974508530268598,
+            "ent_strength": 0.6396508247942388
+          }
+        },
+        {
+          "edge": "CO2-CO2Report",
+          "priority_score": 0.9394337314862902,
+          "prediction": "A->B",
+          "final_direction": "CO2->CO2Report",
+          "confidence": "low",
+          "is_correct": true,
+          "true_direction": "u->v",
+          "signal": {
+            "res_strength": 0.6856631208744726,
+            "ent_strength": 0.25377061061181755
+          }
+        },
+        {
+          "edge": "Grunting-LungParench",
+          "priority_score": 0.32135351046453947,
+          "prediction": "A->B",
+          "final_direction": "Grunting->LungParench",
+          "confidence": "high",
+          "is_correct": false,
+          "true_direction": "v->u",
+          "signal": {
+            "res_strength": 1.071502953937261e-10,
+            "ent_strength": 0.3213535103573892
+          }
+        },
+        {
+          "edge": "Grunting-GruntingReport",
+          "priority_score": 0.06663498669122919,
+          "prediction": "A->B",
+          "final_direction": "Grunting->GruntingReport",
+          "confidence": "low",
+          "is_correct": true,
+          "true_direction": "u->v",
+          "signal": {
+            "res_strength": 0.0003153444201799108,
+            "ent_strength": 0.06631964227104928
+          }
+        }
+      ]
+    },
+    "pc": {
+      "shd": 21
+    },
+    "hillclimb": {
+      "shd": 12
+    },
+    "random": {
+      "shd": 48
+    }
+  },
+  {
+    "network": "alarm",
+    "n_nodes": 37,
+    "n_edges": 46,
+    "sample_size": 1000,
+    "model": "acr-hybrid",
+    "timestamp": "2025-12-26T15:00:28.325300",
+    "acr": {
+      "method": "ACR-Hybrid",
+      "shd": 25,
+      "accuracy": 1.0,
+      "correct_count": 7,
+      "total_edges": 46,
+      "unclear_count": 0,
+      "unclear_ratio": 0.0,
+      "pc_oriented_count": 18,
+      "mec_edge_count": 7,
+      "pairwise_results": [
+        {
+          "edge": "HISTORY-LVFAILURE",
+          "prediction": "B->A",
+          "confidence": "medium",
+          "is_correct": true,
+          "true_direction": "v->u",
+          "profile": {
+            "functional": {
+              "p_xy": 1.882045901222323e-33,
+              "p_yx": 0.0019504289986097857,
+              "direction_signal": "ambiguous",
+              "strength": 0.0019504289986097857
+            },
+            "informational": {
+              "h_x": 0.3194539658094462,
+              "h_y": 0.2821337464520461,
+              "direction_signal": "Y->X",
+              "strength": 0.11682503031700198
+            },
+            "consensus": "aligned",
+            "recommended_direction": "Y->X",
+            "confidence": "low",
+            "node_x": "HISTORY",
+            "node_y": "LVFAILURE"
+          }
+        },
+        {
+          "edge": "PVSAT-SAO2",
+          "prediction": "A->B",
+          "confidence": "low",
+          "is_correct": true,
+          "true_direction": "u->v",
+          "profile": {
+            "functional": {
+              "p_xy": 0.02140104838479562,
+              "p_yx": 2.3053721940707037e-45,
+              "direction_signal": "ambiguous",
+              "strength": 0.02140104838479562
+            },
+            "informational": {
+              "h_x": 0.7274152269223358,
+              "h_y": 0.7938827242367975,
+              "direction_signal": "ambiguous",
+              "strength": 0.08372457946434833
+            },
+            "consensus": "weak",
+            "recommended_direction": "Unclear",
+            "confidence": "low",
+            "node_x": "PVSAT",
+            "node_y": "SAO2"
+          }
+        },
+        {
+          "edge": "LVFAILURE-STROKEVOLUME",
+          "prediction": "A->B",
+          "confidence": "high",
+          "is_correct": true,
+          "true_direction": "u->v",
+          "profile": {
+            "functional": {
+              "p_xy": 0.3040095999625842,
+              "p_yx": 2.809696250449481e-40,
+              "direction_signal": "X->Y",
+              "strength": 0.3040095999625842
+            },
+            "informational": {
+              "h_x": 0.2821337464520461,
+              "h_y": 0.8561943464020817,
+              "direction_signal": "X->Y",
+              "strength": 0.6704793154636983
+            },
+            "consensus": "aligned",
+            "recommended_direction": "X->Y",
+            "confidence": "high",
+            "node_x": "LVFAILURE",
+            "node_y": "STROKEVOLUME"
+          }
+        },
+        {
+          "edge": "ERRCAUTER-HRSAT",
+          "prediction": "A->B",
+          "confidence": "high",
+          "is_correct": true,
+          "true_direction": "u->v",
+          "profile": {
+            "functional": {
+              "p_xy": 0.8502194643766907,
+              "p_yx": 2.3843878894084294e-11,
+              "direction_signal": "X->Y",
+              "strength": 0.8502194643528468
+            },
+            "informational": {
+              "h_x": 0.4968922684853696,
+              "h_y": 1.087060422599336,
+              "direction_signal": "X->Y",
+              "strength": 0.5429028058623243
+            },
+            "consensus": "aligned",
+            "recommended_direction": "X->Y",
+            "confidence": "high",
+            "node_x": "ERRCAUTER",
+            "node_y": "HRSAT"
+          }
+        },
+        {
+          "edge": "MINVOLSET-VENTMACH",
+          "prediction": "A->B",
+          "confidence": "high",
+          "is_correct": true,
+          "true_direction": "u->v",
+          "profile": {
+            "functional": {
+              "p_xy": 0.10871378690585627,
+              "p_yx": 1.3797011061123978e-121,
+              "direction_signal": "X->Y",
+              "strength": 0.10871378690585627
+            },
+            "informational": {
+              "h_x": 0.5475701473181359,
+              "h_y": 0.8937691247526353,
+              "direction_signal": "X->Y",
+              "strength": 0.38734721021266894
+            },
+            "consensus": "aligned",
+            "recommended_direction": "X->Y",
+            "confidence": "medium",
+            "node_x": "MINVOLSET",
+            "node_y": "VENTMACH"
+          }
+        },
+        {
+          "edge": "ERRCAUTER-HREKG",
+          "prediction": "A->B",
+          "confidence": "high",
+          "is_correct": true,
+          "true_direction": "u->v",
+          "profile": {
+            "functional": {
+              "p_xy": 0.7562421662301579,
+              "p_yx": 4.373692658625742e-09,
+              "direction_signal": "X->Y",
+              "strength": 0.7562421618564653
+            },
+            "informational": {
+              "h_x": 0.4968922684853696,
+              "h_y": 1.0852573988771712,
+              "direction_signal": "X->Y",
+              "strength": 0.5421433942384474
+            },
+            "consensus": "aligned",
+            "recommended_direction": "X->Y",
+            "confidence": "high",
+            "node_x": "ERRCAUTER",
+            "node_y": "HREKG"
+          }
+        },
+        {
+          "edge": "CO-STROKEVOLUME",
+          "prediction": "B->A",
+          "confidence": "high",
+          "is_correct": true,
+          "true_direction": "v->u",
+          "profile": {
+            "functional": {
+              "p_xy": 2.960550064247932e-127,
+              "p_yx": 1.3469123698191905e-21,
+              "direction_signal": "ambiguous",
+              "strength": 1.3469123698191905e-21
+            },
+            "informational": {
+              "h_x": 1.2982041110200966,
+              "h_y": 0.8561943464020817,
+              "direction_signal": "Y->X",
+              "strength": 0.3404778651719233
+            },
+            "consensus": "aligned",
+            "recommended_direction": "Y->X",
+            "confidence": "medium",
+            "node_x": "CO",
+            "node_y": "STROKEVOLUME"
+          }
+        }
+      ]
+    },
+    "pc": {
+      "shd": 28
+    },
+    "hillclimb": {
+      "shd": 56
+    },
+    "random": {
+      "shd": 90
+    }
+  },
+  {
+    "network": "hailfinder",
+    "n_nodes": 56,
+    "n_edges": 66,
+    "sample_size": 1000,
+    "model": "acr-hybrid",
+    "timestamp": "2025-12-26T16:02:16.471684",
+    "acr": {
+      "method": "ACR-Hybrid",
+      "shd": 51,
+      "accuracy": 0.16666666666666666,
+      "correct_count": 1,
+      "total_edges": 66,
+      "llm_calls": 6,
+      "unclear_count": 4,
+      "unclear_ratio": 0.6666666666666666,
+      "pc_oriented_count": 29,
+      "mec_edge_count": 6,
+      "meek_propagated": 0,
+      "cycle_rejected": 0,
+      "pairwise_results": [
+        {
+          "edge": "AMInstabMt-InsInMt",
+          "priority_score": 0.10555888197229492,
+          "prediction": "B->A",
+          "final_direction": "InsInMt->AMInstabMt",
+          "confidence": "medium",
+          "is_correct": false,
+          "true_direction": "u->v",
+          "signal": {
+            "res_strength": 5.401467147657806e-31,
+            "ent_strength": 0.10555888197229492
+          }
+        },
+        {
+          "edge": "AMCINInScen-MorningCIN",
+          "priority_score": 0.06217600663892953,
+          "prediction": "Unclear",
+          "final_direction": "AMCINInScen->MorningCIN",
+          "confidence": "low",
+          "is_correct": false,
+          "true_direction": "v->u",
+          "signal": {
+            "res_strength": 2.259047825144697e-18,
+            "ent_strength": 0.06217600663892953
+          }
+        },
+        {
+          "edge": "InsInMt-MountainFcst",
+          "priority_score": 0.05049969810396224,
+          "prediction": "Unclear",
+          "final_direction": "InsInMt->MountainFcst",
+          "confidence": "low",
+          "is_correct": true,
+          "true_direction": "u->v",
+          "signal": {
+            "res_strength": 1.0443181167786784e-28,
+            "ent_strength": 0.05049969810396224
+          }
+        },
+        {
+          "edge": "N34StarFcst-PlainsFcst",
+          "priority_score": 0.0302211591024698,
+          "prediction": "A->B",
+          "final_direction": "N34StarFcst->PlainsFcst",
+          "confidence": "low",
+          "is_correct": false,
+          "true_direction": "v->u",
+          "signal": {
+            "res_strength": 0.0016566766390101264,
+            "ent_strength": 0.028564482463459676
+          }
+        },
+        {
+          "edge": "AreaMeso_ALS-CombVerMo",
+          "priority_score": 0.0,
+          "prediction": "Unclear",
+          "final_direction": "AreaMeso_ALS->CombVerMo",
+          "confidence": "low",
+          "is_correct": false,
+          "true_direction": "v->u",
+          "signal": {
+            "res_strength": 0.0,
+            "ent_strength": 0.0
+          }
+        },
+        {
+          "edge": "CapChange-CompPlFcst",
+          "priority_score": 0.0,
+          "prediction": "Unclear",
+          "final_direction": "CapChange->CompPlFcst",
+          "confidence": "low",
+          "is_correct": false,
+          "true_direction": "v->u",
+          "signal": {
+            "res_strength": 0.0,
+            "ent_strength": 0.0
+          }
+        }
+      ]
+    },
+    "pc": {
+      "shd": 47
+    },
+    "hillclimb": {
+      "shd": 53
+    },
+    "random": {
+      "shd": 126
+    }
+  }
+]
